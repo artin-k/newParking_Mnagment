@@ -1,0 +1,24 @@
+﻿<Window x:Class="WpfTest.MainWindow" Loaded="MainWindow_Load"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfTest"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="11*"/>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="1" Content="Register" HorizontalAlignment="Left" Margin="31,229,0,0" VerticalAlignment="Top"
+        Click="registerBtn_Click"/>
+
+        <Button Grid.Column="1" Content="log in" HorizontalAlignment="Left" Margin="137,229,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.01,2.647" Click="loginBtn_Click"/>
+        <TextBox x:Name="passTxt" HorizontalAlignment="Left"  Margin="30,153,0,0" TextWrapping="Wrap" Text="password" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        <TextBox x:Name="userTxt" HorizontalAlignment="Left" Margin="31,97,0,0" TextWrapping="Wrap" Text="username" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+        
+
+
+    </Grid>
+</Window>
