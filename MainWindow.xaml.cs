@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.RegularExpressions
 
 namespace WpfTest
 {
@@ -41,13 +42,22 @@ namespace WpfTest
                 }
                 MessageBox.Show("moz");
             
-
         }
 
         private void registerBtn_Click(object sender, EventArgs e)
         {
+            
             string getUser = userTxt.Text;
             string getPass = passTxt.Text;
+
+            if(getUser.length > 30 || getPass.length > 30){
+                MessageBox.Show("too long username or password")
+                return;
+            }
+
+            if(!IsStrongPassword(getPass)){
+                MessageBox("must be at least 8 characters, include Upper,lower,digit,and special char");
+            }
 
             AddUser(getUser, getPass);
 
@@ -69,6 +79,15 @@ namespace WpfTest
                 }
             }
 
+        }
+
+        public bool IsStrongPassword(string pass){
+            if(pass.length > 8){
+                return false;
+            }
+
+            bool hasUpper = Regex.IsMatch(pass, "[A-Z]");
+            
         }
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)
@@ -99,7 +118,7 @@ namespace WpfTest
                     {
                         if (reader.Read()) // 🔹 If there is a match, login is successful
                         {
-                            MessageBox.Show("Find the banana successfully 🍌");
+                            MessageBox.Show("Find the banana successfully ");
                         }
                         else
                         {
