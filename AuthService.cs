@@ -1,5 +1,7 @@
 ﻿using Microsoft.Data.Sqlite;
 using System.Windows;
+using System.Security.Cryptography;
+using System.Text;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace WpfTest
@@ -69,25 +71,37 @@ namespace WpfTest
             }
         }
 
+        private string Hash(string input)
+        {
+            using var sha256 = SHA256.Create();
+            var bytes = Encoding.UTF8.GetBytes(input);
+            var hash = sha256.ComputeHash(bytes);
+            return Convert.ToBase64String(hash);
+        }
+
         public void AddUser(string user, string pass)
         {
+            var hashedUser = Hash(user);
+            var hashedPass = Hash(pass);
             using var connection = new SqliteConnection(_connectionString);
             connection.Open();
             string insertCmd = "INSERT INTO Users (Username, Password) VALUES (@user, @pass)";
             using var command = new SqliteCommand(insertCmd, connection);
-            command.Parameters.AddWithValue("@user", user);
-            command.Parameters.AddWithValue("@pass", pass);
+            command.Parameters.AddWithValue("@user", hashedUser);
+            command.Parameters.AddWithValue("@pass", hashedPass);
             command.ExecuteNonQuery();
         }
 
         public bool Login(string user, string pass)
         {
+            var hashedUser = Hash(user);
+            var hashedPass = Hash(pass);
             using var connection = new SqliteConnection(_connectionString);
             connection.Open();
             string selectCmd = "SELECT * FROM Users WHERE Username = @user AND Password = @pass";
             using var command = new SqliteCommand(selectCmd, connection);
-            command.Parameters.AddWithValue("@user", user);
-            command.Parameters.AddWithValue("@pass", pass);
+            command.Parameters.AddWithValue("@user", hashedUser);
+            command.Parameters.AddWithValue("@pass", hashedPass);
             using var reader = command.ExecuteReader();
             return reader.Read();
         }
