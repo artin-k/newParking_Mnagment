@@ -98,7 +98,7 @@ namespace WpfTest
             AuthService authService = new AuthService();
             authService.AddUser(getUser, getPass);
 
-            MessageBox.Show("User registered successfully");
+            MessageBox.Show("کاربر با موفقیت ثبت شد");
         }
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)
@@ -114,7 +114,7 @@ namespace WpfTest
 
             if (success)
             {
-                MessageBox.Show("Login successful!");
+                MessageBox.Show("ورود با موفقیت انجام شد");
                 var mf = new main_form(); //login for main form  
                 mf.Show();
 
@@ -123,7 +123,7 @@ namespace WpfTest
             }
             else
             {
-                MessageBox.Show("Login failed.");
+                MessageBox.Show("ابتدا ثبت نام کنید  ");
             }
                
         }
