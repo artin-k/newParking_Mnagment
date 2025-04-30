@@ -24,7 +24,7 @@ namespace WpfTest
             InitializeComponent();
         }
         
-        private void regStaff_Click(object sender, RoutedEventArgs e)
+        private void managerForm_Click(object sender, RoutedEventArgs e)
         {
             var mf = new manager_form();
             mf.Show();

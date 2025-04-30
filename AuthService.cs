@@ -69,11 +69,6 @@ namespace WpfTest
             }
         }
 
-
-
-
-
-
         public void AddUser(string user, string pass)
         {
             using var connection = new SqliteConnection(_connectionString);

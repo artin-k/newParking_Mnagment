@@ -8,16 +8,6 @@
         Title="manager form" Height="450" Width="800">
     <Grid>
         
-        <StackPanel Margin="20">
-            <TextBox x:Name="nameTxt" PlaceholderText="Name" Margin="0 5"/>
-            <TextBox x:Name="roleTxt" PlaceholderText="Role" Margin="0 5"/>
-            <TextBox x:Name="phoneTxt" PlaceholderText="Phone Number" Margin="0 5"/>
-            <DatePicker x:Name="joinDatePicker" Margin="0 5"/>
-
-            <Button Content="Add Staff" Click="AddStaffBtn_Click" Margin="0 10"/>
-            <DataGrid x:Name="staffGrid" AutoGenerateColumns="True" Height="200"/>
-        </StackPanel>
-
 
     </Grid>
 </Window>
