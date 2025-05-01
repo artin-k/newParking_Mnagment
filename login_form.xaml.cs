@@ -19,21 +19,37 @@ namespace WpfTest
         public login_form()
         {
             InitializeComponent();
+            //it sets up the database
             DatabaseSetup.InitializeTables();
+
+            //a test of the database and the columns 
             AuthService authService = new AuthService();
            // authService.dbTests();
         }
 
         private void UserName_GotFocus(object sender, RoutedEventArgs e)
         {
+            //if it any way user focus on the textbox the placeholder lost visibility
             usernamePlaceholder.Visibility = Visibility.Collapsed;
+        }
+
+        private void userPlaceHolder(object sender, RoutedEventArgs e) 
+        {
+            usernamePlaceholder.Visibility = Visibility.Collapsed;
+            userTxt.Focus();
+        }
+
+        private void passPlaceHolder(object sender, RoutedEventArgs e)
+        {
+            //if clicked on it it dissapear and focus on the textbox 
+            passwordPlaceholder.Visibility = Visibility.Collapsed;
+            passTxt.Focus();    
         }
 
         private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
         {
             passwordPlaceholder.Visibility = Visibility.Collapsed;
         }
-
 
         private void UserNameTextBox_TextChanged(object sender, TextChangedEventArgs e) 
         {
@@ -68,6 +84,7 @@ namespace WpfTest
         {
             string password = passTxt.Password;
 
+            //recognizing the lang the user writes in the textbox and change the rtl / ltr
             if (!string.IsNullOrWhiteSpace(password))
             {
                 char firstChar = password[0];
@@ -84,6 +101,7 @@ namespace WpfTest
             }
             else
             {
+                //set default 
                 passTxt.FlowDirection = FlowDirection.LeftToRight;
             }
         }
@@ -91,15 +109,38 @@ namespace WpfTest
 
         public void registerBtn_Click(object sender, MouseButtonEventArgs e)
         {
+            //get the data from textboxes 
             string getUser = userTxt.Text;
             string getPass = passTxt.Password;
 
+            //make sure the users pass is good 
+            if (IsStrongPassword(getPass))
+            {
+                //building a object from auth cass and use the add user method
+                AuthService authService = new AuthService();
+                authService.AddUser(getUser, getPass);
 
-            AuthService authService = new AuthService();
-            authService.AddUser(getUser, getPass);
-
-            MessageBox.Show("کاربر با موفقیت ثبت شد");
+                MessageBox.Show("کاربر با موفقیت ثبت شد");
+            }
+            else
+            {
+                MessageBox.Show("رمز عبور باید حداقل ۸ کاراکتر، شامل حروف بزرگ و کوچک، عدد و یک کاراکتر خاص باشد.");
+            }          
         }
+
+        private bool IsStrongPassword(string password)
+        {
+            if (string.IsNullOrWhiteSpace(password)) return false;
+
+            var hasMinimum8Chars = password.Length >= 8;
+            var hasUpperCase = password.Any(char.IsUpper);
+            var hasLowerCase = password.Any(char.IsLower);
+            var hasDigit = password.Any(char.IsDigit);
+            var hasSpecialChar = password.Any(c => !char.IsLetterOrDigit(c));
+
+            return hasMinimum8Chars && hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar;
+        }
+
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)
         {

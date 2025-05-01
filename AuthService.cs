@@ -73,6 +73,7 @@ namespace WpfTest
 
         private string Hash(string input)
         {
+            //using sha256 for hash the users pass
             using var sha256 = SHA256.Create();
             var bytes = Encoding.UTF8.GetBytes(input);
             var hash = sha256.ComputeHash(bytes);
@@ -83,13 +84,29 @@ namespace WpfTest
         {
             var hashedUser = Hash(user);
             var hashedPass = Hash(pass);
-            using var connection = new SqliteConnection(_connectionString);
+
+            using var connection = new SqliteConnection("Data Source=parking.db");
             connection.Open();
+
+            // 1. Check if user already exists
+            string checkCmd = "SELECT COUNT(*) FROM Users WHERE Username = @user";
+            using var checkCommand = new SqliteCommand(checkCmd, connection);
+            checkCommand.Parameters.AddWithValue("@user", hashedUser);
+            var result = checkCommand.ExecuteScalar();
+            long userCount = (result != null) ? Convert.ToInt64(result) : 0;
+
+            if (userCount > 0)
+            {
+                MessageBox.Show("این نام کاربری قبلاً ثبت شده است.");
+                return;
+            }
+
+            // 2. Insert new user
             string insertCmd = "INSERT INTO Users (Username, Password) VALUES (@user, @pass)";
-            using var command = new SqliteCommand(insertCmd, connection);
-            command.Parameters.AddWithValue("@user", hashedUser);
-            command.Parameters.AddWithValue("@pass", hashedPass);
-            command.ExecuteNonQuery();
+            using var insertCommand = new SqliteCommand(insertCmd, connection);
+            insertCommand.Parameters.AddWithValue("@user", hashedUser);
+            insertCommand.Parameters.AddWithValue("@pass", hashedPass);
+            insertCommand.ExecuteNonQuery();
         }
 
         public bool Login(string user, string pass)
