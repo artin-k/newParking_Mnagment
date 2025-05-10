@@ -6,8 +6,37 @@
         xmlns:local="clr-namespace:WpfTest"
         mc:Ignorable="d"
         Title="manager form" Height="450" Width="800">
-    <Grid>
-        
+
+    <Grid Margin="-42,-58,0,-36">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="31*"/>
+        </Grid.ColumnDefinitions>
+
+        <GroupBox x:Name="staffPanel" 
+          Header="set staff panel" 
+          Margin="26,71,486,0" Grid.Column="1" Height="412" VerticalAlignment="Top">
+            <StackPanel Height="307" Margin="6,0,-6,0">
+                <local:PlaceholderTextBox x:Name="txtFullName" PlaceholderText="نام و نام خانوادگی" Margin="10"/>
+                <local:PlaceholderTextBox x:Name="txtUsername" PlaceholderText="نام کاربری" Margin="10"/>
+                <local:PlaceholderTextBox x:Name="txtPassword" PlaceholderText="رمز عبور" Margin="10"/>
+                <local:PlaceholderTextBox x:Name="txtRole" PlaceholderText="سمت" Margin="10"/>
+                <local:PlaceholderTextBox x:Name="txtPhone" PlaceholderText="شماره تماس" Margin="10"/>
+                <local:PlaceholderTextBox x:Name="txtJoinDate" PlaceholderText="تاریخ استخدام" Margin="10"/>
+                
+            </StackPanel>
+        </GroupBox>
+
+
+        <Button Content="set staff" 
+                HorizontalAlignment="Left" 
+                Height="53" 
+                Margin="593,0,0,100" 
+                VerticalAlignment="Bottom" 
+                Width="132" 
+                Click="setStaffClick" Grid.Column="1">
+        </Button>
+
 
     </Grid>
 </Window>

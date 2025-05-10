@@ -42,15 +42,18 @@ namespace WpfTest
 
             // Create Users table if it doesn't exist
             var createStaff = new SqliteCommand(@"
-                CREATE TABLE IF NOT EXISTS Staff (
-                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    Name TEXT NOT NULL,          
+                 CREATE TABLE IF NOT EXISTS Staff (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,                    
+                    Name TEXT NOT NULL,  
+                    Password TEXT NOT NULL DEFAULT '',
+                    Username TEXT NOT NULL DEFAULT '',
                     Role TEXT NOT NULL,
                     PhoneNumber TEXT NOT NULL,
-                    JoinDate DATE NOT NULL
+                    JoinDate DATE NOT NULL                   
                 );
             ", connection);
-            createUsers.ExecuteNonQuery();
+            createStaff.ExecuteNonQuery();
+
         }
     }
 }

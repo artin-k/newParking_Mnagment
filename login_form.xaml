@@ -36,7 +36,6 @@
 
         <PasswordBox x:Name="passTxt" 
                      MaxLength="20" 
-                     PasswordChanged="PasswordBox_TextChanged"
                      GotFocus="PasswordBox_GotFocus" 
                      HorizontalAlignment="Left" 
                      Margin="30,153,0,0" 
@@ -61,7 +60,6 @@
 
         <TextBox x:Name="userTxt"
                  MaxLength="20"                 
-                 TextChanged = "UserNameTextBox_TextChanged"
                  GotFocus="UserName_GotFocus"                 
                  HorizontalAlignment="Left"
                  Margin="31,97,0,0" 
