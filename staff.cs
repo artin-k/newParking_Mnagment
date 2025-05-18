@@ -41,6 +41,7 @@ namespace WpfTest
                     salary = "0";
                     MessageBox.Show("سمت به درستی انتخاب نشده است ");
                     break;
+                    
             }
             Phone = phone;
             JoinDate = joinDate;
