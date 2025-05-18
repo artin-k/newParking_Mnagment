@@ -10,6 +10,20 @@ namespace WpfTest
             InitializeComponent();
         }
 
+        public static readonly DependencyProperty MaxLengthProperty =
+            DependencyProperty.Register(
+        "MaxLength", typeof(int), typeof(PlaceholderTextBox),
+        new PropertyMetadata(0, OnMaxLengthChanged));
+
+        public int MaxLength
+        {
+            get => (int)GetValue(MaxLengthProperty);
+            set => SetValue(MaxLengthProperty, value);
+        }
+
+        private static void OnMaxLengthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        { }
+
         public static readonly DependencyProperty TextProperty =
             DependencyProperty.Register("Text", typeof(string), typeof(PlaceholderTextBox), new PropertyMetadata(string.Empty));
 

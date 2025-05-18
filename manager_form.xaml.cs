@@ -14,15 +14,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
+//add code meli to staff 
+
 namespace WpfTest
 {
-    /// <summary>
-    /// Interaction logic for staff_form.xaml
-    /// </summary>
     public partial class manager_form : Window
     {
+
         public manager_form()
         {
+
             InitializeComponent();
         }
 
@@ -34,19 +35,38 @@ namespace WpfTest
         }
         //
 
-        public void ConfirmStaffClick(object sender, RoutedEventArgs e)
+        public void saveStaff_click(object sender, RoutedEventArgs e) 
         {
             string fullName = txtFullName.Text;
             string username = txtUsername.Text;
             string password = txtPassword.Text;
-            string role = txtRole.Text;
-            string phone = txtPhone.Text;
-            string joinDate = txtJoinDate.Text;
+            string role = comboRole.Text;
+            string phone = txtPhone.Text;           
+            DateTime? joinDate = dpJoinDate.SelectedDate;
+            if (joinDate.HasValue)
+            {
+                string formattedDate = joinDate.Value.ToString("yyyy-MM-dd"); 
+            }
 
-            // Check if ANY string is null/empty
-            bool anyInvalid = new[] { fullName, username, password, role, phone, joinDate }.Any(s => string.IsNullOrEmpty(s));
-            Console.WriteLine($"Any invalid: {anyInvalid}"); 
+            bool anyEmptyField = new[] { fullName, username, password, role, phone }.Any(string.IsNullOrWhiteSpace);           
+
+            if (anyEmptyField || !joinDate.HasValue)
+            {
+                MessageBox.Show("لطفاً تمام فیلدها را کامل پر کنید.");               
+                return;
+            }
+
+            Staff st = new Staff(fullName, username, password, role, phone, joinDate.Value);
+            AuthService authService = new AuthService();
+            authService.AddStaff(st);
         }
+
+        private void setStatus_Click(object sender, RoutedEventArgs e)
+        {
+            parkingStatus parkingStatus = new parkingStatus();
+            parkingStatus.Show();
+        }
+
     }
 }
 

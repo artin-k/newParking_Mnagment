@@ -41,19 +41,22 @@ namespace WpfTest
             createCars.ExecuteNonQuery();
 
             // Create Users table if it doesn't exist
-            var createStaff = new SqliteCommand(@"
-                 CREATE TABLE IF NOT EXISTS Staff (
-                    Id INTEGER PRIMARY KEY AUTOINCREMENT,                    
-                    Name TEXT NOT NULL,  
-                    Password TEXT NOT NULL DEFAULT '',
-                    Username TEXT NOT NULL DEFAULT '',
-                    Role TEXT NOT NULL,
-                    PhoneNumber TEXT NOT NULL,
-                    JoinDate DATE NOT NULL                   
-                );
-            ", connection);
-            createStaff.ExecuteNonQuery();
+                       var createStaff = new SqliteCommand(@"
+                             CREATE TABLE IF NOT EXISTS Staff (
+                                Id INTEGER PRIMARY KEY AUTOINCREMENT,                    
+                                Name TEXT NOT NULL,  
+                                Password TEXT NOT NULL DEFAULT '',
+                                NationalCode TEXT NOT NULL DEFAULT '',
+                                Role TEXT NOT NULL,
+                                Salary TEXT NOT NULL,
+                                PhoneNumber TEXT NOT NULL,
+                                JoinDate DATE NOT NULL                   
+                            );
+                        ", connection);
+                        createStaff.ExecuteNonQuery();
+          
 
+           
         }
     }
 }

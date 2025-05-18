@@ -80,6 +80,20 @@ namespace WpfTest
             return Convert.ToBase64String(hash);
         }
 
+        public bool Login(string user, string pass)
+        {
+            var hashedUser = Hash(user);
+            var hashedPass = Hash(pass);
+            using var connection = new SqliteConnection(_connectionString);
+            connection.Open();
+            string selectCmd = "SELECT * FROM Users WHERE Username = @user AND Password = @pass";
+            using var command = new SqliteCommand(selectCmd, connection);
+            command.Parameters.AddWithValue("@user", hashedUser);
+            command.Parameters.AddWithValue("@pass", hashedPass);
+            using var reader = command.ExecuteReader();
+            return reader.Read();
+        }
+
         public void AddUser(string user, string pass)
         {
             var hashedUser = Hash(user);
@@ -109,18 +123,50 @@ namespace WpfTest
             insertCommand.ExecuteNonQuery();
         }
 
-        public bool Login(string user, string pass)
+        public void AddStaff(Staff st)
         {
-            var hashedUser = Hash(user);
-            var hashedPass = Hash(pass);
-            using var connection = new SqliteConnection(_connectionString);
-            connection.Open();
-            string selectCmd = "SELECT * FROM Users WHERE Username = @user AND Password = @pass";
-            using var command = new SqliteCommand(selectCmd, connection);
-            command.Parameters.AddWithValue("@user", hashedUser);
-            command.Parameters.AddWithValue("@pass", hashedPass);
-            using var reader = command.ExecuteReader();
-            return reader.Read();
+            try
+            {
+                var hashedNaCode = Hash(st.NationalCode);
+                var hashedPass = Hash(st.Password);
+
+                using var connection = new SqliteConnection("Data Source=parking.db");
+                connection.Open();
+
+
+                string checkCmd = "SELECT COUNT(*) FROM Staff WHERE NationalCode = @NationalCode";
+                using var checkCommand = new SqliteCommand(checkCmd, connection);
+                checkCommand.Parameters.AddWithValue("@NationalCode", hashedNaCode);
+                var result = checkCommand.ExecuteScalar();
+                long userCount = (result != null) ? Convert.ToInt64(result) : 0;
+
+                if (userCount > 0)
+                {
+                    MessageBox.Show("این نام کاربری قبلاً ثبت شده است.");
+                    return;
+                }
+
+                //  Insert new staff
+                string insertCmd = "INSERT INTO Staff (Name, Password, NationalCode, Role, PhoneNumber, JoinDate) " +
+                       "VALUES (@name, @pass, @NationalCode, @role, @phone, @date)";
+
+                using var insertCommand = new SqliteCommand(insertCmd, connection);
+                insertCommand.Parameters.AddWithValue("@name", st.FullName);
+                insertCommand.Parameters.AddWithValue("@pass", hashedPass);
+                insertCommand.Parameters.AddWithValue("@NationalCode", hashedNaCode);
+                insertCommand.Parameters.AddWithValue("@role", st.Role);
+                insertCommand.Parameters.AddWithValue("@phone", st.Phone);
+                insertCommand.Parameters.AddWithValue("@date", st.JoinDate);
+                insertCommand.ExecuteNonQuery();
+            }
+            catch (Exception) 
+            {
+                MessageBox.Show("an error occured");
+            }
+
+
         }
+
+
     }
 }

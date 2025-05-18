@@ -3,27 +3,56 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:WpfTest"
         mc:Ignorable="d"
-        Title="manager form" Height="450" Width="800">
+        Title="manager form" Height="500" Width="900">
 
-    <Grid Margin="-42,-58,0,-36">
+    <Grid Margin="-42,-58,0,0" Height="594" VerticalAlignment="Top">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="31*"/>
         </Grid.ColumnDefinitions>
 
-        <GroupBox x:Name="staffPanel" 
-          Header="set staff panel" 
+        <GroupBox x:Name="staffPanel" Visibility="Hidden" 
+          Header="Staff Panel" 
           Margin="26,71,486,0" Grid.Column="1" Height="412" VerticalAlignment="Top">
-            <StackPanel Height="307" Margin="6,0,-6,0">
-                <local:PlaceholderTextBox x:Name="txtFullName" PlaceholderText="نام و نام خانوادگی" Margin="10"/>
-                <local:PlaceholderTextBox x:Name="txtUsername" PlaceholderText="نام کاربری" Margin="10"/>
-                <local:PlaceholderTextBox x:Name="txtPassword" PlaceholderText="رمز عبور" Margin="10"/>
-                <local:PlaceholderTextBox x:Name="txtRole" PlaceholderText="سمت" Margin="10"/>
-                <local:PlaceholderTextBox x:Name="txtPhone" PlaceholderText="شماره تماس" Margin="10"/>
-                <local:PlaceholderTextBox x:Name="txtJoinDate" PlaceholderText="تاریخ استخدام" Margin="10"/>
-                
+
+            <StackPanel Margin="6,0,-6,0" >
+
+                <local:PlaceholderTextBox x:Name="txtFullName" MaxLength="40" PlaceholderText="نام و نام خانوادگی" Margin="10"/>
+                <local:PlaceholderTextBox x:Name="txtUsername" MaxLength="20" PlaceholderText="نام کاربری" Margin="10"/>
+                <local:PlaceholderTextBox x:Name="txtPassword" MaxLength="50" PlaceholderText="رمز عبور" Margin="10"/>
+
+                <ComboBox x:Name="comboRole" Margin="10"
+ >
+                    <ComboBoxItem Content="مدیر"/>
+                    <ComboBoxItem Content="حراست"/>
+                    <ComboBoxItem Content="کارمند"/>
+                    <ComboBoxItem Content="نظافتچی"/>
+                </ComboBox>
+
+                <local:PlaceholderTextBox x:Name="txtPhone" MaxLength="12" PlaceholderText="شماره تماس" Margin="10"/>
+                <DatePicker x:Name="dpJoinDate"
+                    Margin="10"
+                    SelectedDateFormat="Short"
+                    DisplayDate="{x:Static sys:DateTime.Now}"
+                    />
+
+
+                <StackPanel Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,20,0,0">
+
+                    <Button x:Name="btnSave"
+                            Content="ذخیره"
+                            Width="120"
+                            Margin="10"
+                            Padding="10,5"
+                            Click="saveStaff_click"
+                            />
+                    <Button x:Name="btnCancel" Content="لغو" Width="120" Margin="10" Padding="10,5"/>
+                </StackPanel>
             </StackPanel>
         </GroupBox>
 
@@ -31,12 +60,22 @@
         <Button Content="set staff" 
                 HorizontalAlignment="Left" 
                 Height="53" 
-                Margin="593,0,0,100" 
+                Margin="731,0,0,426" 
                 VerticalAlignment="Bottom" 
                 Width="132" 
-                Click="setStaffClick" Grid.Column="1">
+                Click="setStaffClick"
+                Grid.Column="1">
         </Button>
 
+        <Button Content="parking status" 
+                HorizontalAlignment="Left" 
+                Height="53" 
+                Margin="731,0,0,330" 
+                VerticalAlignment="Bottom" 
+                Width="132" 
+                Click="setStatus_Click"
+                Grid.Column="1">
+        </Button>
 
     </Grid>
 </Window>
