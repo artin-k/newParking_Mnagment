@@ -1,0 +1,65 @@
+﻿<Window x:Class="WpfTest.staff_form"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:WpfTest"
+        mc:Ignorable="d" 
+        Title="staff_form" Height="550" Width="700"
+        Loaded="staff_form_Load">
+
+    <Grid Margin="-42,-58,0,0" Height="594" VerticalAlignment="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="31*"/>
+        </Grid.ColumnDefinitions>
+
+        <GroupBox x:Name="staffPanel"  
+          Header="Staff Panel" 
+          Margin="26,71,276,0"
+                  Grid.Column="1"
+                  Height="412"                  
+                  VerticalAlignment="Top">
+
+            <StackPanel Margin="6,0,-6,0" >
+
+                <local:PlaceholderTextBox x:Name="txtParkPlace" MaxLength="12" PlaceholderText="محل پارک" Margin="10"/>
+                <local:PlaceholderTextBox x:Name="txtPhone" MaxLength="12" PlaceholderText="شماره تماس" Margin="10"/>
+                <local:PlaceholderTextBox x:Name="txtCarSpecification" MaxLength="12" PlaceholderText="مشخصات خودرو" Margin="10" Width="306"/>
+                <local:PlaceholderTextBox x:Name="txtEnterTime" MaxLength="12" PlaceholderText="تایم ورود" Margin="10" Width="313"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <TextBox x:Name="txtPlatePart1" Width="40" MaxLength="2" Margin="0,0,5,0"/>
+                    <ComboBox x:Name="cmbPlateLetter" Width="60" Margin="0,0,5,0"/>
+                    <TextBox x:Name="txtPlatePart2" Width="60" MaxLength="3"/>
+                </StackPanel>
+
+
+                <DatePicker x:Name="dpJoinDate"
+                    Margin="10"
+                    SelectedDateFormat="Short"
+                    DisplayDate="{x:Static sys:DateTime.Now}"
+                    />
+
+                <StackPanel Orientation="Horizontal" 
+                    HorizontalAlignment="Center" 
+                    Margin="0,20,0,0">
+              
+                <Button
+                    x:Name="CarRegister"
+                    Content="ذخیره"
+                    Width="120"
+                    Padding="10,5"
+                    Click="CarRegister_Click"/>
+
+                <Button x:Name="btnCancel"
+                        Content="لغو"
+                        Width="120"
+                        Margin="10"
+                        Padding="10,5"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        
+    </Grid>
+</Window>
