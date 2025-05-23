@@ -167,6 +167,77 @@ namespace WpfTest
 
         }
 
+        public static List<ParkingSpot> GetAllSpots()
+        {
+            var spots = new List<ParkingSpot>();
+
+            using var connection = new SqliteConnection("Data Source=parking.db");
+            {
+                connection.Open();
+                var command = connection.CreateCommand();
+                command.CommandText = "SELECT Id, IsOccupied FROM ParkingSpots";
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        spots.Add(new ParkingSpot
+                        {
+                            Id = reader.GetInt32(0),
+                            IsOccupied = reader.GetBoolean(1)
+                        });
+                    }
+                }
+            }
+
+            return spots;
+        }
+
+        public static ParkingSpot? GetFirstEmptySpot()
+        {
+            using (var conn = new SqliteConnection("Data Source=parking.db"))
+            {
+                conn.Open();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT Id FROM ParkingSpots WHERE IsOccupied = 0 LIMIT 1";
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    MessageBox.Show("Checking for empty spot...");
+                    if (reader.Read())
+                    {
+                        Console.WriteLine("Free spot found: " + reader.GetInt32(0));
+                        return new ParkingSpot
+                        {
+                            Id = reader.GetInt32(0),
+                            IsOccupied = false
+                        };
+                    }
+                    else
+                    {
+                        MessageBox.Show("No free spots found.");
+                    }
+                }
+            }
+
+            return null; // No free spots
+        }
+
+
+        public static void UpdateSpotStatus(int spotId, bool isOccupied)
+        {
+            using (var conn = new SqliteConnection("Data Source=parking.db"))
+            {
+                conn.Open();
+                var cmd = conn.CreateCommand();
+                cmd.CommandText = "UPDATE ParkingSpots SET IsOccupied = @status WHERE Id = @id";
+                cmd.Parameters.AddWithValue("@status", isOccupied ? 1 : 0);
+                cmd.Parameters.AddWithValue("@id", spotId);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+
 
     }
 }

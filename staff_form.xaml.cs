@@ -27,9 +27,43 @@ namespace WpfTest
         public void staff_form_Load(object sender, EventArgs e)
         {
             txtEnterTime.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            MessageBox.Show("load");
+            AssignStaffToSpot();
         }
-        
+
+        public static ParkingSpot? GetFirstFreeSpot()
+        {
+            
+            var spots = AuthService.GetAllSpots();
+            return spots.FirstOrDefault(s => !s.IsOccupied);
+        }
+
+        private void AssignStaffToSpot()
+        {
+            
+            var freeSpot = AuthService.GetFirstEmptySpot();
+
+            if (freeSpot == null)
+            {
+                MessageBox.Show("No available parking spots.");
+                return;
+            }
+
+            AuthService.UpdateSpotStatus(freeSpot.Id, true);
+            txtParkPlace.Text = freeSpot.Id.ToString();
+
+            foreach (Window window in Application.Current.Windows)
+            {
+                if (window is parkingStatus psWindow)
+                {
+                    psWindow.LoadSpotsFromDb();
+                }
+            }
+        }
+
+
+
+
+
         public void CarRegister_Click(object sender, EventArgs e)
         {
 

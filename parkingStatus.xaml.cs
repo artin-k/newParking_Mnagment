@@ -1,22 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace WpfTest
 {
-    /// <summary>
-    /// Interaction logic for parkingStatus.xaml
-    /// </summary>
     public partial class parkingStatus : Window
     {
         private List<ParkingSpot> spots = new List<ParkingSpot>();
@@ -24,23 +14,13 @@ namespace WpfTest
         public parkingStatus()
         {
             InitializeComponent();
-            InitializeSpots();
-            Console.WriteLine("int spots");
+            LoadSpotsFromDb();
         }
 
-        private void InitializeSpots()
+        public void LoadSpotsFromDb()
         {
-            spots.Clear();
-
-            for (int i = 0; i < 30; i++)
-            {
-                spots.Add(new ParkingSpot
-                {
-                    Id = i,
-                    IsOccupied = (false) 
-                });
-            }
-
+            var spots = AuthService.GetAllSpots();
+            this.spots = spots;
             RenderSpots();
         }
 
@@ -62,7 +42,6 @@ namespace WpfTest
                 };
 
                 btn.Click += Spot_Click;
-
                 spotGrid.Children.Add(btn);
             }
         }
@@ -74,12 +53,16 @@ namespace WpfTest
                 var spot = spots.FirstOrDefault(s => s.Id == id);
                 if (spot != null)
                 {
+                    // Toggle the state
                     spot.IsOccupied = !spot.IsOccupied;
-                    RenderSpots(); // refresh
+
+                    // Update DB
+                    AuthService.UpdateSpotStatus(spot.Id, spot.IsOccupied);
+
+                    // Re-render UI
+                    RenderSpots();
                 }
             }
         }
-
-
     }
 }

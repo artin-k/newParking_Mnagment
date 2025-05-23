@@ -24,23 +24,21 @@
 
             <StackPanel Margin="6,0,-6,0" >
 
-                <local:PlaceholderTextBox x:Name="txtParkPlace" MaxLength="12" PlaceholderText="محل پارک" Margin="10"/>
+                <TextBox x:Name="txtParkPlace" MaxLength="12" Margin="10"/>
                 <local:PlaceholderTextBox x:Name="txtPhone" MaxLength="12" PlaceholderText="شماره تماس" Margin="10"/>
                 <local:PlaceholderTextBox x:Name="txtCarSpecification" MaxLength="12" PlaceholderText="مشخصات خودرو" Margin="10" Width="306"/>
-                <local:PlaceholderTextBox x:Name="txtEnterTime" MaxLength="12" PlaceholderText="تایم ورود" Margin="10" Width="313"/>
+                <TextBox x:Name="txtEnterTime" MaxLength="12" Margin="10" Width="313"/>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <TextBox x:Name="txtPlatePart1" Width="40" MaxLength="2" Margin="0,0,5,0"/>
                     <ComboBox x:Name="cmbPlateLetter" Width="60" Margin="0,0,5,0"/>
                     <TextBox x:Name="txtPlatePart2" Width="60" MaxLength="3"/>
                 </StackPanel>
 
-
                 <DatePicker x:Name="dpJoinDate"
                     Margin="10"
-                    SelectedDateFormat="Short"
-                    DisplayDate="{x:Static sys:DateTime.Now}"
-                    />
-
+                    SelectedDate="{x:Static sys:DateTime.Now}"
+                    SelectedDateFormat="Short" />
+                
                 <StackPanel Orientation="Horizontal" 
                     HorizontalAlignment="Center" 
                     Margin="0,20,0,0">
