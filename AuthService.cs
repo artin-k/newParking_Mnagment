@@ -237,7 +237,48 @@ namespace WpfTest
             }
         }
 
+        public bool registerCar(Car car)
+        {
+            
 
+            try
+            {
+
+                using var connection = new SqliteConnection("Data Source=parking.db");
+                connection.Open();
+
+                string checkCmd = "SELECT COUNT(*) FROM Cars WHERE plate = @plate";
+                using var checkCommand = new SqliteCommand(checkCmd, connection);
+                checkCommand.Parameters.AddWithValue("@plate",car.Plate);
+                var result = checkCommand.ExecuteScalar();
+                long carCount = (result != null) ? Convert.ToInt64(result) : 0;
+
+                if (carCount > 0)
+                {
+                    MessageBox.Show("این نام خودرو قبلاً ثبت شده است.");
+                    return false;
+                }
+
+                //  Insert new staff
+                string insertCmd = "INSERT INTO Cars (ParkPlace, PhoneNumber, Specification, EntryTime, Plate, Date) " +
+                       "VALUES (@parkPlace, @phoneNum, @CarSepc, @entrytime, @plate, @date)";
+
+                using var insertCommand = new SqliteCommand(insertCmd, connection);
+                insertCommand.Parameters.AddWithValue("@parkPlace", car.ParkPlace);
+                insertCommand.Parameters.AddWithValue("@phoneNum", car.PhoneNumber);               
+                insertCommand.Parameters.AddWithValue("@CarSepc", car.Specification);
+                insertCommand.Parameters.AddWithValue("@entrytime", car.EntryTime);
+                insertCommand.Parameters.AddWithValue("@plate", car.Plate);
+                insertCommand.Parameters.AddWithValue("@date", car.Date);
+                insertCommand.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+                return false;
+            }
+        }
 
     }
 }

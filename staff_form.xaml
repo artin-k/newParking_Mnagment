@@ -10,6 +10,10 @@
         Loaded="staff_form_Load">
 
     <Grid Margin="-42,-58,0,0" Height="594" VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="31*"/>
@@ -18,7 +22,7 @@
         <GroupBox x:Name="staffPanel"  
           Header="Staff Panel" 
           Margin="26,71,276,0"
-                  Grid.Column="1"
+                  Grid.Column="1" Grid.Row="0"
                   Height="412"                  
                   VerticalAlignment="Top">
 
@@ -30,11 +34,28 @@
                 <TextBox x:Name="txtEnterTime" MaxLength="12" Margin="10" Width="313"/>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <TextBox x:Name="txtPlatePart1" Width="40" MaxLength="2" Margin="0,0,5,0"/>
-                    <ComboBox x:Name="cmbPlateLetter" Width="60" Margin="0,0,5,0"/>
+                    <ComboBox x:Name="cmbPlateLetter" Width="60" Margin="0,0,5,0">
+                        <ComboBoxItem Content="ب" IsSelected="True"/>
+                        <ComboBoxItem Content="ج"/>
+                        <ComboBoxItem Content="د"/>
+                        <ComboBoxItem Content="س"/>
+                        <ComboBoxItem Content="ص"/>
+                        <ComboBoxItem Content="ط"/>
+                        <ComboBoxItem Content="ق"/>
+                        <ComboBoxItem Content="ل"/>
+                        <ComboBoxItem Content="م"/>
+                        <ComboBoxItem Content="ن"/>
+                        <ComboBoxItem Content="ه"/>
+                        <ComboBoxItem Content="ی"/>
+                        <ComboBoxItem Content="الف"/>
+                        <ComboBoxItem Content="پ"/>
+                        <ComboBoxItem Content="ت"/>
+                        <ComboBoxItem Content="ع"/>
+                    </ComboBox>
                     <TextBox x:Name="txtPlatePart2" Width="60" MaxLength="3"/>
                 </StackPanel>
 
-                <DatePicker x:Name="dpJoinDate"
+                <DatePicker x:Name="txtEnterDate"
                     Margin="10"
                     SelectedDate="{x:Static sys:DateTime.Now}"
                     SelectedDateFormat="Short" />
@@ -59,5 +80,16 @@
             </StackPanel>
         </GroupBox>
         
+        <Button x:Name="PaymentFrmBtn"
+        Content="payment"
+        Width="120"
+        Margin="10"
+        Padding="10,5"
+        Grid.Row="1"
+        Grid.Column="1"
+        VerticalAlignment="Top"
+        Click="PaymentFrmBtn_Click"/>
+
+
     </Grid>
 </Window>

@@ -23,24 +23,24 @@ namespace WpfTest
             createUsers.ExecuteNonQuery();
 
 
-            // Create Cars table if it doesn't exist
+        // Create Cars table if it doesn't exist
             var createCars = new SqliteCommand(@"
                 CREATE TABLE IF NOT EXISTS Cars (
-                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    CarNum TEXT,
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,                  
                     Plate TEXT,
                     Specification TEXT,
-                    Model TEXT,
-                    Color TEXT,
                     PhoneNumber TEXT,
                     ParkPlace TEXT,
+                    Date DATE NOT NULL, 
                     EntryTime DATETIME,
                     ExitTime DATETIME
                 );
             ", connection);
             createCars.ExecuteNonQuery();
 
+
             // Create Users table if it doesn't exist
+            //national code stand for username 
             var createStaff = new SqliteCommand(@"
                     CREATE TABLE IF NOT EXISTS Staff (
                     Id INTEGER PRIMARY KEY AUTOINCREMENT,                    
@@ -55,6 +55,16 @@ namespace WpfTest
             ", connection);
             createStaff.ExecuteNonQuery();
 
+            var createManager = new SqliteCommand(@"
+                    CREATE TABLE IF NOT EXISTS Manager (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,                    
+                    Name TEXT NOT NULL,  
+                    Password TEXT NOT NULL DEFAULT '',
+                    NationalCode TEXT NOT NULL DEFAULT '',
+                    Role TEXT NOT NULL                                
+                );
+            ", connection);
+            createManager.ExecuteNonQuery();
 
             var createParkPlace = new SqliteCommand(@"
                 CREATE TABLE IF NOT EXISTS ParkingSpots (

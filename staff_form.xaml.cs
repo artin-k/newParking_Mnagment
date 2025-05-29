@@ -19,6 +19,8 @@ namespace WpfTest
     /// </summary>
     public partial class staff_form : Window
     {
+        private ParkingSpot? freeSpot;
+
         public staff_form()
         {
             InitializeComponent();
@@ -27,7 +29,7 @@ namespace WpfTest
         public void staff_form_Load(object sender, EventArgs e)
         {
             txtEnterTime.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            AssignStaffToSpot();
+            AssignSpot();
         }
 
         public static ParkingSpot? GetFirstFreeSpot()
@@ -37,37 +39,78 @@ namespace WpfTest
             return spots.FirstOrDefault(s => !s.IsOccupied);
         }
 
-        private void AssignStaffToSpot()
+        private ParkingSpot? AssignSpot()
         {
-            
-            var freeSpot = AuthService.GetFirstEmptySpot();
-
+            freeSpot = AuthService.GetFirstEmptySpot();
             if (freeSpot == null)
             {
                 MessageBox.Show("No available parking spots.");
-                return;
+                return null;
             }
-
-            AuthService.UpdateSpotStatus(freeSpot.Id, true);
             txtParkPlace.Text = freeSpot.Id.ToString();
-
-            foreach (Window window in Application.Current.Windows)
-            {
-                if (window is parkingStatus psWindow)
-                {
-                    psWindow.LoadSpotsFromDb();
-                }
-            }
+            return freeSpot;
         }
-
-
-
-
 
         public void CarRegister_Click(object sender, EventArgs e)
         {
+            var freeSpot = AssignSpot();
+            if (freeSpot == null)
+                return;
 
+            if (txtPlatePart1.Text.Length != 2 || string.IsNullOrWhiteSpace(cmbPlateLetter.Text) || txtPlatePart2.Text.Length != 3)
+            {
+                MessageBox.Show("Bro, don't pass nulls. Fill all the fields properly.");
+                return;
+            }
+
+            string plate = txtPlatePart1.Text + cmbPlateLetter.Text + txtPlatePart2.Text;
+
+            if (txtEnterDate.SelectedDate == null)
+            {
+                MessageBox.Show("Please select a valid date.");
+                return;
+            }
+
+            string enterDateTime = txtEnterDate.SelectedDate.Value.ToString();
+
+            if (string.IsNullOrWhiteSpace(plate) || string.IsNullOrWhiteSpace(txtCarSpecification.Text) ||
+                string.IsNullOrWhiteSpace(txtPhone.Text) || string.IsNullOrWhiteSpace(txtParkPlace.Text) ||
+                string.IsNullOrWhiteSpace(txtEnterTime.Text))
+            {
+                MessageBox.Show("Bro, don't pass nulls. Fill all the fields properly.");
+                return;
+            }
+
+            Car car = new Car(plate, txtCarSpecification.Text, txtPhone.Text, txtParkPlace.Text, txtEnterTime.Text, enterDateTime);
+
+            AuthService authService = new AuthService();
+            bool success = authService.registerCar(car);
+
+            if (success)
+            {
+                AuthService.UpdateSpotStatus(freeSpot.Id, true);
+
+                foreach (Window window in Application.Current.Windows)
+                {
+                    if (window is parkingStatus psWindow)
+                        psWindow.LoadSpotsFromDb();
+                }
+
+                MessageBox.Show("Register successfully");
+            }
+            else
+            {
+                MessageBox.Show("Register failed, try again!");
+            }
         }
+
+        public void PaymentFrmBtn_Click(object sender, EventArgs e)
+        {
+            var pf = new payment_form();
+            pf.Show();
+        }
+
+
 
     }
 }
