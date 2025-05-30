@@ -63,7 +63,7 @@ namespace WpfTest
                 return;
             }
 
-            string plate = txtPlatePart1.Text + cmbPlateLetter.Text + txtPlatePart2.Text;
+            string plate = $"{txtPlatePart1.Text} {cmbPlateLetter.Text} {txtPlatePart2.Text}";
 
             if (txtEnterDate.SelectedDate == null)
             {
@@ -81,7 +81,7 @@ namespace WpfTest
                 return;
             }
 
-            Car car = new Car(plate, txtCarSpecification.Text, txtPhone.Text, txtParkPlace.Text, txtEnterTime.Text, enterDateTime);
+            Car car = new Car(plate, txtCarSpecification.Text, txtPhone.Text, txtParkPlace.Text, txtEnterTime.Text, enterDateTime, false);
 
             AuthService authService = new AuthService();
             bool success = authService.registerCar(car);

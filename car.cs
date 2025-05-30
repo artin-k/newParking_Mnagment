@@ -11,9 +11,10 @@ namespace WpfTest
         public string Date { get; }
         public string EntryTime { get; }
         public string ExitTime { get; }
+        public bool IsExited {  get; }
 
         // Constructor for entry
-        public Car(string plate, string specification, string phoneNumber, string parkPlace, string entryTime, string date)
+        public Car(string plate, string specification, string phoneNumber, string parkPlace, string entryTime, string date, bool isExited)
         {
             Plate = plate;
             Specification = specification;
@@ -21,12 +22,11 @@ namespace WpfTest
             ParkPlace = parkPlace;
             EntryTime = entryTime;
             Date = date;
+            IsExited = isExited;
+
+            if (isExited == false) { ExitTime = ""; }
         }
 
-        // Constructor for exit
-        public Car(string exitTime)
-        {
-            ExitTime = exitTime;
-        }
+
     }
 }

@@ -25,19 +25,19 @@ namespace WpfTest
 
         // Create Cars table if it doesn't exist
             var createCars = new SqliteCommand(@"
-                CREATE TABLE IF NOT EXISTS Cars (
-                    Id INTEGER PRIMARY KEY AUTOINCREMENT,                  
-                    Plate TEXT,
+                   CREATE TABLE IF NOT EXISTS Cars (
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Plate TEXT NOT NULL,
                     Specification TEXT,
                     PhoneNumber TEXT,
                     ParkPlace TEXT,
-                    Date DATE NOT NULL, 
-                    EntryTime DATETIME,
-                    ExitTime DATETIME
+                    Date TEXT NOT NULL,           
+                    EntryTime TEXT,               
+                    ExitTime TEXT,
+                    IsExited INTEGER NOT NULL     
                 );
             ", connection);
             createCars.ExecuteNonQuery();
-
 
             // Create Users table if it doesn't exist
             //national code stand for username 

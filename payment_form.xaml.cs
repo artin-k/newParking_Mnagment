@@ -22,6 +22,21 @@ namespace WpfTest
         public payment_form()
         {
             InitializeComponent();
+            LoadExitedCars();
         }
+
+
+
+        private void LoadExitedCars()
+        {
+            List<Car> allCars = AuthService.GetCars();
+
+            // Filter to get only exited cars
+            //var exitedCars = allCars.Where(car => !string.IsNullOrEmpty(car.ExitTime)).ToList();
+
+            // Bind to DataGrid
+            exitedCarsGrid.ItemsSource = allCars;
+        }
+
     }
 }

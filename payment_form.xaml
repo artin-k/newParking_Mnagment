@@ -7,6 +7,22 @@
         mc:Ignorable="d"
         Title="payment_form" Height="450" Width="800">
     <Grid>
-        
+        <DataGrid x:Name="exitedCarsGrid"
+          AutoGenerateColumns="False"
+          CanUserAddRows="False"
+          Margin="10"
+          IsReadOnly="True">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Plate" Binding="{Binding Plate}" />
+                <DataGridTextColumn Header="Specification" Binding="{Binding Specification}" />
+                <DataGridTextColumn Header="Phone" Binding="{Binding PhoneNumber}" />
+                <DataGridTextColumn Header="Park Place" Binding="{Binding ParkPlace}" />
+                <DataGridTextColumn Header="Entry Time" Binding="{Binding EntryTime}" />
+                <DataGridTextColumn Header="Exit Time" Binding="{Binding ExitTime}" />
+                <DataGridTextColumn Header="Fee" Binding="{Binding PaymentAmount}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
     </Grid>
 </Window>

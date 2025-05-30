@@ -260,8 +260,8 @@ namespace WpfTest
                 }
 
                 //  Insert new staff
-                string insertCmd = "INSERT INTO Cars (ParkPlace, PhoneNumber, Specification, EntryTime, Plate, Date) " +
-                       "VALUES (@parkPlace, @phoneNum, @CarSepc, @entrytime, @plate, @date)";
+                string insertCmd = "INSERT INTO Cars (ParkPlace, PhoneNumber, Specification, EntryTime, Plate, Date, IsExited) " +
+                       "VALUES (@parkPlace, @phoneNum, @CarSepc, @entrytime, @plate, @date, @IsExited)";
 
                 using var insertCommand = new SqliteCommand(insertCmd, connection);
                 insertCommand.Parameters.AddWithValue("@parkPlace", car.ParkPlace);
@@ -270,6 +270,7 @@ namespace WpfTest
                 insertCommand.Parameters.AddWithValue("@entrytime", car.EntryTime);
                 insertCommand.Parameters.AddWithValue("@plate", car.Plate);
                 insertCommand.Parameters.AddWithValue("@date", car.Date);
+                insertCommand.Parameters.AddWithValue("@IsExited", car.IsExited);
                 insertCommand.ExecuteNonQuery();
                 return true;
             }
@@ -278,6 +279,33 @@ namespace WpfTest
                 MessageBox.Show($"Error: {ex.Message}");
                 return false;
             }
+        }
+
+        public static List<Car> GetCars()
+        {
+            var cars = new List<Car>();
+            using (var connection = new SqliteConnection("Data Source=parking.db"))
+            {
+                connection.Open();
+                var command = new SqliteCommand("SELECT * FROM Cars WHERE IsExited = false", connection);
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var car = new Car(
+                            reader["Plate"]?.ToString()?? "",
+                            reader["Specification"]?.ToString()?? "",
+                            reader["PhoneNumber"]?.ToString()?? "",
+                            reader["ParkPlace"]?.ToString()?? "",
+                            reader["EntryTime"]?.ToString()?? "",
+                            reader["ExitTime"]?.ToString()?? "",
+                            Convert.ToBoolean(reader["IsExited"])
+                        );
+                        cars.Add(car);
+                    }
+                }
+            }
+            return cars;
         }
 
     }
