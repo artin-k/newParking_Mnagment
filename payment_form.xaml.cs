@@ -38,5 +38,22 @@ namespace WpfTest
             exitedCarsGrid.ItemsSource = allCars;
         }
 
+        private void ExistedCarBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (exitedCarsGrid.Visibility == Visibility.Hidden)
+                exitedCarsGrid.Visibility = Visibility.Visible;
+            else
+                exitedCarsGrid.Visibility = Visibility.Hidden;
+        }
+        
+        private void paymentBtn_Click( object sender, RoutedEventArgs e)
+        {
+            if (payStack.Visibility == Visibility.Hidden)
+                payStack.Visibility = Visibility.Visible;
+            else
+                payStack.Visibility = Visibility.Hidden;
+        }
+
     }
 }

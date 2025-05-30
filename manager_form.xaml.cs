@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,14 @@ namespace WpfTest
         {
 
             InitializeComponent();
+            paymentLable();
+        }
+
+        public void paymentLable()
+        {
+            AuthService authService = new AuthService();
+            int payemnt = authService.showpayment();
+            feeLable.Content = payemnt;
         }
 
         public void setStaffClick(object sender, RoutedEventArgs e)
@@ -66,6 +75,23 @@ namespace WpfTest
             parkingStatus parkingStatus = new parkingStatus();
             parkingStatus.Show();
         }
+
+        private void setPayment_Click(object sender, RoutedEventArgs e)
+        {
+            string input = Interaction.InputBox("Enter paying fee for your parking:", "Payment Input", "");
+
+            if (!string.IsNullOrWhiteSpace(input) && int.TryParse(input, out int fee))
+            {
+                AuthService.SetParkingPayment(fee);
+                paymentLable();
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid number.");
+            }
+        }
+
+        //to complete we should make admin form next 
 
     }
 }

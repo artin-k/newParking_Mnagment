@@ -123,6 +123,33 @@ namespace WpfTest
             insertCommand.ExecuteNonQuery();
         }
 
+        public static void SetParkingPayment(int pay)
+        {
+
+            using var connection = new SqliteConnection("Data Source=parking.db");
+            connection.Open();
+
+            // 1. Check if user already exists
+            string command = "SELECT COUNT(*) FROM Manager WHERE ParkingFee = @fee";
+            using var insertCommand = new SqliteCommand(command, connection);
+            insertCommand.Parameters.AddWithValue("@fee", pay);
+            insertCommand.ExecuteNonQuery();
+        }
+
+        public int showpayment()
+        {
+            int payment = 0;
+            using var connection = new SqliteConnection("Data Source=parking.db");
+            connection.Open();
+            var command = new SqliteCommand("SELECT ParkingFee FROM Manager LIMIT 1", connection);
+            using var reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                payment = Convert.ToInt32(reader["ParkingFee"]);
+            }
+            return payment;
+        }
+
         public void AddStaff(Staff st)
         {
             try

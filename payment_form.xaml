@@ -6,14 +6,25 @@
         xmlns:local="clr-namespace:WpfTest"
         mc:Ignorable="d"
         Title="payment_form" Height="450" Width="800">
-    <Grid>
-        <DataGrid x:Name="exitedCarsGrid"
-          AutoGenerateColumns="False"
-          CanUserAddRows="False"
-          Margin="10"
-          IsReadOnly="True">
 
-            <DataGrid.Columns>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <!-- DataGrid takes most space -->
+            <ColumnDefinition Width="1*" />
+            <!-- Button takes less space -->
+        </Grid.ColumnDefinitions>
+        
+        
+            <DataGrid x:Name="exitedCarsGrid" 
+              Visibility="Hidden"
+              Grid.Column="0"
+              AutoGenerateColumns="False"
+              CanUserAddRows="False"
+              IsReadOnly="True"
+              Margin="0,0,10,0">
+
+                <DataGrid.Columns>
                 <DataGridTextColumn Header="Plate" Binding="{Binding Plate}" />
                 <DataGridTextColumn Header="Specification" Binding="{Binding Specification}" />
                 <DataGridTextColumn Header="Phone" Binding="{Binding PhoneNumber}" />
@@ -24,5 +35,34 @@
             </DataGrid.Columns>
         </DataGrid>
 
+            <!-- Button next to the grid -->
+            <Button x:Name="ExitedCarBtn"
+            Content="View Cars"
+            Grid.Column="1"
+            Width="100"
+            Height="40"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Click="ExistedCarBtn_Click" />
+        
+        <Button x:Name="paymentsBtn"
+                Content="set payment"
+                Grid.Column="1"
+                Width="100"
+                Height="40"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                Click="paymentBtn_Click"
+                RenderTransformOrigin="0.554,2.456" Margin="0,94,0,0" />
+
+        <StackPanel x:Name="payStack" 
+              Visibility="Hidden"
+              Grid.Column="0"                                     
+              Margin="0,0,10,0">
+
+            <local:PlaceholderTextBox x:Name="GetPlate" MaxLength="20" PlaceholderText="پلاک" Margin="10"/>
+            
+            
+        </StackPanel>
     </Grid>
 </Window>

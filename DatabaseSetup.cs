@@ -61,10 +61,13 @@ namespace WpfTest
                     Name TEXT NOT NULL,  
                     Password TEXT NOT NULL DEFAULT '',
                     NationalCode TEXT NOT NULL DEFAULT '',
-                    Role TEXT NOT NULL                                
+                    Role TEXT NOT NULL    ,
+                    ParkingFee INTEGER NOT NULL
                 );
             ", connection);
             createManager.ExecuteNonQuery();
+
+
 
             var createParkPlace = new SqliteCommand(@"
                 CREATE TABLE IF NOT EXISTS ParkingSpots (

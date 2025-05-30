@@ -60,7 +60,7 @@
         <Button Content="set staff" 
                 HorizontalAlignment="Left" 
                 Height="53" 
-                Margin="731,0,0,426" 
+                Margin="730,0,0,346" 
                 VerticalAlignment="Bottom" 
                 Width="132" 
                 Click="setStaffClick"
@@ -70,12 +70,31 @@
         <Button Content="parking status" 
                 HorizontalAlignment="Left" 
                 Height="53" 
-                Margin="731,0,0,330" 
+                Margin="730,0,0,256" 
                 VerticalAlignment="Bottom" 
                 Width="132" 
                 Click="setStatus_Click"
                 Grid.Column="1">
         </Button>
+
+        <Button Content="set parking payment" 
+                HorizontalAlignment="Left" 
+                Height="53" 
+                Margin="730,0,0,168" 
+                VerticalAlignment="Bottom" 
+                Width="132" 
+                Click="setPayment_Click"
+                Grid.Column="1">
+        </Button>
+        
+        <Label  x:Name="feeLable"
+            Grid.Column="1"
+               Content="Label"
+               HorizontalAlignment="Left"
+               Height="41"
+               Margin="730,105,0,0"
+               VerticalAlignment="Top"
+               Width="104"/>
 
     </Grid>
 </Window>
