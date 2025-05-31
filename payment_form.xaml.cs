@@ -25,8 +25,6 @@ namespace WpfTest
             LoadExitedCars();
         }
 
-
-
         private void LoadExitedCars()
         {
             List<Car> allCars = AuthService.GetCars();
@@ -53,6 +51,13 @@ namespace WpfTest
                 payStack.Visibility = Visibility.Visible;
             else
                 payStack.Visibility = Visibility.Hidden;
+        }
+
+        private void CalcPayment_click(object sender, RoutedEventArgs e) 
+        {
+            string plate = $"{txtPlatePart1.Text} {cmbPlateLetter.Text} {txtPlatePart2.Text}";
+            double amount = AuthService.ExitCar(plate);
+            lblPayment.Content = $"Payment: {amount} currency units";
         }
 
     }

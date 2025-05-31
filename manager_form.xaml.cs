@@ -31,8 +31,7 @@ namespace WpfTest
 
         public void paymentLable()
         {
-            AuthService authService = new AuthService();
-            int payemnt = authService.showpayment();
+            int payemnt = AuthService.ShowPayment();
             feeLable.Content = payemnt;
         }
 

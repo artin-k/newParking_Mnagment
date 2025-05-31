@@ -27,23 +27,5 @@ namespace WpfTest
             if (isExited == false) { ExitTime = ""; }
         }
 
-        public double PaymentAmount
-        {
-            get
-            {
-                if (!IsExited) return 0;
-
-                if (DateTime.TryParse(EntryTime, out DateTime entry) &&
-                    DateTime.TryParse(ExitTime, out DateTime exit))
-                {
-                    var duration = exit - entry;
-                    return Math.Ceiling(duration.TotalHours) * 2.0; // 2 currency units per hour
-                }
-                else
-                {
-                    return 0;
-                }
-            }
-        }
     }
 }

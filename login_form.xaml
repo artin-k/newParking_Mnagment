@@ -7,24 +7,10 @@
         mc:Ignorable="d"
         Title="login_form" Height="450" Width="800" >
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="11*"/>
-        </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Column="1" 
-                   Text="ثبت نام" 
-                   Foreground="Blue" 
-                   HorizontalAlignment="Left"
-                   Margin="31,229,0,0" 
-                   VerticalAlignment="Top" 
-                   Cursor="Hand"
-                   MouseLeftButtonUp="registerBtn_Click">
-            <TextBlock.TextDecorations>
-                <TextDecoration Location="Underline"/>
-            </TextBlock.TextDecorations>
-        </TextBlock>
 
+       
+        
         <Button Grid.Column="1" 
                 Content="ورود" 
                 HorizontalAlignment="Left" 
@@ -58,32 +44,8 @@
                    Height="16" Width="79">
         </TextBlock>
 
-        <TextBox x:Name="userTxt"
-                 MaxLength="20"                 
-                 GotFocus="UserName_GotFocus"                 
-                 HorizontalAlignment="Left"
-                 Margin="31,97,0,0" 
-                 TextWrapping="Wrap" 
-                 VerticalAlignment="Top" 
-                 Width="227" 
-                 Grid.Column="1" 
-                 Height="16">
-        </TextBox>
 
-        <TextBlock x:Name="usernamePlaceholder"
-                   Grid.Column="1" 
-                   MouseLeftButtonUp ="userPlaceHolder"
-                   HorizontalAlignment="Left" 
-                   Margin="31,97,0,0" 
-                   TextWrapping="Wrap" 
-                   Cursor="Hand"
-                   Text="نام کاربری را وارد کنید" 
-                   Foreground="Gray" 
-                   VerticalAlignment="Top" 
-                   Height="16"
-                   Width="107">
-        </TextBlock>
-
+        <local:PlaceholderTextBox x:Name="txtUsername" MaxLength="40" PlaceholderText="نام کاربری" Margin="20,10,0,10"/>
 
 
     </Grid>

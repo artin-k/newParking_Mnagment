@@ -23,5 +23,31 @@ namespace WpfTest
         {
             InitializeComponent();
         }
+
+        public void setManager_Click(object sender, RoutedEventArgs e)
+        {
+            if(managerPanel.Visibility == Visibility.Hidden) 
+                managerPanel.Visibility = Visibility.Visible;
+            else
+                managerPanel.Visibility = Visibility.Hidden;
+        }
+
+        public void saveManager_click(object sender, RoutedEventArgs e)
+        {
+            if (txtFullName == null || txtUsername == null || txtPassword == null)
+            {
+                MessageBox.Show("insert the textboxes");
+            }
+            else 
+            {
+                AuthService authService = new AuthService();
+                bool success =  authService.setManager(txtFullName.Text, txtUsername.Text, txtPassword.Text);
+                if (success)
+                    MessageBox.Show("manager saved successfully");
+                else
+                    MessageBox.Show("manager saving failed");
+            }
+
+        }
     }
 }

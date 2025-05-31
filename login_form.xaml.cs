@@ -54,39 +54,7 @@ namespace WpfTest
             passwordPlaceholder.Visibility = Visibility.Collapsed;
         }
 
-        public void registerBtn_Click(object sender, MouseButtonEventArgs e)
-        {
-            //get the data from textboxes 
-            string getUser = userTxt.Text;
-            string getPass = passTxt.Password;
 
-            //make sure the users pass is good 
-            if (IsStrongPassword(getPass))
-            {
-                //building a object from auth cass and use the add user method
-                AuthService authService = new AuthService();
-                authService.AddUser(getUser, getPass);
-
-                MessageBox.Show("کاربر با موفقیت ثبت شد");
-            }
-            else
-            {
-                MessageBox.Show("رمز عبور باید حداقل ۸ کاراکتر، شامل حروف بزرگ و کوچک، عدد و یک کاراکتر خاص باشد.");
-            }          
-        }
-
-        private bool IsStrongPassword(string password)
-        {
-            if (string.IsNullOrWhiteSpace(password)) return false;
-
-            var hasMinimum8Chars = password.Length >= 8;
-            var hasUpperCase = password.Any(char.IsUpper);
-            var hasLowerCase = password.Any(char.IsLower);
-            var hasDigit = password.Any(char.IsDigit);
-            var hasSpecialChar = password.Any(c => !char.IsLetterOrDigit(c));
-
-            return hasMinimum8Chars && hasUpperCase && hasLowerCase && hasDigit && hasSpecialChar;
-        }
 
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)
@@ -94,8 +62,24 @@ namespace WpfTest
             string getUser = userTxt.Text;
             string getPass = passTxt.Password;
 
-            AuthService authService = new AuthService();
-            bool success = authService.Login(getUser, getPass);
+            if (string.IsNullOrEmpty(getUser) || !string.IsNullOrEmpty(getPass))
+            {
+                MessageBox.Show("fill up the textboxes carefully please");
+                return;
+            }
+            else if (getUser == "admin" && getPass == "1234")
+            {
+                Admin_form af = new Admin_form();
+                af.Show();
+            }
+            else
+            {
+
+            }
+
+
+            //AuthService authService = new AuthService();
+            //bool success = authService.Login(getUser, getPass);
 
             ///
             

@@ -123,32 +123,95 @@ namespace WpfTest
             insertCommand.ExecuteNonQuery();
         }
 
+        public bool setManager(string name, string user, string pass)
+        {
+            try
+            {
+                var hashedUser = Hash(user);
+                var hashedPass = Hash(pass);
+
+                using var connection = new SqliteConnection("Data Source=parking.db");
+                connection.Open();
+
+                string checkCmd = "SELECT COUNT(*) FROM Manager WHERE NationalCode = @user";
+                using var checkCommand = new SqliteCommand(checkCmd, connection);
+                checkCommand.Parameters.AddWithValue("@user", hashedUser);
+                var result = checkCommand.ExecuteScalar();
+                long userCount = (result != null) ? Convert.ToInt64(result) : 0;
+
+                if (userCount > 0)
+                {
+                    MessageBox.Show("این مدیر قبلاً ثبت شده است.");
+                    return false;
+                }
+
+                string insertCmd = "INSERT INTO Manager (Name, Password, NationalCode, Role, ParkingFee) VALUES (@name, @pass, @user, @role, @fee)";
+                using var insertCommand = new SqliteCommand(insertCmd, connection);
+
+                insertCommand.Parameters.AddWithValue("@name", name);
+                insertCommand.Parameters.AddWithValue("@pass", hashedPass);
+                insertCommand.Parameters.AddWithValue("@user", hashedUser);
+                insertCommand.Parameters.AddWithValue("@role", "manager");
+                insertCommand.Parameters.AddWithValue("@fee", 0);
+                insertCommand.ExecuteNonQuery();
+
+                return true;
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show("an error occured " + ex.Message);
+                return false;   
+            }
+        }
+
         public static void SetParkingPayment(int pay)
         {
-
             using var connection = new SqliteConnection("Data Source=parking.db");
             connection.Open();
 
-            // 1. Check if user already exists
-            string command = "SELECT COUNT(*) FROM Manager WHERE ParkingFee = @fee";
-            using var insertCommand = new SqliteCommand(command, connection);
-            insertCommand.Parameters.AddWithValue("@fee", pay);
-            insertCommand.ExecuteNonQuery();
+            // Check if any row exists in Manager table
+            string checkCommand = "SELECT COUNT(*) FROM Manager";
+            using var checkCmd = new SqliteCommand(checkCommand, connection);
+            object? result = checkCmd.ExecuteScalar();
+            int count = result != null ? Convert.ToInt32(result) : 0;
+           
+            if (count > 0)
+            {
+                // Update existing row
+                string updateCommand = "UPDATE Manager SET ParkingFee = @fee";
+                using var updateCmd = new SqliteCommand(updateCommand, connection);
+                updateCmd.Parameters.AddWithValue("@fee", pay);
+                updateCmd.ExecuteNonQuery();
+            }
+            else
+            {
+                // Insert new row
+                string insertCommand = "INSERT INTO Manager (ParkingFee) VALUES (@fee)";
+                using var insertCmd = new SqliteCommand(insertCommand, connection);
+                insertCmd.Parameters.AddWithValue("@fee", pay);
+                insertCmd.ExecuteNonQuery();
+            }
         }
 
-        public int showpayment()
+
+        public static int ShowPayment()
         {
             int payment = 0;
             using var connection = new SqliteConnection("Data Source=parking.db");
             connection.Open();
-            var command = new SqliteCommand("SELECT ParkingFee FROM Manager LIMIT 1", connection);
+
+            string commandText = "SELECT ParkingFee FROM Manager LIMIT 1";
+            using var command = new SqliteCommand(commandText, connection);
             using var reader = command.ExecuteReader();
+
             if (reader.Read())
             {
                 payment = Convert.ToInt32(reader["ParkingFee"]);
             }
+
             return payment;
         }
+
 
         public void AddStaff(Staff st)
         {
@@ -190,8 +253,6 @@ namespace WpfTest
             {
                 MessageBox.Show($"Error: {ex.Message}");
             }
-
-
         }
 
         public static List<ParkingSpot> GetAllSpots()
@@ -230,7 +291,6 @@ namespace WpfTest
 
                 using (var reader = cmd.ExecuteReader())
                 {
-                    MessageBox.Show("Checking for empty spot...");
                     if (reader.Read())
                     {
                         Console.WriteLine("Free spot found: " + reader.GetInt32(0));
@@ -246,7 +306,6 @@ namespace WpfTest
                     }
                 }
             }
-
             return null; // No free spots
         }
 
@@ -265,12 +324,9 @@ namespace WpfTest
         }
 
         public bool registerCar(Car car)
-        {
-            
-
+        {           
             try
             {
-
                 using var connection = new SqliteConnection("Data Source=parking.db");
                 connection.Open();
 
@@ -335,5 +391,50 @@ namespace WpfTest
             return cars;
         }
 
+        public static double ExitCar(string plateNumber)
+        {
+
+            try
+            {
+                using var connection = new SqliteConnection("Data Source=parking.db");
+                connection.Open();
+
+                // Step 1: Update the exit time
+                var updateCommand = new SqliteCommand(
+                    "UPDATE Cars SET ExitTime = @exitTime, IsExited = 1 WHERE Plate = @plate", connection);
+                updateCommand.Parameters.AddWithValue("@exitTime", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                updateCommand.Parameters.AddWithValue("@plate", plateNumber);
+                updateCommand.ExecuteNonQuery();
+
+                // Step 2: Read updated entry/exit time
+                var selectCommand = new SqliteCommand(
+                    "SELECT EntryTime, ExitTime FROM Cars WHERE Plate = @plate", connection);
+                selectCommand.Parameters.AddWithValue("@plate", plateNumber);
+
+                using var reader = selectCommand.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    string? entryStr = reader["EntryTime"]?.ToString();
+                    string? exitStr = reader["ExitTime"]?.ToString();
+
+                    if (DateTime.TryParse(entryStr, out DateTime entry) &&
+                        DateTime.TryParse(exitStr, out DateTime exit))
+                    {
+                        var duration = exit - entry;
+                        int feePerHour = ShowPayment(); // get from Manager table
+                        return Math.Ceiling(duration.TotalHours) * feePerHour;
+                    }
+                }
+
+                return 0;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("an error occured" +  ex.Message);
+                return -1;
+            }
+
+        }
     }
 }

@@ -60,9 +60,44 @@
               Grid.Column="0"                                     
               Margin="0,0,10,0">
 
-            <local:PlaceholderTextBox x:Name="GetPlate" MaxLength="20" PlaceholderText="پلاک" Margin="10"/>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                <TextBox x:Name="txtPlatePart1" Width="40" MaxLength="2" Margin="0,0,5,0"/>
+                <ComboBox x:Name="cmbPlateLetter" Width="60" Margin="0,0,5,0">
+                    <ComboBoxItem Content="ب" IsSelected="True"/>
+                    <ComboBoxItem Content="ج"/>
+                    <ComboBoxItem Content="د"/>
+                    <ComboBoxItem Content="س"/>
+                    <ComboBoxItem Content="ص"/>
+                    <ComboBoxItem Content="ط"/>
+                    <ComboBoxItem Content="ق"/>
+                    <ComboBoxItem Content="ل"/>
+                    <ComboBoxItem Content="م"/>
+                    <ComboBoxItem Content="ن"/>
+                    <ComboBoxItem Content="ه"/>
+                    <ComboBoxItem Content="ی"/>
+                    <ComboBoxItem Content="الف"/>
+                    <ComboBoxItem Content="پ"/>
+                    <ComboBoxItem Content="ت"/>
+                    <ComboBoxItem Content="ع"/>
+                </ComboBox>
+                <TextBox x:Name="txtPlatePart2" Width="60" MaxLength="3"/>
+            </StackPanel>
+
+            <Label x:Name="lblPayment"
+                Content="amount"
+                   HorizontalAlignment="Left"
+                   Margin="222,81,0,0"
+                   VerticalAlignment="Top"/>
             
-            
+            <Button x:Name="btnCalcPayment"
+                           Content="Calculate payment"
+                           Width="120"
+                           Margin="10"
+                           Padding="10,5"
+                           Click="CalcPayment_click"
+                           />
+
         </StackPanel>
+       
     </Grid>
 </Window>
