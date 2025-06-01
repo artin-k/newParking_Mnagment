@@ -48,21 +48,56 @@ namespace WpfTest
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)
         {
-            string getUser = txtUsername.Text;
-            string getPass = passTxt.Password;
+            string getUser = txtUsername.Text.Trim();
+            string getPass = passTxt.Password.Trim();
 
-            
+
+            if (string.IsNullOrWhiteSpace(getUser) || string.IsNullOrWhiteSpace(getPass))
+            {
+                MessageBox.Show("لطفاً نام کاربری و رمز عبور را وارد کنید");
+                return;
+            }
+
+            // Admin login
             if (getUser == "admin" && getPass == "1234")
             {
                 Admin_form af = new Admin_form();
                 af.Show();
+                this.Close(); // Optional: close current window
+                return; // ✅ Prevent further checks
+            }
+
+            AuthService authService = new AuthService();
+            bool isManager = ManagerCheck.IsChecked == true;
+
+            if (isManager)
+            {
+                if (authService.LoginAsManager(getUser, getPass))
+                {
+                    MessageBox.Show("ورود مدیر با موفقیت انجام شد");
+                    manager_form mf = new manager_form();
+                    mf.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("نام کاربری یا رمز عبور مدیر اشتباه است");
+                }
             }
             else
             {
-
+                if (authService.LoginAsStaff(getUser, getPass)) // ✅ You must implement this method
+                {
+                    MessageBox.Show("ورود کارمند با موفقیت انجام شد");
+                    staff_form sf = new staff_form(); // replace with your actual form
+                    sf.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("نام کاربری یا رمز عبور کارمند اشتباه است");
+                }
             }
-
-               
         }
     }
 }

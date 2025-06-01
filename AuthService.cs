@@ -80,18 +80,58 @@ namespace WpfTest
             return Convert.ToBase64String(hash);
         }
 
-        public bool Login(string user, string pass)
+        public bool LoginAsManager(string user, string pass)
         {
-            var hashedUser = Hash(user);
-            var hashedPass = Hash(pass);
-            using var connection = new SqliteConnection(_connectionString);
-            connection.Open();
-            string selectCmd = "SELECT * FROM Users WHERE Username = @user AND Password = @pass";
-            using var command = new SqliteCommand(selectCmd, connection);
-            command.Parameters.AddWithValue("@user", hashedUser);
-            command.Parameters.AddWithValue("@pass", hashedPass);
-            using var reader = command.ExecuteReader();
-            return reader.Read();
+            try
+            {
+                using var connection = new SqliteConnection("Data Source=parking.db");
+                connection.Open();
+                string selectCmd = "SELECT * FROM Manager";
+                using var command = new SqliteCommand(selectCmd, connection);
+                using var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string? dbUser = reader["NationalCode"].ToString();
+                    string? dbPass = reader["Password"].ToString();
+                    if (dbUser == user && dbPass == pass)
+                        return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("an error occured: " + ex.Message);
+                return false;
+            }
+        }
+
+        public bool LoginAsStaff(string user, string pass)
+        {
+            try
+            {
+                using var connection = new SqliteConnection("Data Source=parking.db");
+                connection.Open();
+                string selectCmd = "SELECT * FROM Staff";
+                using var command = new SqliteCommand(selectCmd, connection);
+                using var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string? dbUser = reader["NationalCode"].ToString();
+                    string? dbPass = reader["Password"].ToString();
+                    if (dbUser == user && dbPass == pass)
+                        return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("an error occured: " + ex.Message);
+                return false;
+            }
         }
 
         public void AddUser(string user, string pass)

@@ -10,12 +10,12 @@
     <Grid Background="#707b7c">
 
         <Border 
-           Width="228" 
+           Width="314" 
            Padding="20" 
            Background="#616a6b" 
            CornerRadius="12" 
            HorizontalAlignment="Center" 
-           VerticalAlignment="Center" Height="143">
+           VerticalAlignment="Center" Height="178">
 
 
             <StackPanel>
@@ -55,8 +55,6 @@
                         MouseLeftButtonUp="passPlaceHolder"
                         Visibility="Visible" Height="32" Grid.ColumnSpan="2" RenderTransformOrigin="0.498,0.476"/>
                 </Grid>
-
-                <!-- Login Button -->
                 <Button Content="ورود"
                     Height="36"
                     Background="#0078D7"
@@ -67,9 +65,18 @@
                     Cursor="Hand"
                     Click="loginBtn_Click"/>
 
+                
+
+                <!-- Login Button -->
+
             </StackPanel>
 
         </Border>
+        <CheckBox x:Name="ManagerCheck"
+            Content="login as manager"
+                  HorizontalAlignment="Left"
+                  Margin="337,334,0,0"
+                  VerticalAlignment="Top"/>
     </Grid>
 
 </Window>
