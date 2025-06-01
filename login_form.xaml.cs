@@ -26,7 +26,6 @@ namespace WpfTest
             AuthService authService = new AuthService();
             //authService.dbTests();
 
-            TextDirectionHelper.ApplyToTextBox(txtUsername);
             TextDirectionHelper.ApplyToPasswordBox(passTxt);
         }
 
@@ -52,12 +51,8 @@ namespace WpfTest
             string getUser = txtUsername.Text;
             string getPass = passTxt.Password;
 
-            if (string.IsNullOrEmpty(getUser) || !string.IsNullOrEmpty(getPass))
-            {
-                MessageBox.Show("fill up the textboxes carefully please");
-                return;
-            }
-            else if (getUser == "admin" && getPass == "1234")
+            
+            if (getUser == "admin" && getPass == "1234")
             {
                 Admin_form af = new Admin_form();
                 af.Show();

@@ -6,47 +6,54 @@
         xmlns:local="clr-namespace:WpfTest"
         mc:Ignorable="d"
         Title="login_form" Height="450" Width="800" >
-    
-    <Grid Background="#f0f2f5">
-        
+
+    <Grid Background="#707b7c">
+
         <Border 
-           Width="300" 
+           Width="228" 
            Padding="20" 
-           Background="White" 
+           Background="#616a6b" 
            CornerRadius="12" 
            HorizontalAlignment="Center" 
-           VerticalAlignment="Center">
+           VerticalAlignment="Center" Height="143">
 
 
             <StackPanel>
 
                 <!-- Username Input -->
-                <TextBox
-                    x:Name="txtUsername"
-                    MaxLength="40"
-                    FontSize="14"
-                    Height="32"
-                    Text=""/>
+
+                <!-- Password Wrapper -->
+
+                <!-- Password Wrapper -->
+                <local:PlaceholderTextBox
+                    x:Name="txtUsername" 
+                    MaxLength="20" 
+                    PlaceholderText="نام کاربری"
+                    Width="186" RenderTransformOrigin="0.504,0.501" Height="32"/>
 
                 <!-- Password Wrapper -->
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="23*"/>
+                        <ColumnDefinition Width="163*"/>
+                    </Grid.ColumnDefinitions>
                     <PasswordBox x:Name="passTxt"
                      MaxLength="20"
                      GotFocus="PasswordBox_GotFocus"
                      PasswordChanged="passTxt_PasswordChanged"
                      Height="32"
                      Padding="8,0"
-                     FontSize="14"/>
+                     FontSize="14" Grid.ColumnSpan="2"/>
 
                     <TextBlock x:Name="passwordPlaceholder"
                         Text="رمز عبور"
                         FontSize="14"
                         Foreground="Gray"
                         VerticalAlignment="Center"
-                        Margin="8,0,0,0"
+                        Margin="10,0,-2,0"
                         IsHitTestVisible="True"
                         MouseLeftButtonUp="passPlaceHolder"
-                        Visibility="Visible"/>
+                        Visibility="Visible" Height="32" Grid.ColumnSpan="2" RenderTransformOrigin="0.498,0.476"/>
                 </Grid>
 
                 <!-- Login Button -->
