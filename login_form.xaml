@@ -6,47 +6,63 @@
         xmlns:local="clr-namespace:WpfTest"
         mc:Ignorable="d"
         Title="login_form" Height="450" Width="800" >
-    <Grid>
-
-
-       
+    
+    <Grid Background="#f0f2f5">
         
-        <Button Grid.Column="1" 
-                Content="ورود" 
-                HorizontalAlignment="Left" 
-                Margin="137,229,0,0" 
-                VerticalAlignment="Top" 
-                Cursor="Hand"
-                RenderTransformOrigin="0.01,2.647"
-                Click="loginBtn_Click"/>
-
-        <PasswordBox x:Name="passTxt" 
-                     MaxLength="20" 
-                     GotFocus="PasswordBox_GotFocus" 
-                     HorizontalAlignment="Left" 
-                     Margin="30,153,0,0" 
-                     VerticalAlignment="Top" 
-                     Width="228" 
-                     Grid.Column="1" 
-                     Height="16"/>
-        <PasswordBox/>
-
-        <TextBlock x:Name="passwordPlaceholder" 
-                   MouseLeftButtonUp ="passPlaceHolder"
-                   Grid.Column="1" 
-                   HorizontalAlignment="Left" 
-                   Margin="31,153,0,0" 
-                   TextWrapping="Wrap" 
-                   Cursor="Hand"
-                   Text="رمز را وارد کنید" 
-                   Foreground="Gray" 
-                   VerticalAlignment="Top" 
-                   Height="16" Width="79">
-        </TextBlock>
+        <Border 
+           Width="300" 
+           Padding="20" 
+           Background="White" 
+           CornerRadius="12" 
+           HorizontalAlignment="Center" 
+           VerticalAlignment="Center">
 
 
-        <local:PlaceholderTextBox x:Name="txtUsername" MaxLength="40" PlaceholderText="نام کاربری" Margin="20,10,0,10"/>
+            <StackPanel>
 
+                <!-- Username Input -->
+                <TextBox
+                    x:Name="txtUsername"
+                    MaxLength="40"
+                    FontSize="14"
+                    Height="32"
+                    Text=""/>
 
+                <!-- Password Wrapper -->
+                <Grid>
+                    <PasswordBox x:Name="passTxt"
+                     MaxLength="20"
+                     GotFocus="PasswordBox_GotFocus"
+                     PasswordChanged="passTxt_PasswordChanged"
+                     Height="32"
+                     Padding="8,0"
+                     FontSize="14"/>
+
+                    <TextBlock x:Name="passwordPlaceholder"
+                        Text="رمز عبور"
+                        FontSize="14"
+                        Foreground="Gray"
+                        VerticalAlignment="Center"
+                        Margin="8,0,0,0"
+                        IsHitTestVisible="True"
+                        MouseLeftButtonUp="passPlaceHolder"
+                        Visibility="Visible"/>
+                </Grid>
+
+                <!-- Login Button -->
+                <Button Content="ورود"
+                    Height="36"
+                    Background="#0078D7"
+                    Foreground="White"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    BorderThickness="0"
+                    Cursor="Hand"
+                    Click="loginBtn_Click"/>
+
+            </StackPanel>
+
+        </Border>
     </Grid>
+
 </Window>

@@ -24,29 +24,10 @@ namespace WpfTest
 
             //a test of the database and the columns 
             AuthService authService = new AuthService();
-            authService.dbTests();
+            //authService.dbTests();
 
-            TextDirectionHelper.ApplyToTextBox(userTxt);
+            TextDirectionHelper.ApplyToTextBox(txtUsername);
             TextDirectionHelper.ApplyToPasswordBox(passTxt);
-        }
-
-        private void UserName_GotFocus(object sender, RoutedEventArgs e)
-        {
-            //if it any way user focus on the textbox the placeholder lost visibility
-            usernamePlaceholder.Visibility = Visibility.Collapsed;
-        }
-
-        private void userPlaceHolder(object sender, RoutedEventArgs e) 
-        {
-            usernamePlaceholder.Visibility = Visibility.Collapsed;
-            userTxt.Focus();
-        }
-
-        private void passPlaceHolder(object sender, RoutedEventArgs e)
-        {
-            //if clicked on it it dissapear and focus on the textbox 
-            passwordPlaceholder.Visibility = Visibility.Collapsed;
-            passTxt.Focus();    
         }
 
         private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
@@ -54,12 +35,21 @@ namespace WpfTest
             passwordPlaceholder.Visibility = Visibility.Collapsed;
         }
 
+        private void passPlaceHolder(object sender, MouseButtonEventArgs e)
+        {
+            passTxt.Focus();
+        }
 
-
+        private void passTxt_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            passwordPlaceholder.Visibility = string.IsNullOrEmpty(passTxt.Password)
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+        }
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)
         {
-            string getUser = userTxt.Text;
+            string getUser = txtUsername.Text;
             string getPass = passTxt.Password;
 
             if (string.IsNullOrEmpty(getUser) || !string.IsNullOrEmpty(getPass))
@@ -77,26 +67,6 @@ namespace WpfTest
 
             }
 
-
-            //AuthService authService = new AuthService();
-            //bool success = authService.Login(getUser, getPass);
-
-            ///
-            
-
-            if (success)
-            {
-                MessageBox.Show("ورود با موفقیت انجام شد");
-                var mf = new main_form(); //login for main form  
-                mf.Show();
-
-                this.Close(); 
-
-            }
-            else
-            {
-                MessageBox.Show("ابتدا ثبت نام کنید  ");
-            }
                
         }
     }
