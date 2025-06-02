@@ -3,6 +3,7 @@ using System.Windows;
 using System.Security.Cryptography;
 using System.Text;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using System.Security.Policy;
 
 namespace WpfTest
 {
@@ -71,7 +72,7 @@ namespace WpfTest
             }
         }
 
-        private string Hash(string input)
+        private static string Hash(string input)
         {
             //using sha256 for hash the users pass
             using var sha256 = SHA256.Create();
@@ -257,12 +258,12 @@ namespace WpfTest
                        "VALUES (@name, @pass, @NationalCode, @role, @salary, @phone, @date)";
 
                 using var insertCommand = new SqliteCommand(insertCmd, connection);
-                insertCommand.Parameters.AddWithValue("@name", st.FullName);
+                insertCommand.Parameters.AddWithValue("@name", st.Name);
                 insertCommand.Parameters.AddWithValue("@pass", hashedPass);
                 insertCommand.Parameters.AddWithValue("@NationalCode", hashedNaCode);
                 insertCommand.Parameters.AddWithValue("@role", st.Role);
-                insertCommand.Parameters.AddWithValue("@salary", st.salary);
-                insertCommand.Parameters.AddWithValue("@phone", st.Phone);
+                insertCommand.Parameters.AddWithValue("@salary", st.Salary);
+                insertCommand.Parameters.AddWithValue("@phone", st.PhoneNumber);
                 insertCommand.Parameters.AddWithValue("@date", st.JoinDate);
                 insertCommand.ExecuteNonQuery();
             }
@@ -406,6 +407,39 @@ namespace WpfTest
                 }
             }
             return cars;
+        }
+
+        public static List<Staff> GetStaffs() 
+        {
+            
+
+            var staffs = new List<Staff>();
+            using (var connection = new SqliteConnection("Data Source = parking.db"))
+            {
+                connection.Open();
+                var command = new SqliteCommand("SELECT * FROM Staff", connection);               
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DateTime.TryParse(reader["JoinDate"]?.ToString(), out DateTime joinDate);
+                        var hasheduser = Hash(reader["NationalCode"]?.ToString() ?? "");
+                        var hashedpass = Hash(reader["Password"]?.ToString() ?? "");
+
+
+                        var staff = new Staff(
+                            reader["Name"]?.ToString() ?? "",
+                            hashedpass,
+                            hasheduser,
+                            reader["Role"]?.ToString() ?? "",                            
+                            reader["PhoneNumber"]?.ToString() ?? "",
+                            joinDate
+                            );
+                        staffs.Add(staff);
+                    }
+                }                
+            }
+            return staffs;
         }
 
         public static double ExitCar(string plateNumber)

@@ -24,7 +24,7 @@
                 <local:PlaceholderTextBox x:Name="txtUsername" MaxLength="20" PlaceholderText="نام کاربری" Margin="10"/>
                 <local:PlaceholderTextBox x:Name="txtPassword" MaxLength="50" PlaceholderText="رمز عبور" Margin="10"/>
 
-                <ComboBox x:Name="comboRole" Margin="10">       
+                <ComboBox x:Name="comboRole" Margin="10">
                     <!-- to be customized -->
                     <ComboBoxItem Content="worker"/>
                 </ComboBox>
@@ -52,20 +52,50 @@
         </GroupBox>
 
 
+        <DataGrid x:Name="staffGrid" 
+              Visibility="Visible"
+              Grid.Column="1"
+              AutoGenerateColumns="False"
+              CanUserAddRows="False"
+              IsReadOnly="True"
+              Margin="58,84,351,84">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="name" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Password" Binding="{Binding Password}" />
+                <DataGridTextColumn Header="NationalCode" Binding="{Binding NationalCode}" />
+                <DataGridTextColumn Header="Role" Binding="{Binding Role}" />
+                <DataGridTextColumn Header="PhoneNumber" Binding="{Binding PhoneNumber}" />
+                <DataGridTextColumn Header="JoinDate" Binding="{Binding JoinDate}" />
+                <DataGridTextColumn Header="Salary" Binding="{Binding Salary}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
         <Button Content="set staff" 
                 HorizontalAlignment="Left" 
                 Height="53" 
-                Margin="730,0,0,346" 
+                Margin="730,0,0,396" 
                 VerticalAlignment="Bottom" 
                 Width="132" 
                 Click="setStaffClick"
                 Grid.Column="1">
         </Button>
 
+        <Button Content="show staff" 
+                HorizontalAlignment="Left" 
+                Height="53" 
+                Margin="730,0,0,130" 
+                VerticalAlignment="Bottom" 
+                Width="132" 
+                Click="showStaff_Click"
+                Grid.Column="1">
+        </Button>
+
+
         <Button Content="parking status" 
                 HorizontalAlignment="Left" 
                 Height="53" 
-                Margin="730,0,0,256" 
+                Margin="730,0,0,306" 
                 VerticalAlignment="Bottom" 
                 Width="132" 
                 Click="setStatus_Click"
@@ -75,13 +105,13 @@
         <Button Content="set parking payment" 
                 HorizontalAlignment="Left" 
                 Height="53" 
-                Margin="730,0,0,168" 
+                Margin="730,0,0,218" 
                 VerticalAlignment="Bottom" 
                 Width="132" 
                 Click="setPayment_Click"
                 Grid.Column="1">
         </Button>
-        
+
         <Label  x:Name="feeLable"
             Grid.Column="1"
                Content="Label"

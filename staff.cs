@@ -1,52 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 
-namespace WpfTest
+public class Staff
 {
-    public class Staff
+    public string Name { get; set; }
+    public string NationalCode { get; set; }
+    public string Password { get; set; }
+    public string Role { get; set; }
+    public string PhoneNumber { get; set; }
+    public DateTime JoinDate { get; set; }
+    public string Salary { get; set; }
+
+    public Staff(string name, string password, string nationalCode, string role, string phoneNumber, DateTime joinDate)
     {
-        public string FullName { get; }
-        public string NationalCode { get; }
-        public string Password { get; }
-        public string Role { get; }
-        public string salary {  get; }
-        public string Phone { get; }
-        public DateTime JoinDate { get; }
+        Name = name;
+        NationalCode = nationalCode;
+        Password = password;
+        Role = role;
+        PhoneNumber = phoneNumber;
+        JoinDate = joinDate;
 
-        public Staff(string fullName, string nationalCode, string password, string role, string phone, DateTime joinDate)
+        // Salary based on role
+        switch (Role.ToLower())
         {
-            FullName = fullName;
-            NationalCode = nationalCode;
-            Password = password;
-            Role = role;
-            switch (Role)
-            {
-                case "مدیر":
-                    salary = "5000000";
-                    break;
-                case "حراست":
-                    salary = "2500000";
-                    break;
-                case "کارمند":
-                    salary = "3500000";
-                    break;
-                case "نظافتچی":
-                    salary = "2000000";
-                    break;
-                default:
-                    salary = "0";
-                    MessageBox.Show("سمت به درستی انتخاب نشده است ");
-                    break;
-                    
-            }
-            Phone = phone;
-            JoinDate = joinDate;
+            case "worker":
+                Salary = "5000000";
+                break;
+            default:
+                Salary = "0";
+                MessageBox.Show("سمت به درستی انتخاب نشده است");
+                break;
         }
-
     }
-
 }

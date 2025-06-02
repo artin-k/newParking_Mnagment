@@ -42,6 +42,9 @@ namespace WpfTest
                 );
             ", connection);
             createStaff.ExecuteNonQuery();
+            
+
+
 
             var createManager = new SqliteCommand(@"
                     CREATE TABLE IF NOT EXISTS Manager (

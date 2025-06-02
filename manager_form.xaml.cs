@@ -26,6 +26,11 @@ namespace WpfTest
         {
 
             InitializeComponent();
+
+            List<Staff> allStaff = AuthService.GetStaffs();
+
+            staffGrid.ItemsSource = allStaff;
+
             paymentLable();
         }
 
@@ -90,7 +95,19 @@ namespace WpfTest
             }
         }
 
-        //to complete we should make admin form next 
+        public void showStaff_Click(object sender, RoutedEventArgs e)
+        {
+            if (staffGrid.Visibility != Visibility.Visible)
+            {
+                staffGrid.ItemsSource = AuthService.GetStaffs();
+                staffGrid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                staffGrid.Visibility = Visibility.Collapsed;
+            }
+        }
+
 
     }
 }

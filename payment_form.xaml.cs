@@ -29,10 +29,6 @@ namespace WpfTest
         {
             List<Car> allCars = AuthService.GetCars();
 
-            // Filter to get only exited cars
-            //var exitedCars = allCars.Where(car => !string.IsNullOrEmpty(car.ExitTime)).ToList();
-
-            // Bind to DataGrid
             exitedCarsGrid.ItemsSource = allCars;
         }
 
