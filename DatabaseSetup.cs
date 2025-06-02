@@ -11,18 +11,6 @@ namespace WpfTest
             using var connection = new SqliteConnection(_connectionString);
             connection.Open();
 
-
-            // Create Users table if it doesn't exist
-            var createUsers = new SqliteCommand(@"
-                CREATE TABLE IF NOT EXISTS Users (
-                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    Username TEXT NOT NULL,
-                    Password TEXT NOT NULL
-                );
-            ", connection);
-            createUsers.ExecuteNonQuery();
-
-
         // Create Cars table if it doesn't exist
             var createCars = new SqliteCommand(@"
                    CREATE TABLE IF NOT EXISTS Cars (

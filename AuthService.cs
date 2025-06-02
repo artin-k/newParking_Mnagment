@@ -82,6 +82,8 @@ namespace WpfTest
 
         public bool LoginAsManager(string user, string pass)
         {
+            var hashedUser = Hash(user);
+            var hashedPass = Hash(pass);
             try
             {
                 using var connection = new SqliteConnection("Data Source=parking.db");
@@ -94,21 +96,25 @@ namespace WpfTest
                 {
                     string? dbUser = reader["NationalCode"].ToString();
                     string? dbPass = reader["Password"].ToString();
-                    if (dbUser == user && dbPass == pass)
+                    if (dbUser == hashedUser && dbPass == hashedPass) // ✅ Fix: compare with hashed values
                         return true;
                 }
 
+                MessageBox.Show("manager doesn't exist");
                 return false;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("an error occured: " + ex.Message);
+                MessageBox.Show("An error occurred: " + ex.Message);
                 return false;
             }
         }
 
+
         public bool LoginAsStaff(string user, string pass)
         {
+            var hashedUser = Hash(user);
+            var hashedPass = Hash(pass);
             try
             {
                 using var connection = new SqliteConnection("Data Source=parking.db");
@@ -121,10 +127,10 @@ namespace WpfTest
                 {
                     string? dbUser = reader["NationalCode"].ToString();
                     string? dbPass = reader["Password"].ToString();
-                    if (dbUser == user && dbPass == pass)
+                    if (dbUser == hashedUser && dbPass == hashedPass)
                         return true;
                 }
-
+                MessageBox.Show("log in as staff failed");
                 return false;
             }
             catch (Exception ex)
@@ -132,35 +138,6 @@ namespace WpfTest
                 MessageBox.Show("an error occured: " + ex.Message);
                 return false;
             }
-        }
-
-        public void AddUser(string user, string pass)
-        {
-            var hashedUser = Hash(user);
-            var hashedPass = Hash(pass);
-
-            using var connection = new SqliteConnection("Data Source=parking.db");
-            connection.Open();
-
-            // 1. Check if user already exists
-            string checkCmd = "SELECT COUNT(*) FROM Users WHERE Username = @user";
-            using var checkCommand = new SqliteCommand(checkCmd, connection);
-            checkCommand.Parameters.AddWithValue("@user", hashedUser);
-            var result = checkCommand.ExecuteScalar();
-            long userCount = (result != null) ? Convert.ToInt64(result) : 0;
-
-            if (userCount > 0)
-            {
-                MessageBox.Show("این نام کاربری قبلاً ثبت شده است.");
-                return;
-            }
-
-            // 2. Insert new user
-            string insertCmd = "INSERT INTO Users (Username, Password) VALUES (@user, @pass)";
-            using var insertCommand = new SqliteCommand(insertCmd, connection);
-            insertCommand.Parameters.AddWithValue("@user", hashedUser);
-            insertCommand.Parameters.AddWithValue("@pass", hashedPass);
-            insertCommand.ExecuteNonQuery();
         }
 
         public bool setManager(string name, string user, string pass)
@@ -433,7 +410,6 @@ namespace WpfTest
 
         public static double ExitCar(string plateNumber)
         {
-
             try
             {
                 using var connection = new SqliteConnection("Data Source=parking.db");
@@ -448,23 +424,33 @@ namespace WpfTest
 
                 // Step 2: Read updated entry/exit time
                 var selectCommand = new SqliteCommand(
-                    "SELECT EntryTime, ExitTime FROM Cars WHERE Plate = @plate", connection);
+                    "SELECT EntryTime, ExitTime, ParkPlace FROM Cars WHERE Plate = @plate", connection);
                 selectCommand.Parameters.AddWithValue("@plate", plateNumber);
 
                 using var reader = selectCommand.ExecuteReader();
 
                 if (reader.Read())
                 {
+                    string? parkPlace = reader["ParkPlace"]?.ToString();
                     string? entryStr = reader["EntryTime"]?.ToString();
                     string? exitStr = reader["ExitTime"]?.ToString();
+                    
 
                     if (DateTime.TryParse(entryStr, out DateTime entry) &&
-                        DateTime.TryParse(exitStr, out DateTime exit))
+                      DateTime.TryParse(exitStr, out DateTime exit))
                     {
+                        // Step 3: Free the parking spot if valid
+                        if (!string.IsNullOrWhiteSpace(parkPlace) && int.TryParse(parkPlace, out int parkPlaceId))
+                        {
+                            var freeSpotCommand = new SqliteCommand(
+                                "UPDATE ParkingSpots SET IsOccupied = 0 WHERE Id = @id", connection);
+                            freeSpotCommand.Parameters.AddWithValue("@id", parkPlaceId);
+                            freeSpotCommand.ExecuteNonQuery();
+                        }
                         var duration = exit - entry;
                         int feePerHour = ShowPayment(); // get from Manager table
                         return Math.Ceiling(duration.TotalHours) * feePerHour;
-                    }
+                    }                    
                 }
 
                 return 0;

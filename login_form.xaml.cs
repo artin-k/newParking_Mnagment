@@ -63,8 +63,8 @@ namespace WpfTest
             {
                 Admin_form af = new Admin_form();
                 af.Show();
-                this.Close(); // Optional: close current window
-                return; // ✅ Prevent further checks
+                
+                return; 
             }
 
             AuthService authService = new AuthService();
@@ -86,10 +86,10 @@ namespace WpfTest
             }
             else
             {
-                if (authService.LoginAsStaff(getUser, getPass)) // ✅ You must implement this method
+                if (authService.LoginAsStaff(getUser, getPass)) 
                 {
                     MessageBox.Show("ورود کارمند با موفقیت انجام شد");
-                    staff_form sf = new staff_form(); // replace with your actual form
+                    staff_form sf = new staff_form(); 
                     sf.Show();
                     this.Close();
                 }
