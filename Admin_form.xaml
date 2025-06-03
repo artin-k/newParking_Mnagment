@@ -5,17 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTest"
         mc:Ignorable="d"
-        Title="Admin_form" Height="450" Width="800">
-    
-    <Grid Margin="-42,-58,0,0" Height="594" VerticalAlignment="Top">
+        Title="Admin_form" 
+        Height="450" 
+        Width="800">
+
+    <Grid Background="#707b7c" 
+          Height="495" 
+          VerticalAlignment="Top">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
             <ColumnDefinition/>
-            <ColumnDefinition Width="31*"/>
         </Grid.ColumnDefinitions>
 
-        <GroupBox x:Name="managerPanel" Visibility="Hidden" 
+        <GroupBox 
+          x:Name="managerPanel" 
+          Visibility="Hidden" 
           Header="set manager Panel" 
-          Margin="26,71,486,0" Grid.Column="1" Height="412" VerticalAlignment="Top">
+          Margin="26,71,486,0" 
+          Grid.Column="1" 
+          Height="412" 
+          VerticalAlignment="Top">
 
             <StackPanel Margin="6,0,-6,0" >
 
@@ -47,8 +56,9 @@
         <Button Content="set manager" 
                 HorizontalAlignment="Left" 
                 Height="53" 
-                Margin="655,0,0,438" 
+                Margin="628,0,0,427" 
                 VerticalAlignment="Bottom" 
+                Background="#b3b6b7"
                 Width="132" 
                 Click="setManager_Click"
                 Grid.Column="1">

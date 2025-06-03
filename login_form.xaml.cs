@@ -28,6 +28,13 @@ namespace WpfTest
 
             TextDirectionHelper.ApplyToPasswordBox(passTxt);
         }
+        private void BackgroundVideo_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            BackgroundVideo.LoadedBehavior = MediaState.Manual;
+            BackgroundVideo.Source = new Uri("C:\\Users\\Sia\\source\\repos\\artin-k\\WpfTest\\backgrounds\\login.mp4", UriKind.Relative);
+            BackgroundVideo.Play();
+
+        }
 
         private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
         {

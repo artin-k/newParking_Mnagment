@@ -5,17 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTest"
         mc:Ignorable="d"
-        Title="login_form" Height="450" Width="800" >
+        Title="login_form" 
+        Height="500" 
+        Width="350" >
 
-    <Grid Background="#707b7c">
-
+    <Grid  HorizontalAlignment="Center" Width="400">
+        <!-- Background Video -->
+        <MediaElement Name="BackgroundVideo"
+                      Source="C:\Users\Sia\source\repos\artin-k\WpfTest\backgrounds\login.mp4"
+                      LoadedBehavior="Play"
+                      UnloadedBehavior="Stop"
+                      Stretch="Fill"
+                      IsHitTestVisible="False"
+                      MediaEnded="BackgroundVideo_MediaEnded" />
+    
         <Border 
-           Width="314" 
+           Width="224" 
            Padding="20" 
-           Background="#616a6b" 
+           
            CornerRadius="12" 
            HorizontalAlignment="Center" 
-           VerticalAlignment="Center" Height="178">
+           VerticalAlignment="Top" 
+           Height="235" Margin="0,101,0,0">
 
 
             <StackPanel>
@@ -29,31 +40,36 @@
                     x:Name="txtUsername" 
                     MaxLength="20" 
                     PlaceholderText="نام کاربری"
-                    Width="186" RenderTransformOrigin="0.504,0.501" Height="32"/>
+                    Width="185" 
+                    RenderTransformOrigin="0.504,0.501" 
+                    Height="32"/>
 
                 <!-- Password Wrapper -->
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="23*"/>
-                        <ColumnDefinition Width="163*"/>
+                        <ColumnDefinition Width="0"/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <PasswordBox x:Name="passTxt"
                      MaxLength="20"
                      GotFocus="PasswordBox_GotFocus"
                      PasswordChanged="passTxt_PasswordChanged"
-                     Height="32"
                      Padding="8,0"
-                     FontSize="14" Grid.ColumnSpan="2"/>
+                     FontSize="14" 
+                     Grid.ColumnSpan="2"/>
 
                     <TextBlock x:Name="passwordPlaceholder"
                         Text="رمز عبور"
                         FontSize="14"
                         Foreground="Gray"
+                        Background="#d7dbdd"
                         VerticalAlignment="Center"
-                        Margin="10,0,-2,0"
                         IsHitTestVisible="True"
                         MouseLeftButtonUp="passPlaceHolder"
-                        Visibility="Visible" Height="32" Grid.ColumnSpan="2" RenderTransformOrigin="0.498,0.476"/>
+                        Visibility="Visible" 
+                        Height="32" 
+                        Grid.ColumnSpan="2" 
+                        RenderTransformOrigin="0.498,0.476"/>
                 </Grid>
                 <Button Content="ورود"
                     Height="36"
@@ -65,7 +81,7 @@
                     Cursor="Hand"
                     Click="loginBtn_Click"/>
 
-                
+
 
                 <!-- Login Button -->
 
@@ -74,8 +90,8 @@
         </Border>
         <CheckBox x:Name="ManagerCheck"
             Content="login as manager"
-                  HorizontalAlignment="Left"
-                  Margin="337,334,0,0"
+                  HorizontalAlignment="Center"
+                  Margin="0,226,0,0"
                   VerticalAlignment="Top"/>
     </Grid>
 
