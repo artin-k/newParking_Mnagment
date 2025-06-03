@@ -1,40 +1,73 @@
-﻿using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
+﻿using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows;
 
-public static class TextDirectionHelper
+public class PlaceholderTextBox : TextBox
 {
-    public static void ApplyToTextBox(TextBox textBox)
+    public string PlaceholderText { get; set; } = "";
+    private bool _isPlaceholderVisible = true;
+
+    public PlaceholderTextBox()
     {
-        textBox.TextChanged += (sender, e) =>
+        Loaded += (s, e) => ShowPlaceholderIfEmpty();
+        GotFocus += (s, e) => RemovePlaceholder();
+        LostFocus += (s, e) => ShowPlaceholderIfEmpty();
+        TextChanged += (s, e) =>
         {
-            var text = textBox.Text;
-            textBox.FlowDirection = GetFlowDirection(text);
+            if (!_isPlaceholderVisible)
+                FlowDirection = GetFlowDirection(Text);
+
+            if (string.IsNullOrEmpty(Text) && !IsFocused)
+            {
+                ShowPlaceholderIfEmpty();
+            }
         };
     }
 
-    public static void ApplyToPasswordBox(PasswordBox passwordBox)
+    private void ShowPlaceholderIfEmpty()
     {
-        passwordBox.PasswordChanged += (sender, e) =>
+        if (string.IsNullOrWhiteSpace(base.Text))
         {
-            var text = passwordBox.Password;
-            passwordBox.FlowDirection = GetFlowDirection(text);
-        };
+            _isPlaceholderVisible = true;
+            base.Text = PlaceholderText;
+            Foreground = Brushes.Gray;
+        }
     }
 
-    private static FlowDirection GetFlowDirection(string text)
+    private void RemovePlaceholder()
+    {
+        if (_isPlaceholderVisible)
+        {
+            _isPlaceholderVisible = false;
+            base.Text = "";
+            Foreground = Brushes.Black;
+        }
+    }
+
+    public new string Text
+    {
+        get => _isPlaceholderVisible ? "" : base.Text;
+        set
+        {
+            base.Text = value;
+            _isPlaceholderVisible = string.IsNullOrWhiteSpace(value);
+            Foreground = _isPlaceholderVisible ? Brushes.Gray : Brushes.Black;
+            FlowDirection = GetFlowDirection(value);
+        }
+    }
+
+    private FlowDirection GetFlowDirection(string text)
     {
         if (!string.IsNullOrWhiteSpace(text))
         {
             char firstChar = text[0];
-            if ((firstChar >= 0x0600 && firstChar <= 0x06FF) ||    // Arabic / Persian
+            if ((firstChar >= 0x0600 && firstChar <= 0x06FF) || // Arabic/Persian
                 (firstChar >= 0x0750 && firstChar <= 0x077F) ||
                 (firstChar >= 0xFB50 && firstChar <= 0xFDFF))
             {
                 return FlowDirection.RightToLeft;
             }
         }
-
         return FlowDirection.LeftToRight;
     }
 }

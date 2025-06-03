@@ -32,6 +32,7 @@ namespace WpfTest
             AssignSpot();
         }
 
+
         public static ParkingSpot? GetFirstFreeSpot()
         {
             
@@ -97,11 +98,28 @@ namespace WpfTest
                 }
 
                 MessageBox.Show("Register successfully");
+                AssignSpot();
+                CancellFunc();
             }
             else
             {
                 MessageBox.Show("Register failed, try again!");
             }
+        }
+
+        public void CancellFunc()
+        {
+            txtPlatePart1.Text = null;
+            cmbPlateLetter.SelectedIndex = 0;
+            txtPlatePart2.Text = null;
+            txtCarSpecification.Text = null;
+            txtPhone.Text = null;
+            Keyboard.ClearFocus();
+        }
+
+        public void CanselBtn_Click(object sender, EventArgs e)
+        {
+            CancellFunc();
         }
 
         public void PaymentFrmBtn_Click(object sender, EventArgs e)
@@ -110,6 +128,11 @@ namespace WpfTest
             pf.Show();
         }
 
+        public void statusBtn_Click(object sender, EventArgs e)
+        {
+            var ps = new parkingStatus();
+            ps.Show();
+        }
 
 
     }

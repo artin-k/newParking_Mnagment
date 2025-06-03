@@ -25,8 +25,7 @@ namespace WpfTest
             //a test of the database and the columns 
             AuthService authService = new AuthService();
             //authService.dbTests();
-
-            TextDirectionHelper.ApplyToPasswordBox(passTxt);
+           
         }
         private void BackgroundVideo_MediaEnded(object sender, RoutedEventArgs e)
         {
