@@ -4,12 +4,12 @@ using System.Security.Cryptography;
 using System.Text;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using System.Security.Policy;
+using System.Xml.Linq;
 
 namespace WpfTest
 {
     public class AuthService
     {
-        private string _connectionString = "Data Source=parking.db";
 
         public void dbTests()
         {
@@ -97,8 +97,13 @@ namespace WpfTest
                 {
                     string? dbUser = reader["NationalCode"].ToString();
                     string? dbPass = reader["Password"].ToString();
-                    if (dbUser == hashedUser && dbPass == hashedPass) // ✅ Fix: compare with hashed values
+                    if (dbUser == hashedUser && dbPass == hashedPass)
+                    {
+                        string? name = reader["Name"].ToString();
+                        MessageBox.Show($"welcome {name} as manager ");
                         return true;
+                    }
+
                 }
 
                 MessageBox.Show("manager doesn't exist");
@@ -129,7 +134,13 @@ namespace WpfTest
                     string? dbUser = reader["NationalCode"].ToString();
                     string? dbPass = reader["Password"].ToString();
                     if (dbUser == hashedUser && dbPass == hashedPass)
+                    {
+                        string? name = reader["Name"].ToString();
+                        MessageBox.Show($"welcome {name} as staff ");
                         return true;
+                    }
+
+                      
                 }
                 MessageBox.Show("log in as staff failed");
                 return false;
@@ -163,14 +174,13 @@ namespace WpfTest
                     return false;
                 }
 
-                string insertCmd = "INSERT INTO Manager (Name, Password, NationalCode, Role, ParkingFee) VALUES (@name, @pass, @user, @role, @fee)";
+                string insertCmd = "INSERT INTO Manager (Name, Password, NationalCode, Role) VALUES (@name, @pass, @user, @role)";
                 using var insertCommand = new SqliteCommand(insertCmd, connection);
 
                 insertCommand.Parameters.AddWithValue("@name", name);
                 insertCommand.Parameters.AddWithValue("@pass", hashedPass);
                 insertCommand.Parameters.AddWithValue("@user", hashedUser);
                 insertCommand.Parameters.AddWithValue("@role", "manager");
-                insertCommand.Parameters.AddWithValue("@fee", 0);
                 insertCommand.ExecuteNonQuery();
 
                 return true;
@@ -182,52 +192,49 @@ namespace WpfTest
             }
         }
 
-        public static void SetParkingPayment(int pay)
+        public void SetFee(string vehicleType, int fee)
         {
             using var connection = new SqliteConnection("Data Source=parking.db");
             connection.Open();
 
-            // Check if any row exists in Manager table
-            string checkCommand = "SELECT COUNT(*) FROM Manager";
-            using var checkCmd = new SqliteCommand(checkCommand, connection);
-            object? result = checkCmd.ExecuteScalar();
-            int count = result != null ? Convert.ToInt32(result) : 0;
-           
-            if (count > 0)
-            {
-                // Update existing row
-                string updateCommand = "UPDATE Manager SET ParkingFee = @fee";
-                using var updateCmd = new SqliteCommand(updateCommand, connection);
-                updateCmd.Parameters.AddWithValue("@fee", pay);
-                updateCmd.ExecuteNonQuery();
-            }
-            else
-            {
-                // Insert new row
-                string insertCommand = "INSERT INTO Manager (ParkingFee) VALUES (@fee)";
-                using var insertCmd = new SqliteCommand(insertCommand, connection);
-                insertCmd.Parameters.AddWithValue("@fee", pay);
-                insertCmd.ExecuteNonQuery();
-            }
+            var cmd = new SqliteCommand(@"
+                INSERT INTO VehicleTypeFee (VehicleType, FeePerHour)
+                VALUES (@type, @fee)
+                ON CONFLICT(VehicleType) DO UPDATE SET FeePerHour = excluded.FeePerHour;
+            ", connection);
+
+            cmd.Parameters.AddWithValue("@type", vehicleType);
+            cmd.Parameters.AddWithValue("@fee", fee);
+
+            cmd.ExecuteNonQuery();
         }
 
-
-        public static int ShowPayment()
+        public List<VehicleFee> ShowFee()
         {
-            int payment = 0;
-            using var connection = new SqliteConnection("Data Source=parking.db");
-            connection.Open();
+            var feeList = new List<VehicleFee>();
 
-            string commandText = "SELECT ParkingFee FROM Manager LIMIT 1";
-            using var command = new SqliteCommand(commandText, connection);
-            using var reader = command.ExecuteReader();
-
-            if (reader.Read())
+            using (var connection = new SqliteConnection("Data Source=parking.db"))
             {
-                payment = Convert.ToInt32(reader["ParkingFee"]);
+                connection.Open();
+                var command = new SqliteCommand("SELECT * FROM VehicleTypeFee", connection);
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var vehicleType = reader["VehicleType"]?.ToString() ?? "";
+                        var feeStr = reader["FeePerHour"]?.ToString() ?? "0";
+                        int fee = int.TryParse(feeStr, out int result) ? result : 0;
+
+                        feeList.Add(new VehicleFee
+                        {
+                            VehicleType = vehicleType,
+                            Fee = fee
+                        });
+                    }
+                }
             }
 
-            return payment;
+            return feeList;
         }
 
 
@@ -361,12 +368,14 @@ namespace WpfTest
                 }
 
                 //  Insert new staff
-                string insertCmd = "INSERT INTO Cars (ParkPlace, PhoneNumber, Specification, EntryTime, Plate, Date, IsExited) " +
-                       "VALUES (@parkPlace, @phoneNum, @CarSepc, @entrytime, @plate, @date, @IsExited)";
+                string insertCmd = "INSERT INTO Cars (ParkPlace, PhoneNumber, Specification, EntryTime, Plate, Date, IsExited, VehicleType, Fee) " +
+                                   "VALUES (@parkPlace, @phoneNum, @CarSepc, @entrytime, @plate, @date, @IsExited, @vehicleType, @fee)";
 
                 using var insertCommand = new SqliteCommand(insertCmd, connection);
                 insertCommand.Parameters.AddWithValue("@parkPlace", car.ParkPlace);
-                insertCommand.Parameters.AddWithValue("@phoneNum", car.PhoneNumber);               
+                insertCommand.Parameters.AddWithValue("@phoneNum", car.PhoneNumber);
+                insertCommand.Parameters.AddWithValue("@vehicleType", car.VehicleType);
+                insertCommand.Parameters.AddWithValue("@fee", car.Fee);
                 insertCommand.Parameters.AddWithValue("@CarSepc", car.Specification);
                 insertCommand.Parameters.AddWithValue("@entrytime", car.EntryTime);
                 insertCommand.Parameters.AddWithValue("@plate", car.Plate);
@@ -394,14 +403,16 @@ namespace WpfTest
                     while (reader.Read())
                     {
                         var car = new Car(
-                            reader["Plate"]?.ToString()?? "",
-                            reader["Specification"]?.ToString()?? "",
-                            reader["PhoneNumber"]?.ToString()?? "",
-                            reader["ParkPlace"]?.ToString()?? "",
-                            reader["EntryTime"]?.ToString()?? "",
-                            reader["ExitTime"]?.ToString()?? "",
+                            reader["Plate"]?.ToString() ?? "",
+                            reader["Specification"]?.ToString() ?? "",
+                            reader["PhoneNumber"]?.ToString() ?? "",
+                            reader["VehicleType"]?.ToString() ?? "",
+                            reader["ParkPlace"]?.ToString() ?? "",
+                            reader["EntryTime"]?.ToString() ?? "",
+                            reader["ExitTime"]?.ToString() ?? "",
                             Convert.ToBoolean(reader["IsExited"])
                         );
+                        car.Fee = Convert.ToInt32(reader["Fee"]);
                         cars.Add(car);
                     }
                 }
@@ -456,24 +467,24 @@ namespace WpfTest
                 updateCommand.Parameters.AddWithValue("@plate", plateNumber);
                 updateCommand.ExecuteNonQuery();
 
-                // Step 2: Read updated entry/exit time
+                // Step 2: Read updated entry/exit time and vehicle type
                 var selectCommand = new SqliteCommand(
-                    "SELECT EntryTime, ExitTime, ParkPlace FROM Cars WHERE Plate = @plate", connection);
+                    "SELECT EntryTime, ExitTime, ParkPlace, VehicleType FROM Cars WHERE Plate = @plate", connection);
                 selectCommand.Parameters.AddWithValue("@plate", plateNumber);
 
                 using var reader = selectCommand.ExecuteReader();
-
                 if (reader.Read())
                 {
                     string? parkPlace = reader["ParkPlace"]?.ToString();
                     string? entryStr = reader["EntryTime"]?.ToString();
                     string? exitStr = reader["ExitTime"]?.ToString();
-                    
+                    string? vehicleType = reader["VehicleType"]?.ToString();
 
                     if (DateTime.TryParse(entryStr, out DateTime entry) &&
-                      DateTime.TryParse(exitStr, out DateTime exit))
+                        DateTime.TryParse(exitStr, out DateTime exit) &&
+                        !string.IsNullOrWhiteSpace(vehicleType))
                     {
-                        // Step 3: Free the parking spot if valid
+                        // Step 3: Free the parking spot
                         if (!string.IsNullOrWhiteSpace(parkPlace) && int.TryParse(parkPlace, out int parkPlaceId))
                         {
                             var freeSpotCommand = new SqliteCommand(
@@ -481,20 +492,41 @@ namespace WpfTest
                             freeSpotCommand.Parameters.AddWithValue("@id", parkPlaceId);
                             freeSpotCommand.ExecuteNonQuery();
                         }
+
+                        // Step 4: Calculate time difference
                         var duration = exit - entry;
-                        int feePerHour = ShowPayment(); // get from Manager table
-                        return Math.Ceiling(duration.TotalHours) * feePerHour;
-                    }                    
+                        var totalHours = Math.Ceiling(duration.TotalHours);
+
+                        // Step 5: Fee lookup per vehicle type (replace this with DB if needed)
+                        int feePerHour = vehicleType switch
+                        {
+                            "Motorbike" => 2000,
+                            "Car" => 5000,
+                            "Truck" => 10000,
+                            _ => 5000 // default
+                        };
+
+                        double totalFee = totalHours * feePerHour;
+
+                        // Step 6: Update the fee in the Cars table
+                        var updateFeeCmd = new SqliteCommand(
+                            "UPDATE Cars SET Fee = @fee WHERE Plate = @plate", connection);
+                        updateFeeCmd.Parameters.AddWithValue("@fee", totalFee);
+                        updateFeeCmd.Parameters.AddWithValue("@plate", plateNumber);
+                        updateFeeCmd.ExecuteNonQuery();
+
+                        return totalFee;
+                    }
                 }
 
                 return 0;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show("an error occured" +  ex.Message);
+                MessageBox.Show("An error occurred: " + ex.Message);
                 return -1;
             }
-
         }
+
     }
 }

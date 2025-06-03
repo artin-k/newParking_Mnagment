@@ -33,7 +33,7 @@
                 <DatePicker x:Name="dpJoinDate"
                     Margin="10"
                     SelectedDateFormat="Short"
-                    DisplayDate="{x:Static sys:DateTime.Now}"
+                    SelectedDate="{x:Static sys:DateTime.Now}"
                     />
 
                 <StackPanel Orientation="Horizontal" 
@@ -53,7 +53,7 @@
 
 
         <DataGrid x:Name="staffGrid" 
-              Visibility="Visible"
+              Visibility="Hidden"
               Grid.Column="1"
               AutoGenerateColumns="False"
               CanUserAddRows="False"
@@ -62,14 +62,39 @@
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="name" Binding="{Binding Name}" />
-                <DataGridTextColumn Header="Password" Binding="{Binding Password}" />
-                <DataGridTextColumn Header="NationalCode" Binding="{Binding NationalCode}" />
                 <DataGridTextColumn Header="Role" Binding="{Binding Role}" />
                 <DataGridTextColumn Header="PhoneNumber" Binding="{Binding PhoneNumber}" />
                 <DataGridTextColumn Header="JoinDate" Binding="{Binding JoinDate}" />
                 <DataGridTextColumn Header="Salary" Binding="{Binding Salary}" />
             </DataGrid.Columns>
         </DataGrid>
+
+        <StackPanel x:Name="setingFee" Visibility="Visible" 
+          Margin="41,0,471,0" Grid.Column="1" Height="412" VerticalAlignment="Center">
+
+            <ComboBox x:Name="comboBoxVehicleType" Margin="10">
+                <!-- to be customized -->
+                <ComboBoxItem Content="Car" IsSelected="True"/>
+                <ComboBoxItem Content="Motor cycle" />
+                <ComboBoxItem Content="Truck" />
+                <ComboBoxItem Content="Others" />
+            </ComboBox>
+
+            <TextBox x:Name="textBoxFee"
+                     MaxLength="50"
+                     Margin="10">
+            </TextBox>
+
+            <Button Content="set fee"
+                    Click="setPayment_Click">
+            </Button>
+            <DataGrid x:Name="feeDataGrid"
+                      AutoGenerateColumns="True"
+                      Height="225"
+                      Width="347"/>
+
+
+        </StackPanel>
 
         <Button Content="set staff" 
                 HorizontalAlignment="Left" 
@@ -108,7 +133,7 @@
                 Margin="730,0,0,218" 
                 VerticalAlignment="Bottom" 
                 Width="132" 
-                Click="setPayment_Click"
+                
                 Grid.Column="1">
         </Button>
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualBasic;
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,29 +16,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-//add code meli to staff 
 
 namespace WpfTest
 {
     public partial class manager_form : Window
     {
-
         public manager_form()
         {
-
             InitializeComponent();
+            // This is what links to XAML
 
             List<Staff> allStaff = AuthService.GetStaffs();
 
             staffGrid.ItemsSource = allStaff;
 
-            paymentLable();
-        }
-
-        public void paymentLable()
-        {
-            int payemnt = AuthService.ShowPayment();
-            feeLable.Content = payemnt;
+            LoadFeeDataGrid();
         }
 
         public void setStaffClick(object sender, RoutedEventArgs e)
@@ -72,7 +65,17 @@ namespace WpfTest
             Staff st = new Staff(fullName, username, password, role, phone, joinDate.Value);
             AuthService authService = new AuthService();
             authService.AddStaff(st);
+
+            LoadFeeDataGrid();
         }
+
+        private void LoadFeeDataGrid()
+        {
+            AuthService authService = new AuthService();    
+            var feeList = authService.ShowFee();
+            feeDataGrid.ItemsSource = feeList;
+        }
+
 
         private void setStatus_Click(object sender, RoutedEventArgs e)
         {
@@ -82,18 +85,28 @@ namespace WpfTest
 
         private void setPayment_Click(object sender, RoutedEventArgs e)
         {
-            string input = Interaction.InputBox("Enter paying fee for your parking:", "Payment Input", "");
+            AuthService authService = new AuthService();
 
-            if (!string.IsNullOrWhiteSpace(input) && int.TryParse(input, out int fee))
+            if (comboBoxVehicleType.SelectedItem is ComboBoxItem selectedItem)
             {
-                AuthService.SetParkingPayment(fee);
-                paymentLable();
+                string vehicleType = selectedItem.Content.ToString();
+                if (int.TryParse(textBoxFee.Text, out int fee))
+                {                    
+                    authService.SetFee(vehicleType, fee);
+                    MessageBox.Show("Fee updated successfully.");
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid fee.");
+                }
             }
             else
             {
-                MessageBox.Show("Please enter a valid number.");
+                MessageBox.Show("First select the vehicle type");
             }
         }
+
+
 
         public void showStaff_Click(object sender, RoutedEventArgs e)
         {

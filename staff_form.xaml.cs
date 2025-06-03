@@ -75,13 +75,13 @@ namespace WpfTest
 
             if (string.IsNullOrWhiteSpace(plate) || string.IsNullOrWhiteSpace(txtCarSpecification.Text) ||
                 string.IsNullOrWhiteSpace(txtPhone.Text) || string.IsNullOrWhiteSpace(txtParkPlace.Text) ||
-                string.IsNullOrWhiteSpace(txtEnterTime.Text))
+                string.IsNullOrWhiteSpace(txtEnterTime.Text) || string.IsNullOrEmpty(cmbVehicleType.Text))
             {
                 MessageBox.Show("Bro, don't pass nulls. Fill all the fields properly.");
                 return;
             }
 
-            Car car = new Car(plate, txtCarSpecification.Text, txtPhone.Text, txtParkPlace.Text, txtEnterTime.Text, enterDateTime, false);
+            Car car = new Car(plate, txtCarSpecification.Text, txtPhone.Text, cmbVehicleType.Text, txtParkPlace.Text, txtEnterTime.Text, enterDateTime, false);
 
             AuthService authService = new AuthService();
             bool success = authService.registerCar(car);

@@ -32,6 +32,12 @@
                 <local:PlaceholderTextBox x:Name="txtPhone" MaxLength="12" PlaceholderText="شماره تماس" Margin="10"/>
                 <local:PlaceholderTextBox x:Name="txtCarSpecification" MaxLength="12" PlaceholderText="مشخصات خودرو" Margin="10" Width="306"/>
                 <TextBox x:Name="txtEnterTime" MaxLength="12" Margin="10" Width="313"/>
+                <ComboBox x:Name="cmbVehicleType" Width="60" Margin="0,0,5,0">
+                    <ComboBoxItem Content="Car" IsSelected="True"/>
+                    <ComboBoxItem Content="Motorbike"/>
+                    <ComboBoxItem Content="Truck"/>
+                </ComboBox>
+                
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <TextBox x:Name="txtPlatePart1" Width="40" MaxLength="2" Margin="0,0,5,0"/>
                     <ComboBox x:Name="cmbPlateLetter" Width="60" Margin="0,0,5,0">

@@ -74,28 +74,18 @@ namespace WpfTest
             {
                 if (authService.LoginAsManager(getUser, getPass))
                 {
-                    MessageBox.Show("ورود مدیر با موفقیت انجام شد");
                     manager_form mf = new manager_form();
                     mf.Show();
                     this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("نام کاربری یا رمز عبور مدیر اشتباه است");
                 }
             }
             else
             {
                 if (authService.LoginAsStaff(getUser, getPass)) 
                 {
-                    MessageBox.Show("ورود کارمند با موفقیت انجام شد");
                     staff_form sf = new staff_form(); 
                     sf.Show();
                     this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("نام کاربری یا رمز عبور کارمند اشتباه است");
                 }
             }
         }

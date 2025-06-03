@@ -1,31 +1,41 @@
-﻿using System;
-
-namespace WpfTest
+﻿public class Car
 {
-    public class Car
+    public string Plate { get; set; }
+    public string Specification { get; set; }
+    public string PhoneNumber { get; set; }
+    public string VehicleType { get; set; }
+    public string ParkPlace { get; set; }
+    public string EntryTime { get; set; }
+    public string ExitTime { get; set; }
+    public bool IsExited { get; set; }
+    public string Date { get; set; }
+    public int Fee { get; set; }
+
+    public Car(string plate, string specification, string phone, string vehicleType, string parkPlace, string entryTime, string exitTime, bool isExited)
     {
-        public string Plate { get; }
-        public string Specification { get; }
-        public string PhoneNumber { get; }
-        public string ParkPlace { get; }
-        public string Date { get; }
-        public string EntryTime { get; }
-        public string ExitTime { get; }
-        public bool IsExited { get; }
+        Plate = plate;
+        Specification = specification;
+        PhoneNumber = phone;
+        VehicleType = vehicleType;
+        ParkPlace = parkPlace;
+        EntryTime = entryTime;
+        ExitTime = exitTime;
+        IsExited = isExited;
+        Date = DateTime.Now.ToShortDateString();
+        Fee = CalculateFee(vehicleType);
 
-        // Constructor for entry
-        public Car(string plate, string specification, string phoneNumber, string parkPlace, string entryTime, string date, bool isExited)
+        if (isExited == false) { ExitTime = ""; }
+        
+    }
+
+    private int CalculateFee(string vehicleType)
+    {
+        return vehicleType switch
         {
-            Plate = plate;
-            Specification = specification;
-            PhoneNumber = phoneNumber;
-            ParkPlace = parkPlace;
-            EntryTime = entryTime;
-            Date = date;
-            IsExited = isExited;
-
-            if (isExited == false) { ExitTime = ""; }
-        }
-
+            "Motorbike" => 2000,
+            "Car" => 5000,
+            "Truck" => 10000,
+            _ => 5000
+        };
     }
 }
