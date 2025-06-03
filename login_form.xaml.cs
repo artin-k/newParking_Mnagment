@@ -25,8 +25,7 @@ namespace WpfTest
             //a test of the database and the columns 
             AuthService authService = new AuthService();
             //authService.dbTests();
-
-            TextDirectionHelper.ApplyToPasswordBox(passTxt);
+           
         }
 
         private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)

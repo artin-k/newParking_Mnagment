@@ -37,7 +37,7 @@
                     <ComboBoxItem Content="Motorbike"/>
                     <ComboBoxItem Content="Truck"/>
                 </ComboBox>
-                
+
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <TextBox x:Name="txtPlatePart1" Width="40" MaxLength="2" Margin="0,0,5,0"/>
                     <ComboBox x:Name="cmbPlateLetter" Width="60" Margin="0,0,5,0">
@@ -65,27 +65,28 @@
                     Margin="10"
                     SelectedDate="{x:Static sys:DateTime.Now}"
                     SelectedDateFormat="Short" />
-                
+
                 <StackPanel Orientation="Horizontal" 
                     HorizontalAlignment="Center" 
                     Margin="0,20,0,0">
-              
-                <Button
+
+                    <Button
                     x:Name="CarRegister"
                     Content="ذخیره"
                     Width="120"
                     Padding="10,5"
                     Click="CarRegister_Click"/>
 
-                <Button x:Name="btnCancel"
+                    <Button x:Name="btnCancel"
                         Content="لغو"
                         Width="120"
                         Margin="10"
-                        Padding="10,5"/>
+                        Padding="10,5"
+                        Click="CanselBtn_Click"/>
                 </StackPanel>
             </StackPanel>
         </GroupBox>
-        
+
         <Button x:Name="PaymentFrmBtn"
         Content="payment"
         Width="120"
@@ -95,7 +96,16 @@
         Grid.Column="1"
         VerticalAlignment="Top"
         Click="PaymentFrmBtn_Click"/>
-
+        
+        <Button x:Name="statusBtn"
+            Content="status parking"
+            Width="120"
+            Margin="300,58,299,0"
+            Padding="10,5"
+            Grid.Row="1"
+            Grid.Column="1"
+            VerticalAlignment="Top"
+            Click="statusBtn_Click"/>
 
     </Grid>
 </Window>

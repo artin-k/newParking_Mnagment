@@ -493,19 +493,26 @@ namespace WpfTest
                             freeSpotCommand.ExecuteNonQuery();
                         }
 
-                        // Step 4: Calculate time difference
+                        // Step 4: Get FeePerHour from VehicleTypeFee table
+                        int feePerHour = 0;
+                        var feeCommand = new SqliteCommand(
+                            "SELECT FeePerHour FROM VehicleTypeFee WHERE VehicleType = @type", connection);
+                        feeCommand.Parameters.AddWithValue("@type", vehicleType);
+
+                        object? feeResult = feeCommand.ExecuteScalar();
+                        if (feeResult != null && int.TryParse(feeResult.ToString(), out int fee))
+                        {
+                            feePerHour = fee;
+                        }
+                        else
+                        {
+                            // fallback/default fee if vehicle type not found in DB
+                            feePerHour = 5000;
+                        }
+
+                        // Step 5: Calculate time difference
                         var duration = exit - entry;
                         var totalHours = Math.Ceiling(duration.TotalHours);
-
-                        // Step 5: Fee lookup per vehicle type (replace this with DB if needed)
-                        int feePerHour = vehicleType switch
-                        {
-                            "Motorbike" => 2000,
-                            "Car" => 5000,
-                            "Truck" => 10000,
-                            _ => 5000 // default
-                        };
-
                         double totalFee = totalHours * feePerHour;
 
                         // Step 6: Update the fee in the Cars table
@@ -527,6 +534,7 @@ namespace WpfTest
                 return -1;
             }
         }
+
 
     }
 }
