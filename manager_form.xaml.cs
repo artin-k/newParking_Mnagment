@@ -33,7 +33,15 @@ namespace WpfTest
             LoadFeeDataGrid();
         }
 
+        public bool IsAllDigit(string str)
+        {
+            return str.All(char.IsDigit);
+        }
 
+        public bool IsPhoneNumberValid(string phoneNumber)
+        {
+            return !string.IsNullOrWhiteSpace(phoneNumber) && IsAllDigit(phoneNumber) && phoneNumber.Length == 11;
+        }
 
         public void saveStaff_click(object sender, RoutedEventArgs e) 
         {
@@ -50,17 +58,26 @@ namespace WpfTest
 
             bool anyEmptyField = new[] { fullName, username, password, role, phone }.Any(string.IsNullOrWhiteSpace);           
 
-            if (anyEmptyField || !joinDate.HasValue)
+            if (anyEmptyField || !joinDate.HasValue || !IsPhoneNumberValid(phone) || !(IsAllDigit(username) && username.Length != 9))
             {
-                MessageBox.Show("لطفاً تمام فیلدها را کامل پر کنید.");               
+                MessageBox.Show("لطفاً تمام فیلدها با دقت کامل پر کنید.");               
                 return;
             }
 
             Staff st = new Staff(fullName, username, password, role, phone, joinDate.Value);
             AuthService authService = new AuthService();
             authService.AddStaff(st);
-
+            MessageBox.Show("کارمند با موفقیت ذخیره شد");
             LoadFeeDataGrid();
+        }
+
+        public void CancelBtnـClick(object sender, RoutedEventArgs e)
+        {
+            txtFullName.Text = string.Empty;
+            txtUsername.Text = string.Empty;
+            txtPassword.Text = string.Empty;
+            comboRole.SelectedIndex = 0;
+            txtPhone.Text = string.Empty ;
         }
 
         private void LoadFeeDataGrid()
@@ -83,7 +100,7 @@ namespace WpfTest
 
             if (comboBoxVehicleType.SelectedItem is ComboBoxItem selectedItem)
             {
-                string vehicleType = selectedItem.Content.ToString();
+                string? vehicleType = selectedItem.Content.ToString();
                 if (int.TryParse(textBoxFee.Text, out int fee))
                 {                    
                     authService.SetFee(vehicleType, fee);
@@ -106,6 +123,7 @@ namespace WpfTest
             staffGrid.Visibility = Visibility.Hidden;
             feeDataGrid.Visibility = Visibility.Hidden;
             setingFee.Visibility = Visibility.Hidden;
+            gridOptions.Visibility = Visibility.Hidden;
         }
 
 
@@ -116,6 +134,7 @@ namespace WpfTest
                 HideAllPages();
                 staffGrid.ItemsSource = AuthService.GetStaffs();
                 staffGrid.Visibility = Visibility.Visible;
+                gridOptions.Visibility = Visibility.Visible;
             }
             else
             {
@@ -173,7 +192,7 @@ namespace WpfTest
 
             foreach (var staff in staffs)
             {
-                if (authService.UpdateStaff(staff)) // Replace with actual service class
+                if (authService.UpdateStaff(staff)) 
                 {
                     successCount++;
                 }

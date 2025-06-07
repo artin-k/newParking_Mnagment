@@ -52,7 +52,11 @@ namespace WpfTest
         {
 
             if (carDataGrid.Visibility == Visibility.Hidden)
+            {
+                payStack.Visibility = Visibility.Hidden;
                 carDataGrid.Visibility = Visibility.Visible;
+                CarGridOptions.Visibility = Visibility.Visible;
+            }
             else
                 carDataGrid.Visibility = Visibility.Hidden;
         }
@@ -60,7 +64,12 @@ namespace WpfTest
         private void paymentBtn_Click( object sender, RoutedEventArgs e)
         {
             if (payStack.Visibility == Visibility.Hidden)
+            {
+                CarGridOptions.Visibility = Visibility.Hidden;
+                carDataGrid.Visibility = Visibility.Hidden;
                 payStack.Visibility = Visibility.Visible;
+            }
+
             else
                 payStack.Visibility = Visibility.Hidden;
         }

@@ -500,23 +500,19 @@ namespace WpfTest
                 connection.Open();
 
                 string updateCmd = @"
-            UPDATE Staff SET
-                Name = @name,
-                Password = @password,
-                Role = @role,
-                Salary = @salary,
-                PhoneNumber = @phone,
-                JoinDate = @joinDate
-            WHERE NationalCode = @nationalCode";
+                UPDATE Staff SET
+                    Name = @name,
+                    Role = @role,
+                    Salary = @salary,
+                    PhoneNumber = @phone,
+                    JoinDate = @joinDate";
 
                 using var command = new SqliteCommand(updateCmd, connection);
                 command.Parameters.AddWithValue("@name", staff.Name);
-                command.Parameters.AddWithValue("@password", staff.Password);
                 command.Parameters.AddWithValue("@role", staff.Role);
                 command.Parameters.AddWithValue("@salary", staff.Salary);
                 command.Parameters.AddWithValue("@phone", staff.PhoneNumber);
                 command.Parameters.AddWithValue("@joinDate", staff.JoinDate);
-                command.Parameters.AddWithValue("@nationalCode", staff.NationalCode); // 🔥 used as ID
 
                 return command.ExecuteNonQuery() > 0;
             }

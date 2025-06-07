@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTest"
         mc:Ignorable="d"
-        Title="payment_form" Height="450" Width="1000">
+        Title="payment_form" Height="450" Width="1000" Background="#bdc3c7">
 
     <Grid Margin="10,10,10,-6">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="5*" />
             <!-- DataGrid takes most space -->
             <ColumnDefinition Width="1*" />
             <!-- Button takes less space -->
@@ -46,7 +46,15 @@
             Height="40"
             VerticalAlignment="Top"
             HorizontalAlignment="Left"
-            Click="ExistedCarBtn_Click" />
+            Click="ExistedCarBtn_Click">
+
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFA1A1A1" Offset="0.26"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
 
         <Button x:Name="paymentsBtn"
                 Content="set payment"
@@ -56,21 +64,35 @@
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
                 Click="paymentBtn_Click"
-                RenderTransformOrigin="0.554,2.456" Margin="0,94,0,0" />
+                RenderTransformOrigin="0.554,2.456" Margin="0,94,0,0">
+
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFA1A1A1" Offset="0.26"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
 
         <StackPanel x:Name="payStack" 
-              Visibility="Hidden"
+              Visibility="Visible"
               Grid.Column="0"                                     
-              Margin="0,0,10,0">
-
-            <StackPanel Orientation="Horizontal">
+              Margin="0,0,10,10">
+            <StackPanel Orientation="Horizontal" Height="22" RenderTransformOrigin="50.50,0.5" Width="270">
+                <StackPanel.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </StackPanel.RenderTransform>
+                
                 <RadioButton x:Name="radioCar" Content="Car" GroupName="vehicleType" Checked="RadioButton_Checked"/>
                 <RadioButton x:Name="radioMotorbike" Content="Motorbike" GroupName="vehicleType" Checked="RadioButton_Checked"/>
             </StackPanel>
-
-            <local:PlaceholderTextBox x:Name="txtMotorPlate" MaxLength="7" PlaceholderText=" پلاک موتور" Margin="10" Width="306" Visibility="Hidden"/>
-
-            <StackPanel x:Name="normalPlate" Orientation="Horizontal" Margin="0,0,0,10" Visibility="Hidden">
+            <local:PlaceholderTextBox x:Name="txtMotorPlate" MaxLength="7" PlaceholderText=" پلاک موتور" Width="306" Visibility="Visible"/>
+            <StackPanel x:Name="normalPlate" Orientation="Horizontal" Visibility="Visible" Width="262">
                 <TextBox x:Name="txtPlatePart1" Width="40" MaxLength="2" Margin="0,0,5,0"/>
                 <ComboBox x:Name="cmbPlateLetter" Width="60" Margin="0,0,5,0">
                     <ComboBoxItem Content="ب" IsSelected="True"/>
@@ -92,25 +114,50 @@
                 </ComboBox>
                 <TextBox x:Name="txtPlatePart2" Width="60" MaxLength="3"/>
             </StackPanel>
-            <Label x:Name="lblPayment"
-                Content="amount"
-                   HorizontalAlignment="Left"
-                   Margin="222,81,0,0"
-                   VerticalAlignment="Top"/>
 
-            <Button x:Name="btnCalcPayment"
+            <StackPanel Margin="200">
+                <Label x:Name="lblPayment"
+                Content="amount" Width="71"
+
+                   />
+                <Button x:Name="btnCalcPayment"
                            Content="Calculate payment"
                            Width="120"
-                           Margin="10"
                            Padding="10,5"
-                           Click="CalcPayment_click"
-                           />
+
+                           Click="CalcPayment_click">
+                    <Button.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FF4B627C" Offset="0.234"/>
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+
+
 
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="355,372,0,10">
-            <Button Content="Update" Width="100" Margin="5" Click="Update_Click"/>
-            <Button Content="Delete" Width="100" Margin="5" Click="Delete_Click"/>
+        <StackPanel x:Name="CarGridOptions" Orientation="Horizontal" HorizontalAlignment="Left" Margin="587,372,0,10" Visibility="Hidden">
+
+            <Button Content="Update" Width="100" Margin="5" Click="Update_Click">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFA1A1A1" Offset="0.26"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+
+            <Button Content="Delete" Width="100" Margin="5" Click="Delete_Click">
+                <Button.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFA1A1A1" Offset="0.26"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>
