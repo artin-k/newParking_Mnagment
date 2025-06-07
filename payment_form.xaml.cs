@@ -102,7 +102,6 @@ namespace WpfTest
             }
         }
 
-
         private void Update_Click(object sender, RoutedEventArgs e)
         {
             var cars = (List<Car>)carDataGrid.ItemsSource;

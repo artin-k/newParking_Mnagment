@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTest"
         mc:Ignorable="d"
-        Title="payment_form" Height="450" Width="800">
+        Title="payment_form" Height="450" Width="1000">
 
     <Grid Margin="10,10,10,-6">
         <Grid.ColumnDefinitions>
@@ -29,6 +29,7 @@
                 <DataGridTextColumn Header="Plate" Binding="{Binding Plate}" />
                 <DataGridTextColumn Header="Specification" Binding="{Binding Specification}" />
                 <DataGridTextColumn Header="Phone" Binding="{Binding PhoneNumber}" />
+                <DataGridTextColumn Header="Type" Binding="{Binding VehicleType}" />
                 <DataGridTextColumn Header="Park Place" Binding="{Binding ParkPlace}" />
                 <DataGridTextColumn Header="Entry Time" Binding="{Binding EntryTime}" />
                 <DataGridTextColumn Header="Exit Time" Binding="{Binding ExitTime}" />

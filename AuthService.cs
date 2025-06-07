@@ -10,6 +10,9 @@ namespace WpfTest
 {
     public class AuthService
     {
+        //شرط های منیجر فرم 
+        //دیلیت اپدیت 
+        //
 
         public void dbTests()
         {
@@ -349,47 +352,52 @@ namespace WpfTest
         }
 
         public bool registerCar(Car car)
-        {           
+        {
             try
             {
                 using var connection = new SqliteConnection("Data Source=parking.db");
                 connection.Open();
 
-                string checkCmd = "SELECT COUNT(*) FROM Cars WHERE plate = @plate";
+                // Check if the car with the same plate and not exited already exists
+                string checkCmd = "SELECT COUNT(*) FROM Cars WHERE Plate = @plate AND IsExited = false";
                 using var checkCommand = new SqliteCommand(checkCmd, connection);
-                checkCommand.Parameters.AddWithValue("@plate",car.Plate);
+                checkCommand.Parameters.AddWithValue("@plate", car.Plate);
                 var result = checkCommand.ExecuteScalar();
                 long carCount = (result != null) ? Convert.ToInt64(result) : 0;
 
                 if (carCount > 0)
                 {
-                    MessageBox.Show("این نام خودرو قبلاً ثبت شده است.");
+                    MessageBox.Show("این خودرو قبلاً ثبت شده و هنوز خارج نشده است.");
                     return false;
                 }
 
-                //  Insert new staff
-                string insertCmd = "INSERT INTO Cars (ParkPlace, PhoneNumber, Specification, EntryTime, Plate, Date, IsExited, VehicleType, Fee) " +
-                                   "VALUES (@parkPlace, @phoneNum, @CarSepc, @entrytime, @plate, @date, @IsExited, @vehicleType, @fee)";
+                // Insert new car
+                string insertCmd = @"INSERT INTO Cars 
+                            (ParkPlace, PhoneNumber, Specification, EntryTime, Plate, Date, IsExited, VehicleType, Fee) 
+                             VALUES 
+                            (@parkPlace, @phoneNum, @CarSpec, @entrytime, @plate, @date, @IsExited, @vehicleType, @fee)";
 
                 using var insertCommand = new SqliteCommand(insertCmd, connection);
                 insertCommand.Parameters.AddWithValue("@parkPlace", car.ParkPlace);
                 insertCommand.Parameters.AddWithValue("@phoneNum", car.PhoneNumber);
-                insertCommand.Parameters.AddWithValue("@vehicleType", car.VehicleType);
-                insertCommand.Parameters.AddWithValue("@fee", car.Fee);
-                insertCommand.Parameters.AddWithValue("@CarSepc", car.Specification);
+                insertCommand.Parameters.AddWithValue("@CarSpec", car.Specification);
                 insertCommand.Parameters.AddWithValue("@entrytime", car.EntryTime);
                 insertCommand.Parameters.AddWithValue("@plate", car.Plate);
                 insertCommand.Parameters.AddWithValue("@date", car.Date);
                 insertCommand.Parameters.AddWithValue("@IsExited", car.IsExited);
+                insertCommand.Parameters.AddWithValue("@vehicleType", car.VehicleType);
+                insertCommand.Parameters.AddWithValue("@fee", car.Fee);
+
                 insertCommand.ExecuteNonQuery();
                 return true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show($"خطا در ثبت خودرو: {ex.Message}");
                 return false;
             }
         }
+
 
         public bool UpdateCar(Car car)
         {
@@ -397,16 +405,6 @@ namespace WpfTest
             {
                 using var connection = new SqliteConnection("Data Source=parking.db");
                 connection.Open();
-
-                // Step 3: Free the parking spot
-              /*  if (!string.IsNullOrWhiteSpace(parkPlace) && int.TryParse(parkPlace, out int parkPlaceId))
-                {
-                    var freeSpotCommand = new SqliteCommand(
-                        "UPDATE ParkingSpots SET IsOccupied = 0 WHERE Id = @id", connection);
-                    freeSpotCommand.Parameters.AddWithValue("@id", parkPlaceId);
-                    freeSpotCommand.ExecuteNonQuery();
-                }*/
-
 
                 string updateCmd = @"UPDATE Cars 
                              SET ParkPlace = @parkPlace, 
@@ -493,6 +491,62 @@ namespace WpfTest
                 return false;
             }
         }
+
+        public bool UpdateStaff(Staff staff)
+        {
+            try
+            {
+                using var connection = new SqliteConnection("Data Source=parking.db");
+                connection.Open();
+
+                string updateCmd = @"
+            UPDATE Staff SET
+                Name = @name,
+                Password = @password,
+                Role = @role,
+                Salary = @salary,
+                PhoneNumber = @phone,
+                JoinDate = @joinDate
+            WHERE NationalCode = @nationalCode";
+
+                using var command = new SqliteCommand(updateCmd, connection);
+                command.Parameters.AddWithValue("@name", staff.Name);
+                command.Parameters.AddWithValue("@password", staff.Password);
+                command.Parameters.AddWithValue("@role", staff.Role);
+                command.Parameters.AddWithValue("@salary", staff.Salary);
+                command.Parameters.AddWithValue("@phone", staff.PhoneNumber);
+                command.Parameters.AddWithValue("@joinDate", staff.JoinDate);
+                command.Parameters.AddWithValue("@nationalCode", staff.NationalCode); // 🔥 used as ID
+
+                return command.ExecuteNonQuery() > 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Update Staff Error: {ex.Message}");
+                return false;
+            }
+        }
+
+        public bool DeleteStaffByPhoneNumber(string phoneNumber)
+        {
+            try
+            {
+                using var connection = new SqliteConnection("Data Source=parking.db");
+                connection.Open();
+
+                var delCmd = new SqliteCommand(
+                    "DELETE FROM Staff WHERE PhoneNumber = @phone", connection);
+                delCmd.Parameters.AddWithValue("@phone", phoneNumber);
+
+                return delCmd.ExecuteNonQuery() > 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Delete error: {ex.Message}");
+                return false;
+            }
+        }
+
 
 
         public static List<Car> GetCars()
