@@ -22,6 +22,7 @@ public class PlaceholderTextBox : TextBox
                 ShowPlaceholderIfEmpty();
             }
         };
+        Background = Brushes.Transparent;
     }
 
     private void ShowPlaceholderIfEmpty()
@@ -31,6 +32,7 @@ public class PlaceholderTextBox : TextBox
             _isPlaceholderVisible = true;
             base.Text = PlaceholderText;
             Foreground = Brushes.Gray;
+            Background = Brushes.Transparent;
         }
     }
 
@@ -41,6 +43,7 @@ public class PlaceholderTextBox : TextBox
             _isPlaceholderVisible = false;
             base.Text = "";
             Foreground = Brushes.Black;
+            Background = Brushes.Transparent;
         }
     }
 
@@ -53,6 +56,7 @@ public class PlaceholderTextBox : TextBox
             _isPlaceholderVisible = string.IsNullOrWhiteSpace(value);
             Foreground = _isPlaceholderVisible ? Brushes.Gray : Brushes.Black;
             FlowDirection = GetFlowDirection(value);
+            Background = Brushes.Transparent;
         }
     }
 

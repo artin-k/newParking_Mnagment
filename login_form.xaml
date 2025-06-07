@@ -10,6 +10,16 @@
         Height="500" 
         Width="350" >
 
+    <Window.Resources>
+        <Style TargetType="TextBox" x:Key="TransparentTextBoxStyle">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+
+    </Window.Resources>
+
     <Grid  HorizontalAlignment="Center" Width="400">
         <!-- Background Video -->
         <MediaElement Name="BackgroundVideo"
@@ -24,15 +34,15 @@
 
         <Border 
            Width="224" 
-           Padding="20" 
-           
+           Padding="20"           
            CornerRadius="12" 
            HorizontalAlignment="Center" 
            VerticalAlignment="Top" 
            Height="235" Margin="0,101,0,0">
 
 
-            <StackPanel>
+            <StackPanel 
+                Margin="-5,-5,-5,-5">
 
                 <!-- Username Input -->
 
@@ -42,8 +52,9 @@
                 <local:PlaceholderTextBox
                     x:Name="txtUsername" 
                     MaxLength="20" 
+                    Background="Transparent"
                     PlaceholderText="نام کاربری"
-                    Width="185" 
+                    Width="195" 
                     RenderTransformOrigin="0.504,0.501" 
                     Height="32"/>
 
@@ -61,11 +72,12 @@
                      FontSize="14" 
                      Grid.ColumnSpan="2"/>
 
-                    <TextBlock x:Name="passwordPlaceholder"
+                    <TextBlock Background="#CCEEEEEE"
+                        x:Name="passwordPlaceholder"
                         Text="رمز عبور"
                         FontSize="14"
                         Foreground="Gray"
-                        Background="#d7dbdd"
+                       
                         VerticalAlignment="Center"
                         IsHitTestVisible="True"
                         MouseLeftButtonUp="passPlaceHolder"
@@ -75,7 +87,7 @@
                         RenderTransformOrigin="0.498,0.476"/>
                 </Grid>
                 <Button Content="ورود"
-                    Height="36"
+                    Height="42"
                     Background="#0078D7"
                     Foreground="White"
                     FontSize="14"
@@ -93,6 +105,7 @@
         </Border>
         <CheckBox x:Name="ManagerCheck"
             Content="login as manager"
+                  Foreground="White"
                   HorizontalAlignment="Center"
                   Margin="0,226,0,0"
                   VerticalAlignment="Top"/>

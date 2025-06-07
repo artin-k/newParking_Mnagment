@@ -1,5 +1,6 @@
-﻿using System.Windows.Controls;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace WpfTest
 {
@@ -8,12 +9,13 @@ namespace WpfTest
         public PlaceholderTextBox()
         {
             InitializeComponent();
+
+            // Ensure placeholder visibility is synced initially
+            Loaded += (s, e) => UpdatePlaceholderVisibility();
         }
 
         public static readonly DependencyProperty MaxLengthProperty =
-            DependencyProperty.Register(
-        "MaxLength", typeof(int), typeof(PlaceholderTextBox),
-        new PropertyMetadata(0, OnMaxLengthChanged));
+            DependencyProperty.Register(nameof(MaxLength), typeof(int), typeof(PlaceholderTextBox), new PropertyMetadata(0));
 
         public int MaxLength
         {
@@ -21,11 +23,9 @@ namespace WpfTest
             set => SetValue(MaxLengthProperty, value);
         }
 
-        private static void OnMaxLengthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        { }
-
         public static readonly DependencyProperty TextProperty =
-            DependencyProperty.Register("Text", typeof(string), typeof(PlaceholderTextBox), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register(nameof(Text), typeof(string), typeof(PlaceholderTextBox),
+                new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnTextChanged));
 
         public string Text
         {
@@ -33,8 +33,14 @@ namespace WpfTest
             set => SetValue(TextProperty, value);
         }
 
+        private static void OnTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (PlaceholderTextBox)d;
+            control.UpdatePlaceholderVisibility();
+        }
+
         public static readonly DependencyProperty PlaceholderTextProperty =
-            DependencyProperty.Register("PlaceholderText", typeof(string), typeof(PlaceholderTextBox), new PropertyMetadata(""));
+            DependencyProperty.Register(nameof(PlaceholderText), typeof(string), typeof(PlaceholderTextBox), new PropertyMetadata(string.Empty));
 
         public string PlaceholderText
         {
@@ -44,13 +50,25 @@ namespace WpfTest
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            Placeholder.Visibility = Visibility.Collapsed;
+            UpdatePlaceholderVisibility();
         }
 
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            Placeholder.Visibility = string.IsNullOrWhiteSpace(Text) ? Visibility.Visible : Visibility.Collapsed;
+            UpdatePlaceholderVisibility();
+        }
+
+        private void TextBoxInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Text = TextBoxInput.Text; // sync in case TextBox changed directly
+            UpdatePlaceholderVisibility();
+        }
+
+        private void UpdatePlaceholderVisibility()
+        {
+            Placeholder.Visibility = string.IsNullOrWhiteSpace(TextBoxInput.Text) && !TextBoxInput.IsFocused
+                ? Visibility.Visible
+                : Visibility.Collapsed;
         }
     }
-
 }
