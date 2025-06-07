@@ -164,7 +164,54 @@ namespace WpfTest
                 staffPanel.Visibility = Visibility.Hidden;
             }
         }
+
+        private void Update_Click(object sender, RoutedEventArgs e)
+        {
+            var staffs = (List<Staff>)staffGrid.ItemsSource;
+            AuthService authService = new AuthService();
+            int successCount = 0;
+
+            foreach (var staff in staffs)
+            {
+                if (authService.UpdateStaff(staff)) // Replace with actual service class
+                {
+                    successCount++;
+                }
+            }
+
+            MessageBox.Show($"{successCount} staffs updated successfully.");
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            AuthService auth = new AuthService();
+
+            if (staffGrid.SelectedItem is Staff selectedStaff)
+            {
+                var confirm = MessageBox.Show(
+                    $"Delete staff with phone number {selectedStaff.PhoneNumber}?",
+                    "Confirm delete",
+                    MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    if (auth.DeleteStaffByPhoneNumber(selectedStaff.PhoneNumber))
+                    {
+                        // Remove from the grid’s source
+                        var staffList = (List<Staff>)staffGrid.ItemsSource;
+                        staffList.Remove(selectedStaff);
+                        staffGrid.Items.Refresh();
+
+                        MessageBox.Show("Staff deleted successfully.");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Select a staff member first.");
+            }
+        }
+
     }
-        //
 }
 

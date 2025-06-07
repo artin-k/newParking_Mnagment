@@ -10,6 +10,9 @@ namespace WpfTest
 {
     public class AuthService
     {
+        //شرط های منیجر فرم 
+        //دیلیت اپدیت 
+        //
 
         public void dbTests()
         {
@@ -403,16 +406,6 @@ namespace WpfTest
                 using var connection = new SqliteConnection("Data Source=parking.db");
                 connection.Open();
 
-                // Step 3: Free the parking spot
-              /*  if (!string.IsNullOrWhiteSpace(parkPlace) && int.TryParse(parkPlace, out int parkPlaceId))
-                {
-                    var freeSpotCommand = new SqliteCommand(
-                        "UPDATE ParkingSpots SET IsOccupied = 0 WHERE Id = @id", connection);
-                    freeSpotCommand.Parameters.AddWithValue("@id", parkPlaceId);
-                    freeSpotCommand.ExecuteNonQuery();
-                }*/
-
-
                 string updateCmd = @"UPDATE Cars 
                              SET ParkPlace = @parkPlace, 
                                  PhoneNumber = @phoneNum,
@@ -498,6 +491,62 @@ namespace WpfTest
                 return false;
             }
         }
+
+        public bool UpdateStaff(Staff staff)
+        {
+            try
+            {
+                using var connection = new SqliteConnection("Data Source=parking.db");
+                connection.Open();
+
+                string updateCmd = @"
+            UPDATE Staff SET
+                Name = @name,
+                Password = @password,
+                Role = @role,
+                Salary = @salary,
+                PhoneNumber = @phone,
+                JoinDate = @joinDate
+            WHERE NationalCode = @nationalCode";
+
+                using var command = new SqliteCommand(updateCmd, connection);
+                command.Parameters.AddWithValue("@name", staff.Name);
+                command.Parameters.AddWithValue("@password", staff.Password);
+                command.Parameters.AddWithValue("@role", staff.Role);
+                command.Parameters.AddWithValue("@salary", staff.Salary);
+                command.Parameters.AddWithValue("@phone", staff.PhoneNumber);
+                command.Parameters.AddWithValue("@joinDate", staff.JoinDate);
+                command.Parameters.AddWithValue("@nationalCode", staff.NationalCode); // 🔥 used as ID
+
+                return command.ExecuteNonQuery() > 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Update Staff Error: {ex.Message}");
+                return false;
+            }
+        }
+
+        public bool DeleteStaffByPhoneNumber(string phoneNumber)
+        {
+            try
+            {
+                using var connection = new SqliteConnection("Data Source=parking.db");
+                connection.Open();
+
+                var delCmd = new SqliteCommand(
+                    "DELETE FROM Staff WHERE PhoneNumber = @phone", connection);
+                delCmd.Parameters.AddWithValue("@phone", phoneNumber);
+
+                return delCmd.ExecuteNonQuery() > 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Delete error: {ex.Message}");
+                return false;
+            }
+        }
+
 
 
         public static List<Car> GetCars()

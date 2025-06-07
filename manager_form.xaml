@@ -62,12 +62,13 @@
 
 
         <DataGrid x:Name="staffGrid" 
-              Visibility="Hidden"
-              Grid.Column="1"
-              AutoGenerateColumns="False"
-              CanUserAddRows="False"
-              IsReadOnly="True"
-              Margin="58,84,351,84">
+                  Visibility="Visible"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="False"
+                  CanUserAddRows="False"
+                  SelectionMode="Single"
+                  SelectionUnit="FullRow"
+                  Margin="0,59,292,119" Grid.Column="1">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="name" Binding="{Binding Name}" />
@@ -182,6 +183,12 @@
 
         <DataGrid Background="#ecf0f1" x:Name="feeDataGrid" Visibility="Hidden"
                       AutoGenerateColumns="True" Grid.Column="1" Margin="58,87,494,214"/>
+
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="271,351,0,31" Grid.Column="1">
+            <Button Content="Delete" Width="100" Click="Delete_Click"/>
+            <Button Content="Update" Width="100" Margin="5" Click="Update_Click"/>
+        </StackPanel>
 
     </Grid>
 </Window>
