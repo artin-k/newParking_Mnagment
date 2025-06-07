@@ -21,6 +21,9 @@ namespace WpfTest
     {
         private ParkingSpot? freeSpot;
 
+        string plate = string.Empty;
+        string vehicleType = string.Empty;
+
         public staff_form()
         {
             InitializeComponent();
@@ -28,14 +31,28 @@ namespace WpfTest
 
         public void staff_form_Load(object sender, EventArgs e)
         {
-            txtEnterTime.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            txtEnterTime.Text = DateTime.Now.ToString("HH:mm:ss");
             AssignSpot();
         }
 
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (radioMotorbike.IsChecked == true)
+            {
+                // Show motorbike-specific input (like txtMotorPlate)
+                normalPlate.Visibility = Visibility.Hidden;
+                txtMotorPlate.Visibility = Visibility.Visible;
+            }
+            else if (radioCar.IsChecked == true)
+            {
+                // Show car-specific plate parts
+                normalPlate.Visibility = Visibility.Visible;
+                txtMotorPlate.Visibility = Visibility.Hidden;
+            }
+        }
 
         public static ParkingSpot? GetFirstFreeSpot()
-        {
-            
+        {           
             var spots = AuthService.GetAllSpots();
             return spots.FirstOrDefault(s => !s.IsOccupied);
         }
@@ -52,19 +69,52 @@ namespace WpfTest
             return freeSpot;
         }
 
+        public bool IsAllDigit(string str)
+        {
+            return str.All(char.IsDigit);
+        }
+
+        public bool IsPhoneNumberValid(string phoneNumber)
+        {
+            return !string.IsNullOrWhiteSpace(phoneNumber) && IsAllDigit(phoneNumber) && phoneNumber.Length == 11;
+        }
+
         public void CarRegister_Click(object sender, EventArgs e)
         {
+            if (radioMotorbike.IsChecked == true)
+            {
+                if (string.IsNullOrWhiteSpace(txtMotorPlate.Text) || !IsAllDigit(txtMotorPlate.Text))
+                {
+                    MessageBox.Show("Invalid motorbike plate. Please enter only digits.");
+                    return;
+                }
+                plate = txtMotorPlate.Text;
+            }
+            else // Car
+            {
+                if (!IsAllDigit(txtPlatePart1.Text) || txtPlatePart1.Text.Length != 2 ||
+                    string.IsNullOrWhiteSpace(cmbPlateLetter.Text) ||
+                    !IsAllDigit(txtPlatePart2.Text) || txtPlatePart2.Text.Length != 3)
+                {
+                    MessageBox.Show("Invalid car plate. Format should be like: 12 ب 345");
+                    return;
+                }
+
+                plate = $"{txtPlatePart1.Text} {cmbPlateLetter.Text} {txtPlatePart2.Text}";
+
+            }
+
+            string phone = txtPhone.Text;
+
             var freeSpot = AssignSpot();
             if (freeSpot == null)
                 return;
 
             if (txtPlatePart1.Text.Length != 2 || string.IsNullOrWhiteSpace(cmbPlateLetter.Text) || txtPlatePart2.Text.Length != 3)
             {
-                MessageBox.Show("Bro, don't pass nulls. Fill all the fields properly.");
+                MessageBox.Show("Bro, don't pass nulls or wrong info. Fill all the fields properly.");
                 return;
             }
-
-            string plate = $"{txtPlatePart1.Text} {cmbPlateLetter.Text} {txtPlatePart2.Text}";
 
             if (txtEnterDate.SelectedDate == null)
             {
@@ -72,17 +122,28 @@ namespace WpfTest
                 return;
             }
 
-            string enterDateTime = txtEnterDate.SelectedDate.Value.ToString();
-
-            if (string.IsNullOrWhiteSpace(plate) || string.IsNullOrWhiteSpace(txtCarSpecification.Text) ||
-                string.IsNullOrWhiteSpace(txtPhone.Text) || string.IsNullOrWhiteSpace(txtParkPlace.Text) ||
-                string.IsNullOrWhiteSpace(txtEnterTime.Text) || string.IsNullOrEmpty(cmbVehicleType.Text))
+            if (string.IsNullOrWhiteSpace(txtCarSpecification.Text) ||
+                !IsPhoneNumberValid(phone) ||
+                string.IsNullOrWhiteSpace(txtParkPlace.Text) ||
+                string.IsNullOrWhiteSpace(txtEnterTime.Text))
             {
-                MessageBox.Show("Bro, don't pass nulls. Fill all the fields properly.");
+                MessageBox.Show("Bro, don't pass nulls or wrong info. Fill all the fields properly.");
                 return;
             }
 
-            Car car = new Car(plate, txtCarSpecification.Text, txtPhone.Text, cmbVehicleType.Text, txtParkPlace.Text, txtEnterTime.Text, enterDateTime, false);
+            string enterDateTime = txtEnterDate.SelectedDate.Value.ToString();
+            string vehicleType = radioCar.IsChecked == true ? "Car" : "Motorbike";
+
+            Car car = new Car(
+                plate,
+                txtCarSpecification.Text,
+                txtPhone.Text,
+                vehicleType,
+                txtParkPlace.Text,
+                txtEnterTime.Text,
+                enterDateTime,
+                false
+            );
 
             AuthService authService = new AuthService();
             bool success = authService.registerCar(car);
@@ -133,7 +194,5 @@ namespace WpfTest
             var ps = new parkingStatus();
             ps.Show();
         }
-
-
     }
 }

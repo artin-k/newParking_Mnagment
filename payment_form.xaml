@@ -37,7 +37,6 @@
             </DataGrid.Columns>
         </DataGrid>
 
-
         <!-- Button next to the grid -->
         <Button x:Name="ExitedCarBtn"
             Content="View Cars"
@@ -63,7 +62,14 @@
               Grid.Column="0"                                     
               Margin="0,0,10,0">
 
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal">
+                <RadioButton x:Name="radioCar" Content="Car" GroupName="vehicleType" Checked="RadioButton_Checked"/>
+                <RadioButton x:Name="radioMotorbike" Content="Motorbike" GroupName="vehicleType" Checked="RadioButton_Checked"/>
+            </StackPanel>
+
+            <local:PlaceholderTextBox x:Name="txtMotorPlate" MaxLength="7" PlaceholderText=" پلاک موتور" Margin="10" Width="306" Visibility="Hidden"/>
+
+            <StackPanel x:Name="normalPlate" Orientation="Horizontal" Margin="0,0,0,10" Visibility="Hidden">
                 <TextBox x:Name="txtPlatePart1" Width="40" MaxLength="2" Margin="0,0,5,0"/>
                 <ComboBox x:Name="cmbPlateLetter" Width="60" Margin="0,0,5,0">
                     <ComboBoxItem Content="ب" IsSelected="True"/>
@@ -85,7 +91,6 @@
                 </ComboBox>
                 <TextBox x:Name="txtPlatePart2" Width="60" MaxLength="3"/>
             </StackPanel>
-
             <Label x:Name="lblPayment"
                 Content="amount"
                    HorizontalAlignment="Left"

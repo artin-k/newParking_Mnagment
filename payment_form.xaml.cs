@@ -32,6 +32,22 @@ namespace WpfTest
             carDataGrid.ItemsSource = allCars;
         }
 
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (radioMotorbike.IsChecked == true)
+            {
+                // Show motorbike-specific input (like txtMotorPlate)
+                normalPlate.Visibility = Visibility.Hidden;
+                txtMotorPlate.Visibility = Visibility.Visible;
+            }
+            else if (radioCar.IsChecked == true)
+            {
+                // Show car-specific plate parts
+                normalPlate.Visibility = Visibility.Visible;
+                txtMotorPlate.Visibility = Visibility.Hidden;
+            }
+        }
+
         private void ExistedCarBtn_Click(object sender, RoutedEventArgs e)
         {
 
