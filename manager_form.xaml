@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:WpfTest"
-        xmlns:Default="clr-namespace:" x:Class="WpfTest.manager_form"
+        xmlns:Default="clr-namespace:WpfTest" x:Class="WpfTest.manager_form"
         mc:Ignorable="d"
         Title="manager form" Height="500" Width="900" Background="#bdc3c7">
 

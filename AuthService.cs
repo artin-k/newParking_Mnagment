@@ -349,47 +349,52 @@ namespace WpfTest
         }
 
         public bool registerCar(Car car)
-        {           
+        {
             try
             {
                 using var connection = new SqliteConnection("Data Source=parking.db");
                 connection.Open();
 
-                string checkCmd = "SELECT COUNT(*) FROM Cars WHERE plate = @plate";
+                // Check if the car with the same plate and not exited already exists
+                string checkCmd = "SELECT COUNT(*) FROM Cars WHERE Plate = @plate AND IsExited = false";
                 using var checkCommand = new SqliteCommand(checkCmd, connection);
-                checkCommand.Parameters.AddWithValue("@plate",car.Plate);
+                checkCommand.Parameters.AddWithValue("@plate", car.Plate);
                 var result = checkCommand.ExecuteScalar();
                 long carCount = (result != null) ? Convert.ToInt64(result) : 0;
 
                 if (carCount > 0)
                 {
-                    MessageBox.Show("این نام خودرو قبلاً ثبت شده است.");
+                    MessageBox.Show("این خودرو قبلاً ثبت شده و هنوز خارج نشده است.");
                     return false;
                 }
 
-                //  Insert new staff
-                string insertCmd = "INSERT INTO Cars (ParkPlace, PhoneNumber, Specification, EntryTime, Plate, Date, IsExited, VehicleType, Fee) " +
-                                   "VALUES (@parkPlace, @phoneNum, @CarSepc, @entrytime, @plate, @date, @IsExited, @vehicleType, @fee)";
+                // Insert new car
+                string insertCmd = @"INSERT INTO Cars 
+                            (ParkPlace, PhoneNumber, Specification, EntryTime, Plate, Date, IsExited, VehicleType, Fee) 
+                             VALUES 
+                            (@parkPlace, @phoneNum, @CarSpec, @entrytime, @plate, @date, @IsExited, @vehicleType, @fee)";
 
                 using var insertCommand = new SqliteCommand(insertCmd, connection);
                 insertCommand.Parameters.AddWithValue("@parkPlace", car.ParkPlace);
                 insertCommand.Parameters.AddWithValue("@phoneNum", car.PhoneNumber);
-                insertCommand.Parameters.AddWithValue("@vehicleType", car.VehicleType);
-                insertCommand.Parameters.AddWithValue("@fee", car.Fee);
-                insertCommand.Parameters.AddWithValue("@CarSepc", car.Specification);
+                insertCommand.Parameters.AddWithValue("@CarSpec", car.Specification);
                 insertCommand.Parameters.AddWithValue("@entrytime", car.EntryTime);
                 insertCommand.Parameters.AddWithValue("@plate", car.Plate);
                 insertCommand.Parameters.AddWithValue("@date", car.Date);
                 insertCommand.Parameters.AddWithValue("@IsExited", car.IsExited);
+                insertCommand.Parameters.AddWithValue("@vehicleType", car.VehicleType);
+                insertCommand.Parameters.AddWithValue("@fee", car.Fee);
+
                 insertCommand.ExecuteNonQuery();
                 return true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show($"خطا در ثبت خودرو: {ex.Message}");
                 return false;
             }
         }
+
 
         public bool UpdateCar(Car car)
         {
