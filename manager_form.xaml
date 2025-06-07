@@ -115,7 +115,7 @@
             Content="کارمند جدید" 
                 HorizontalAlignment="Left" 
                 Height="53" 
-                Margin="688,0,0,387" 
+                Margin="643,0,0,395" 
                 VerticalAlignment="Bottom" 
                 Width="132" 
                 Click="setStaffClick"
@@ -131,7 +131,7 @@
         <Button 
                 HorizontalAlignment="Left" 
                 Height="53" 
-                Margin="688,378,0,0" 
+                Margin="643,366,0,0" 
                 VerticalAlignment="Top" 
                 Width="132" 
               Click="showStaff_Click"
@@ -148,7 +148,7 @@
         <Button Content="وظعیت پارکینگ" 
                 HorizontalAlignment="Left" 
                 Height="53" 
-                Margin="688,0,0,306" 
+                Margin="643,0,0,313" 
                 VerticalAlignment="Bottom" 
                 Width="132" 
                 Click="setStatus_Click"
@@ -164,7 +164,7 @@
         <Button 
                 HorizontalAlignment="Left" 
                 Height="54" 
-                Margin="688,444,0,0" 
+                Margin="643,451,0,0" 
                 VerticalAlignment="Top" 
                 Width="132" 
                 
@@ -176,7 +176,7 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
-        <Button Grid.Column="1" Content="تعرفه های پارکینگ" HorizontalAlignment="Left" Margin="688,292,0,0" VerticalAlignment="Top" Height="52" Width="132" Click="Button_Click">
+        <Button Grid.Column="1" Content="تعرفه های پارکینگ" HorizontalAlignment="Left" Margin="643,279,0,0" VerticalAlignment="Top" Height="52" Width="132" Click="Button_Click">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFA1A1A1" Offset="0.33"/>
