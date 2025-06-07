@@ -25,15 +25,22 @@ namespace WpfTest
             //a test of the database and the columns 
             AuthService authService = new AuthService();
             //authService.dbTests();
-           
-        }
-        private void BackgroundVideo_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            BackgroundVideo.LoadedBehavior = MediaState.Manual;
-            BackgroundVideo.Source = new Uri("C:\\Users\\Sia\\source\\repos\\artin-k\\WpfTest\\backgrounds\\login.mp4", UriKind.Relative);
-            BackgroundVideo.Play();
 
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            BackgroundVideo.Source = new Uri("backgrounds/login.mp4", UriKind.Relative);
+            BackgroundVideo.Play();
+        }
+
+
+        private void BackgroundVideo_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            BackgroundVideo.Position = TimeSpan.Zero;
+            BackgroundVideo.Play();
+        }
+
 
         private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
         {

@@ -12,6 +12,11 @@
     <Grid Background="#707b7c" 
           Height="495" 
           VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="16*"/>
+            <RowDefinition Height="80*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition/>
@@ -24,7 +29,7 @@
           Margin="26,71,486,0" 
           Grid.Column="1" 
           Height="412" 
-          VerticalAlignment="Top">
+          VerticalAlignment="Top" Grid.RowSpan="3">
 
             <StackPanel Margin="6,0,-6,0" >
 
@@ -52,16 +57,43 @@
             </StackPanel>
         </GroupBox>
 
+        <DataGrid x:Name="managerDataGrid"
+          AutoGenerateColumns="False"
+          IsReadOnly="False"
+          Visibility="Visible"
+          CanUserAddRows="False"
+          SelectionMode="Single"
+          SelectionUnit="FullRow"
+          Margin="10,15,177,227"
+          ItemsSource="{Binding allManagers}" Grid.ColumnSpan="2" Grid.RowSpan="2">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="name" Binding="{Binding Name}" />
+                <DataGridTextColumn Header="Username" Binding="{Binding NationalCode}" />
+                <DataGridTextColumn Header="Password" Binding="{Binding Password}" />
+
+            </DataGrid.Columns>
+        </DataGrid>
 
         <Button Content="set manager" 
                 HorizontalAlignment="Left" 
                 Height="53" 
-                Margin="628,0,0,427" 
+                Margin="628,0,0,12" 
                 VerticalAlignment="Bottom" 
                 Background="#b3b6b7"
                 Width="132" 
                 Click="setManager_Click"
                 Grid.Column="1">
         </Button>
+
+        <Button Content="view managers" 
+            HorizontalAlignment="Left" 
+            Height="53" 
+            Margin="628,0,0,316" 
+            VerticalAlignment="Bottom" 
+            Background="#b3b6b7"
+            Width="132" 
+            Click="viewManagers_Click"
+            Grid.Column="1" Grid.Row="1"/>
     </Grid>
 </Window>

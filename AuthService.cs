@@ -391,13 +391,63 @@ namespace WpfTest
             }
         }
 
+        public bool UpdateCar(Car car)
+        {
+            try
+            {
+                using var connection = new SqliteConnection("Data Source=parking.db");
+                connection.Open();
+
+                // Step 3: Free the parking spot
+                if (!string.IsNullOrWhiteSpace(parkPlace) && int.TryParse(parkPlace, out int parkPlaceId))
+                {
+                    var freeSpotCommand = new SqliteCommand(
+                        "UPDATE ParkingSpots SET IsOccupied = 0 WHERE Id = @id", connection);
+                    freeSpotCommand.Parameters.AddWithValue("@id", parkPlaceId);
+                    freeSpotCommand.ExecuteNonQuery();
+                }
+
+
+                string updateCmd = @"UPDATE Cars 
+                             SET ParkPlace = @parkPlace, 
+                                 PhoneNumber = @phoneNum,
+                                 Specification = @CarSpec,
+                                 EntryTime = @entrytime,
+                                 Date = @date,
+                                 IsExited = @IsExited,
+                                 VehicleType = @vehicleType,
+                                 Fee = @fee
+                             WHERE Plate = @plate";
+
+                using var updateCommand = new SqliteCommand(updateCmd, connection);
+                updateCommand.Parameters.AddWithValue("@parkPlace", car.ParkPlace);
+                updateCommand.Parameters.AddWithValue("@phoneNum", car.PhoneNumber);
+                updateCommand.Parameters.AddWithValue("@CarSpec", car.Specification);
+                updateCommand.Parameters.AddWithValue("@entrytime", car.EntryTime);
+                updateCommand.Parameters.AddWithValue("@date", car.Date);
+                updateCommand.Parameters.AddWithValue("@IsExited", car.IsExited);
+                updateCommand.Parameters.AddWithValue("@vehicleType", car.VehicleType);
+                updateCommand.Parameters.AddWithValue("@fee", car.Fee);
+                updateCommand.Parameters.AddWithValue("@plate", car.Plate); // Plate = unique key
+
+                int rowsAffected = updateCommand.ExecuteNonQuery();
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error while updating car: {ex.Message}");
+                return false;
+            }
+        }
+
+
         public static List<Car> GetCars()
         {
             var cars = new List<Car>();
             using (var connection = new SqliteConnection("Data Source=parking.db"))
             {
                 connection.Open();
-                var command = new SqliteCommand("SELECT * FROM Cars WHERE IsExited = false", connection);
+                var command = new SqliteCommand("SELECT * FROM Cars", connection);
                 using (var reader = command.ExecuteReader())
                 {
                     while (reader.Read())
@@ -420,10 +470,34 @@ namespace WpfTest
             return cars;
         }
 
-        public static List<Staff> GetStaffs() 
+        public static List<Manager> GetManagers()
         {
-            
+            var Managers = new List<Manager>();
+            using (var connection = new SqliteConnection("Data Source=parking.db"))
+            {
+                connection.Open();
+                var command = new SqliteCommand("SELECT * FROM Manager", connection);
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var manager = new Manager
+                        {
+                            Name = reader["Name"]?.ToString() ?? "",
+                            NationalCode = reader["NationalCode"]?.ToString() ?? "",
+                            Password = reader["Password"]?.ToString() ?? ""
+                        };
+                        Managers.Add(manager);
+                    }
+                }
+            }
+            return Managers;
+        }
 
+
+
+        public static List<Staff> GetStaffs() 
+        {           
             var staffs = new List<Staff>();
             using (var connection = new SqliteConnection("Data Source = parking.db"))
             {

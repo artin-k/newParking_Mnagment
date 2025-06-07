@@ -22,6 +22,15 @@ namespace WpfTest
         public Admin_form()
         {
             InitializeComponent();
+
+            LoadExitedCars();
+        }
+
+        private void LoadExitedCars()
+        {
+            List<Manager> allManagers = AuthService.GetManagers();
+
+            managerDataGrid.ItemsSource = allManagers;
         }
 
         public void setManager_Click(object sender, RoutedEventArgs e)
@@ -49,5 +58,15 @@ namespace WpfTest
             }
 
         }
+
+        public void viewManagers_Click(object sender, RoutedEventArgs e)
+        {
+            if (managerDataGrid.Visibility == Visibility.Hidden)
+                managerDataGrid.Visibility = Visibility.Visible;
+            else
+                managerDataGrid.Visibility = Visibility.Hidden;
+        }
+
+
     }
 }

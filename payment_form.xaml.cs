@@ -29,16 +29,16 @@ namespace WpfTest
         {
             List<Car> allCars = AuthService.GetCars();
 
-            exitedCarsGrid.ItemsSource = allCars;
+            carDataGrid.ItemsSource = allCars;
         }
 
         private void ExistedCarBtn_Click(object sender, RoutedEventArgs e)
         {
 
-            if (exitedCarsGrid.Visibility == Visibility.Hidden)
-                exitedCarsGrid.Visibility = Visibility.Visible;
+            if (carDataGrid.Visibility == Visibility.Hidden)
+                carDataGrid.Visibility = Visibility.Visible;
             else
-                exitedCarsGrid.Visibility = Visibility.Hidden;
+                carDataGrid.Visibility = Visibility.Hidden;
         }
         
         private void paymentBtn_Click( object sender, RoutedEventArgs e)
@@ -55,6 +55,39 @@ namespace WpfTest
             double amount = AuthService.ExitCar(plate);
             lblPayment.Content = $"Payment: {amount} currency units";
         }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+/*            var selected = carDataGrid.SelectedItem as Vehicle;
+            if (selected != null)
+            {
+                var result = MessageBox.Show($"Delete vehicle with plate {selected.Plate}?", "Confirm", MessageBoxButton.YesNo);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Vehicles.Remove(selected);
+                    carDataGrid.Items.Refresh();
+                }
+            }*/
+        }
+
+        private void Update_Click(object sender, RoutedEventArgs e)
+        {
+            var cars = (List<Car>)carDataGrid.ItemsSource;
+            AuthService authService = new AuthService();    
+            int successCount = 0;
+
+            foreach (var car in cars)
+            {
+                if (authService.UpdateCar(car)) // Replace with actual service class
+                {
+                    successCount++;
+                }
+            }
+
+            MessageBox.Show($"{successCount} cars updated successfully.");
+        }
+
+
 
     }
 }

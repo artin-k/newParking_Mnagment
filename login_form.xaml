@@ -4,21 +4,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTest"
-        mc:Ignorable="d"
+        mc:Ignorable="d"       
         Title="login_form" 
+        Loaded="Window_Loaded"
         Height="500" 
         Width="350" >
 
     <Grid  HorizontalAlignment="Center" Width="400">
         <!-- Background Video -->
         <MediaElement Name="BackgroundVideo"
-                      Source="C:\Users\Sia\source\repos\artin-k\WpfTest\backgrounds\login.mp4"
-                      LoadedBehavior="Play"
-                      UnloadedBehavior="Stop"
-                      Stretch="Fill"
-                      IsHitTestVisible="False"
-                      MediaEnded="BackgroundVideo_MediaEnded" />
-    
+             Source="pack://siteoforigin:,,,/backgrounds/login.mp4"
+
+              LoadedBehavior="Manual"
+              UnloadedBehavior="Stop"
+              Stretch="Fill"
+              IsHitTestVisible="False"
+              MediaEnded="BackgroundVideo_MediaEnded" />
+
+
         <Border 
            Width="224" 
            Padding="20" 
