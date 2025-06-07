@@ -10,15 +10,42 @@
         Height="500" 
         Width="350" >
 
-    <Window.Resources>
-        <Style TargetType="TextBox" x:Key="TransparentTextBoxStyle">
+
+        <Window.Resources>
+            <!-- Style for TextBox -->
+            <Style x:Key="TransparentTextBoxStyle" TargetType="TextBox">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Foreground" Value="Black"/>
+            </Style>
+
+            <!-- Style for PasswordBox -->
+        <Style x:Key="TransparentPasswordBoxStyle" TargetType="PasswordBox">
+            <Setter Property="Foreground" Value="Black"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                  Margin="0"
+                                  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
 
     </Window.Resources>
+
+
+
 
     <Grid  HorizontalAlignment="Center" Width="400">
         <!-- Background Video -->
@@ -38,11 +65,12 @@
            CornerRadius="12" 
            HorizontalAlignment="Center" 
            VerticalAlignment="Top" 
-           Height="235" Margin="0,101,0,0">
+           Height="235" 
+           Margin="0,101,0,0">
 
 
             <StackPanel 
-                Margin="-5,-5,-5,-5">
+                Margin="-10,-5,-10,-5">
 
                 <!-- Username Input -->
 
@@ -54,7 +82,7 @@
                     MaxLength="20" 
                     Background="Transparent"
                     PlaceholderText="نام کاربری"
-                    Width="195" 
+                    Width="204" 
                     RenderTransformOrigin="0.504,0.501" 
                     Height="32"/>
 
@@ -62,7 +90,8 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0"/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="25*"/>
+                        <ColumnDefinition Width="77*"/>
                     </Grid.ColumnDefinitions>
                     <PasswordBox x:Name="passTxt"
                      MaxLength="20"
@@ -70,32 +99,45 @@
                      PasswordChanged="passTxt_PasswordChanged"
                      Padding="8,0"
                      FontSize="14" 
-                     Grid.ColumnSpan="2"/>
+                     Grid.ColumnSpan="3"/>
 
-                    <TextBlock Background="#CCEEEEEE"
-                        x:Name="passwordPlaceholder"
-                        Text="رمز عبور"
-                        FontSize="14"
-                        Foreground="Gray"
-                       
-                        VerticalAlignment="Center"
-                        IsHitTestVisible="True"
-                        MouseLeftButtonUp="passPlaceHolder"
-                        Visibility="Visible" 
-                        Height="32" 
-                        Grid.ColumnSpan="2" 
-                        RenderTransformOrigin="0.498,0.476"/>
+                    <Border BorderBrush="Black"
+                            BorderThickness="1"
+
+                            Height="32"
+                            VerticalAlignment="Center"
+                            Grid.ColumnSpan="3"
+                            Padding="8,0">
+
+                        <TextBlock 
+                            x:Name="passwordPlaceholder"
+                            Text="رمز عبور"
+                            FontSize="14"
+                            Foreground="Gray"
+                            IsHitTestVisible="True"
+                            MouseLeftButtonUp="passPlaceHolder"
+                            Visibility="Visible"
+                            RenderTransformOrigin="0.498,0.476"
+                            VerticalAlignment="Center"/>
+                    </Border>
+
                 </Grid>
-                <Button Content="ورود"
-                    Height="42"
-                    Background="#0078D7"
-                    Foreground="White"
-                    FontSize="14"
-                    FontWeight="SemiBold"
-                    BorderThickness="0"
-                    Cursor="Hand"
-                    Click="loginBtn_Click"/>
 
+                <Border BorderBrush="Black"
+                    BorderThickness="1"
+                    CornerRadius="10"
+                    Margin="5"
+                    Background="#0078D7"
+                    Cursor="Hand"
+                    MouseLeftButtonUp="loginBtn_Click">
+                    <TextBlock Text="ورود"
+               Foreground="White"
+               FontSize="14"
+               FontWeight="SemiBold"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Padding="0,6"/>
+                </Border>
 
 
                 <!-- Login Button -->
@@ -107,8 +149,8 @@
             Content="login as manager"
                   Foreground="White"
                   HorizontalAlignment="Center"
-                  Margin="0,226,0,0"
-                  VerticalAlignment="Top"/>
+                  Margin="0,242,0,0"
+                  VerticalAlignment="Top" RenderTransformOrigin="0.482,1.897"/>
     </Grid>
 
 </Window>
