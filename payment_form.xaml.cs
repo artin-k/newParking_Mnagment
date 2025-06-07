@@ -58,17 +58,34 @@ namespace WpfTest
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-/*            var selected = carDataGrid.SelectedItem as Vehicle;
-            if (selected != null)
+            AuthService auth = new AuthService();
+
+            if (carDataGrid.SelectedItem is Car selectedCar)
             {
-                var result = MessageBox.Show($"Delete vehicle with plate {selected.Plate}?", "Confirm", MessageBoxButton.YesNo);
-                if (result == MessageBoxResult.Yes)
+                var confirm = MessageBox.Show(
+                    $"Delete car with plate {selectedCar.Plate}?",
+                    "Confirm delete",
+                    MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                if (confirm == MessageBoxResult.Yes)
                 {
-                    Vehicles.Remove(selected);
-                    carDataGrid.Items.Refresh();
+                    if (auth.DeleteCar(selectedCar.Plate))
+                    {
+                        // Remove from the grid’s source
+                        var cars = (List<Car>)carDataGrid.ItemsSource;
+                        cars.Remove(selectedCar);
+                        carDataGrid.Items.Refresh();
+
+                        MessageBox.Show("Car deleted successfully.");
+                    }
                 }
-            }*/
+            }
+            else
+            {
+                MessageBox.Show("Select a car first.");
+            }
         }
+
 
         private void Update_Click(object sender, RoutedEventArgs e)
         {

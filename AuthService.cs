@@ -398,16 +398,7 @@ namespace WpfTest
                 using var connection = new SqliteConnection("Data Source=parking.db");
                 connection.Open();
 
-                // Step 3: Free the parking spot
-                if (!string.IsNullOrWhiteSpace(parkPlace) && int.TryParse(parkPlace, out int parkPlaceId))
-                {
-                    var freeSpotCommand = new SqliteCommand(
-                        "UPDATE ParkingSpots SET IsOccupied = 0 WHERE Id = @id", connection);
-                    freeSpotCommand.Parameters.AddWithValue("@id", parkPlaceId);
-                    freeSpotCommand.ExecuteNonQuery();
-                }
-
-
+                // Update car info
                 string updateCmd = @"UPDATE Cars 
                              SET ParkPlace = @parkPlace, 
                                  PhoneNumber = @phoneNum,
@@ -431,11 +422,65 @@ namespace WpfTest
                 updateCommand.Parameters.AddWithValue("@plate", car.Plate); // Plate = unique key
 
                 int rowsAffected = updateCommand.ExecuteNonQuery();
+
+                // Step 2: Free all spots
+                using var freeAll = new SqliteCommand("UPDATE ParkingSpots SET IsOccupied = 0", connection);
+                freeAll.ExecuteNonQuery();
+
+                // Step 3: Get all active cars (IsExited = 0)
+                var getActiveCars = new SqliteCommand("SELECT ParkPlace FROM Cars WHERE IsExited = 0", connection);
+                using var reader = getActiveCars.ExecuteReader();
+                while (reader.Read())
+                {
+                    string? placeStr = reader["ParkPlace"]?.ToString();
+                    if (int.TryParse(placeStr, out int parkId))
+                    {
+                        var occupyCmd = new SqliteCommand("UPDATE ParkingSpots SET IsOccupied = 1 WHERE Id = @id", connection);
+                        occupyCmd.Parameters.AddWithValue("@id", parkId);
+                        occupyCmd.ExecuteNonQuery();
+                    }
+                }
                 return rowsAffected > 0;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error while updating car: {ex.Message}");
+                return false;
+            }
+        }
+
+        public bool DeleteCar(string plate)
+        {
+            try
+            {
+                using var connection = new SqliteConnection("Data Source=parking.db");
+                connection.Open();
+
+                // ── 1.  Find the park-place for this car
+                var getPlaceCmd = new SqliteCommand(
+                    "SELECT ParkPlace FROM Cars WHERE Plate = @plate", connection);
+                getPlaceCmd.Parameters.AddWithValue("@plate", plate);
+
+                var parkPlaceObj = getPlaceCmd.ExecuteScalar();
+                if (parkPlaceObj != null && int.TryParse(parkPlaceObj.ToString(), out int placeId))
+                {
+                    // ── 2.  Free that spot
+                    var freeSpotCmd = new SqliteCommand(
+                        "UPDATE ParkingSpots SET IsOccupied = 0 WHERE Id = @id", connection);
+                    freeSpotCmd.Parameters.AddWithValue("@id", placeId);
+                    freeSpotCmd.ExecuteNonQuery();
+                }
+
+                // ── 3.  Delete the car row
+                var delCmd = new SqliteCommand(
+                    "DELETE FROM Cars WHERE Plate = @plate", connection);
+                delCmd.Parameters.AddWithValue("@plate", plate);
+
+                return delCmd.ExecuteNonQuery() > 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Delete error: {ex.Message}");
                 return false;
             }
         }
