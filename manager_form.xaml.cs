@@ -33,13 +33,7 @@ namespace WpfTest
             LoadFeeDataGrid();
         }
 
-        public void setStaffClick(object sender, RoutedEventArgs e)
-        {
-            staffPanel.Visibility = staffPanel.Visibility == Visibility.Visible
-            ? Visibility.Collapsed
-            : Visibility.Visible;
-        }
-        //
+
 
         public void saveStaff_click(object sender, RoutedEventArgs e) 
         {
@@ -106,22 +100,71 @@ namespace WpfTest
             }
         }
 
+        private void HideAllPages()
+        {
+            staffPanel.Visibility = Visibility.Hidden;
+            staffGrid.Visibility = Visibility.Hidden;
+            feeDataGrid.Visibility = Visibility.Hidden;
+            setingFee.Visibility = Visibility.Hidden;
+        }
 
 
         public void showStaff_Click(object sender, RoutedEventArgs e)
         {
             if (staffGrid.Visibility != Visibility.Visible)
             {
+                HideAllPages();
                 staffGrid.ItemsSource = AuthService.GetStaffs();
                 staffGrid.Visibility = Visibility.Visible;
             }
             else
             {
-                staffGrid.Visibility = Visibility.Collapsed;
+                staffGrid.Visibility = Visibility.Hidden;
             }
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (feeDataGrid.Visibility != Visibility.Visible)
+            {
+                HideAllPages();
+                feeDataGrid.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                feeDataGrid.Visibility = Visibility.Hidden;
+            }
+            
+        }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (setingFee.Visibility != Visibility.Visible)
+            {
+                HideAllPages();
+                setingFee.Visibility = Visibility.Visible;
+
+            }
+            else
+            {
+                setingFee.Visibility = Visibility.Hidden;
+            }
+        }
+
+        public void setStaffClick(object sender, RoutedEventArgs e)
+        {
+            if (staffPanel.Visibility != Visibility.Visible)
+            {
+                HideAllPages();
+                staffPanel.Visibility = Visibility.Visible;
+
+            }
+            else
+            {
+                staffPanel.Visibility = Visibility.Hidden;
+            }
+        }
     }
+        //
 }
 

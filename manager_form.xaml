@@ -1,17 +1,18 @@
-﻿<Window x:Class="WpfTest.manager_form"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:WpfTest"
+        xmlns:Default="clr-namespace:" x:Class="WpfTest.manager_form"
         mc:Ignorable="d"
-        Title="manager form" Height="500" Width="900">
+        Title="manager form" Height="500" Width="900" Background="#bdc3c7">
 
     <Grid 
-        Margin="-42,-58,0,0" 
-        Height="583" 
-        VerticalAlignment="Top">
+        Margin="-72,0,0,-16" 
+        Height="558" 
+        VerticalAlignment="Bottom">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="31*"/>
@@ -77,90 +78,112 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel x:Name="setingFee" Visibility="Visible" 
-          Margin="41,0,471,0" Grid.Column="1" Height="412" VerticalAlignment="Center">
+        <StackPanel x:Name="setingFee" Visibility="Hidden" 
+          Margin="97,170,416,0" Grid.Column="1" Height="150" VerticalAlignment="Top">
 
-            <ComboBox x:Name="comboBoxVehicleType" Margin="10">
+            <ComboBox x:Name="comboBoxVehicleType" Width="109" RenderTransformOrigin="0.541,0.598">
                 <!-- to be customized -->
                 <ComboBoxItem Content="Car" IsSelected="True"/>
                 <ComboBoxItem Content="Motor cycle" />
-                <ComboBoxItem Content="Truck" />
-                <ComboBoxItem Content="Others" />
             </ComboBox>
 
             <TextBox x:Name="textBoxFee"
                      MaxLength="50"
-                     Margin="10">
+                     Margin="10" Width="104" RenderTransformOrigin="0.514,0.5" Height="21">
+                <TextBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="0.3"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </TextBox.RenderTransform>
             </TextBox>
 
             <Button Content="set/edit fee"
-                    Click="setPayment_Click" Width="347">
-            </Button>
-            <DataGrid x:Name="feeDataGrid"
-                      AutoGenerateColumns="True"
-                      Height="225"
-                      Width="347"/>
-
+                    Click="setPayment_Click" Width="89"/>
 
         </StackPanel>
 
-        <Button Content="set staff" 
+        <Button 
+            Content="کارمند جدید" 
                 HorizontalAlignment="Left" 
                 Height="53" 
-                Margin="730,0,0,396" 
+                Margin="688,0,0,387" 
                 VerticalAlignment="Bottom" 
                 Width="132" 
                 Click="setStaffClick"
-                Grid.Column="1">
+                Grid.Column="1" Cursor="" FontStyle="Italic">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFA1A1A1" Offset="0.253"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
         </Button>
 
-        <Button Content="show staff" 
+        <Button 
                 HorizontalAlignment="Left" 
                 Height="53" 
-                Margin="730,0,0,130" 
-                VerticalAlignment="Bottom" 
+                Margin="688,378,0,0" 
+                VerticalAlignment="Top" 
                 Width="132" 
               Click="showStaff_Click"
-                Grid.Column="1">
+                Grid.Column="1" FontStyle="Italic" Content="کارمندان">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFA1A1A1" Offset="0.26"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
         </Button>
 
 
-        <Button Content="parking status" 
+        <Button Content="وظعیت پارکینگ" 
                 HorizontalAlignment="Left" 
                 Height="53" 
-                Margin="730,0,0,306" 
+                Margin="688,0,0,306" 
                 VerticalAlignment="Bottom" 
                 Width="132" 
                 Click="setStatus_Click"
-                Grid.Column="1">
+                Grid.Column="1" FontStyle="Italic">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFA1A1A1" Offset="0.292"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
         </Button>
 
-        <Button Content="set parking payment" 
+        <Button 
                 HorizontalAlignment="Left" 
-                Height="53" 
-                Margin="730,0,0,218" 
-                VerticalAlignment="Bottom" 
+                Height="54" 
+                Margin="688,444,0,0" 
+                VerticalAlignment="Top" 
                 Width="132" 
                 
-                Grid.Column="1">
+                Grid.Column="1" FontStyle="Italic" RenderTransformOrigin="0.5,0.5" Content="تعریف قیمت پارکینگ" Click="Button_Click_1">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFA1A1A1" Offset="0.301"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button Grid.Column="1" Content="تعرفه های پارکینگ" HorizontalAlignment="Left" Margin="688,292,0,0" VerticalAlignment="Top" Height="52" Width="132" Click="Button_Click">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFA1A1A1" Offset="0.33"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
         </Button>
 
-        <Label  x:Name="feeLable"
-            Grid.Column="1"
-               Content="Label"
-               HorizontalAlignment="Left"
-               Height="41"
-               Margin="730,105,0,0"
-               VerticalAlignment="Top"
-               Width="104"/>
-        <Button Content="show staff" 
-            HorizontalAlignment="Left" 
-            Height="53" 
-            Margin="730,0,0,130" 
-            VerticalAlignment="Bottom" 
-            Width="132" 
-            Click="showStaff_Click"
-            Grid.Column="1"/>
 
+        <DataGrid Background="#ecf0f1" x:Name="feeDataGrid" Visibility="Hidden"
+                      AutoGenerateColumns="True"
+                      Height="257"
+                      Width="378" Grid.Column="1" Margin="58,87,506,214"/>
+        
     </Grid>
 </Window>
