@@ -35,11 +35,15 @@ namespace WpfTest
                 {
                     Width = 60,
                     Height = 60,
-                    Margin = new Thickness(5),
-                    Background = spot.IsOccupied ? Brushes.Red : Brushes.Green,
+                    Margin = new Thickness(1),
+                    Background = (Brush)new BrushConverter().ConvertFromString(spot.IsOccupied ? "#e74c3c" : "#28b463"),
                     Tag = spot.Id,
                     Content = $"P{spot.Id}"
                 };
+
+
+                // Apply the style
+                btn.Style = (Style)FindResource("SpotButtonStyle");
 
                 btn.Click += Spot_Click;
                 spotGrid.Children.Add(btn);

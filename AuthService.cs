@@ -398,7 +398,16 @@ namespace WpfTest
                 using var connection = new SqliteConnection("Data Source=parking.db");
                 connection.Open();
 
-                // Update car info
+                // Step 3: Free the parking spot
+              /*  if (!string.IsNullOrWhiteSpace(parkPlace) && int.TryParse(parkPlace, out int parkPlaceId))
+                {
+                    var freeSpotCommand = new SqliteCommand(
+                        "UPDATE ParkingSpots SET IsOccupied = 0 WHERE Id = @id", connection);
+                    freeSpotCommand.Parameters.AddWithValue("@id", parkPlaceId);
+                    freeSpotCommand.ExecuteNonQuery();
+                }*/
+
+
                 string updateCmd = @"UPDATE Cars 
                              SET ParkPlace = @parkPlace, 
                                  PhoneNumber = @phoneNum,
