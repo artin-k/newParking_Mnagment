@@ -80,12 +80,12 @@
                 <local:PlaceholderTextBox
                     x:Name="txtUsername" 
                     MaxLength="20" 
-                    Background="Transparent"
+                   Background="white"
                     PlaceholderText="نام کاربری"
                     Width="204" 
                     Margin="0,5"
                     RenderTransformOrigin="0.504,0.501" 
-                    Height="32"/>
+                    Height="32" Loaded="txtUsername_Loaded"/>
 
                 <!-- Password Wrapper -->
                 <Grid>
@@ -112,14 +112,14 @@
 
                         <TextBlock 
                             x:Name="passwordPlaceholder"
-                            Text="                   رمز عبور"
+                            Text="  رمز عبور"
                             FontSize="14"
                             Foreground="Gray"
                             IsHitTestVisible="True"
                             MouseLeftButtonUp="passPlaceHolder"
                             Visibility="Visible"
                             RenderTransformOrigin="0.498,0.476"
-                            VerticalAlignment="Center" Margin="-9,0,-9,0" Height="32"/>
+                            VerticalAlignment="Center" Margin="-9,0,-9,0" Height="32" FontStyle="Italic"/>
                     </Border>
 
                 </Grid>
@@ -130,8 +130,11 @@
                     Margin="5"
                     Background="#0078D7"
                     Cursor="Hand"
-                    MouseLeftButtonUp="loginBtn_Click" Width="162">
-                    <TextBlock Text="ورود"
+                    MouseLeftButtonUp="loginBtn_Click" 
+                        Width="162">
+                    
+                   <TextBlock 
+                Text="ورود"                             
                Foreground="White"
                FontSize="14"
                FontWeight="SemiBold"

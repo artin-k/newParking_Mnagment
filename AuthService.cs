@@ -10,10 +10,7 @@ namespace WpfTest
 {
     public class AuthService
     {
-        //شرط های منیجر فرم 
-        //دیلیت اپدیت 
-        //
-
+     
         public void dbTests()
         {
             

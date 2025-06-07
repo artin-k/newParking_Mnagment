@@ -102,5 +102,10 @@ namespace WpfTest
                 }
             }
         }
+
+        private void txtUsername_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

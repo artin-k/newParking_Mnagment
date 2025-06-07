@@ -7,7 +7,10 @@
         xmlns:local="clr-namespace:WpfTest"
         xmlns:Default="clr-namespace:WpfTest" x:Class="WpfTest.manager_form"
         mc:Ignorable="d"
-        Title="manager form" Height="500" Width="900" Background="#bdc3c7">
+        Title="manager form" 
+        Height="500" 
+        Width="900" 
+        Background="#bdc3c7">
 
     <Grid 
         Margin="-72,0,0,-16" 
@@ -62,7 +65,7 @@
 
 
         <DataGrid x:Name="staffGrid" 
-                  Visibility="Visible"
+                  Visibility="Hidden"
                   AutoGenerateColumns="False"
                   IsReadOnly="False"
                   CanUserAddRows="False"
