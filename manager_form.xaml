@@ -65,7 +65,7 @@
 
 
         <DataGrid x:Name="staffGrid" 
-                  Visibility="Hidden"
+                  Visibility="Visible"
                   AutoGenerateColumns="False"
                   IsReadOnly="False"
                   CanUserAddRows="False"
