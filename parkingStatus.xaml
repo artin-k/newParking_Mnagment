@@ -35,9 +35,15 @@
     </Window.Resources>
 
 
-    <Grid Background="#cacfd2">
-        
-        
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFEFF3F5"/>
+                <GradientStop Color="White" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+
 
         <TextBlock 
             Text="Parking Status" 

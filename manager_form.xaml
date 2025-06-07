@@ -14,8 +14,8 @@
         Height="558" 
         VerticalAlignment="Bottom">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="31*"/>
+            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="299*"/>
         </Grid.ColumnDefinitions>
 
         <GroupBox 
@@ -181,9 +181,7 @@
 
 
         <DataGrid Background="#ecf0f1" x:Name="feeDataGrid" Visibility="Hidden"
-                      AutoGenerateColumns="True"
-                      Height="257"
-                      Width="378" Grid.Column="1" Margin="58,87,506,214"/>
-        
+                      AutoGenerateColumns="True" Grid.Column="1" Margin="58,87,494,214"/>
+
     </Grid>
 </Window>

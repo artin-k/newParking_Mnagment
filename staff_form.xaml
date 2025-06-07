@@ -9,7 +9,13 @@
         Title="staff_form" Height="550" Width="700"
         Loaded="staff_form_Load">
 
-    <Grid Margin="-42,-58,0,0" Height="594" VerticalAlignment="Top">
+    <Grid Height="540" VerticalAlignment="Top">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Black" Offset="1"/>
+                <GradientStop Color="#FFB2B2B2"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -20,27 +26,35 @@
         </Grid.ColumnDefinitions>
 
         <GroupBox x:Name="staffPanel"  
-          Header="Staff Panel" 
+          Header="پنل کاربری" 
           Margin="26,71,276,0"
                   Grid.Column="1" Grid.Row="0"
                   Height="412"                  
-                  VerticalAlignment="Top">
+                  VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+            <GroupBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.073"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </GroupBox.RenderTransform>
 
             <StackPanel Margin="6,0,-6,0" >
 
-                <TextBox x:Name="txtParkPlace" MaxLength="12" Margin="10"/>
-                <local:PlaceholderTextBox x:Name="txtPhone" MaxLength="11" PlaceholderText="شماره تماس" Margin="10"/>
-                <local:PlaceholderTextBox x:Name="txtCarSpecification" MaxLength="11" PlaceholderText="مشخصات خودرو" Margin="10" Width="306"/>
-                <TextBox x:Name="txtEnterTime" MaxLength="12" Margin="10" Width="313"/>
-                <StackPanel Orientation="Horizontal">
-                    <RadioButton x:Name="radioCar" Content="Car" GroupName="vehicleType" Checked="RadioButton_Checked"/>
-                    <RadioButton x:Name="radioMotorbike" Content="Motorbike" GroupName="vehicleType" Checked="RadioButton_Checked"/>
+                <TextBox x:Name="txtParkPlace" MaxLength="12" Margin="10" Width="15" Height="16"/>
+                <local:PlaceholderTextBox x:Name="txtPhone" MaxLength="11" PlaceholderText="شماره تماس" Margin="10" Width="321"/>
+                <local:PlaceholderTextBox x:Name="txtCarSpecification" MaxLength="11" PlaceholderText="مشخصات خودرو" Margin="10" Width="328"/>
+                <TextBox x:Name="txtEnterTime" MaxLength="12" Margin="10" Width="324"/>
+                <StackPanel Orientation="Horizontal" Width="158">
+                    <RadioButton x:Name="radioCar" Content="خودرو" GroupName="vehicleType" Checked="RadioButton_Checked" Margin="0,0,5,0"/>
+                    <RadioButton x:Name="radioMotorbike" Content="موتور سیکلت" GroupName="vehicleType" Checked="RadioButton_Checked" Width="86"/>
                 </StackPanel>
 
                 <local:PlaceholderTextBox x:Name="txtMotorPlate" MaxLength="7" PlaceholderText=" پلاک موتور" Margin="10" Width="306" Visibility="Hidden"/>
 
                 <StackPanel x:Name="normalPlate" Orientation="Horizontal" Margin="0,0,0,10" Visibility="Hidden">
-                    <TextBox x:Name="txtPlatePart1" Width="40" MaxLength="2" Margin="0,0,5,0"/>
+                    <TextBox x:Name="txtPlatePart1" Width="40" MaxLength="2" Margin="90,0,5,0"/>
                     <ComboBox x:Name="cmbPlateLetter" Width="60" Margin="0,0,5,0">
                         <ComboBoxItem Content="ب" IsSelected="True"/>
                         <ComboBoxItem Content="ج"/>
@@ -65,7 +79,7 @@
                 <DatePicker x:Name="txtEnterDate"
                     Margin="10"
                     SelectedDate="{x:Static sys:DateTime.Now}"
-                    SelectedDateFormat="Short" />
+                    SelectedDateFormat="Short" Width="231" />
 
                 <StackPanel Orientation="Horizontal" 
                     HorizontalAlignment="Center" 
@@ -74,39 +88,64 @@
                     <Button
                     x:Name="CarRegister"
                     Content="ذخیره"
-                    Width="120"
+                    Width="110"
                     Padding="10,5"
-                    Click="CarRegister_Click"/>
-
+                    Margin="0,0,5,0"
+                    Click="CarRegister_Click" Height="30">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#FF4B627C" Offset="0.234"/>
+                                <GradientStop Color="White" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
                     <Button x:Name="btnCancel"
                         Content="لغو"
-                        Width="120"
-                        Margin="10"
+                        Width="110"
                         Padding="10,5"
-                        Click="CanselBtn_Click"/>
+                        Click="CanselBtn_Click" Height="30">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="White" Offset="0"/>
+                                <GradientStop Color="#FF411111" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
                 </StackPanel>
             </StackPanel>
         </GroupBox>
 
         <Button x:Name="PaymentFrmBtn"
         Content="payment"
-        Width="120"
-        Margin="10"
+        Width="132"
+        Margin="506,108,40,0"
         Padding="10,5"
-        Grid.Row="1"
         Grid.Column="1"
         VerticalAlignment="Top"
-        Click="PaymentFrmBtn_Click"/>
-        
+        Click="PaymentFrmBtn_Click" Height="53">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFA1A1A1" Offset="0.276"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+
         <Button x:Name="statusBtn"
             Content="status parking"
-            Width="120"
-            Margin="300,58,299,0"
+            Width="132"
+            Margin="506,188,40,0"
             Padding="10,5"
-            Grid.Row="1"
             Grid.Column="1"
             VerticalAlignment="Top"
-            Click="statusBtn_Click"/>
+            Click="statusBtn_Click" Height="53">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFA1A1A1" Offset="0.327"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
 
     </Grid>
 </Window>
