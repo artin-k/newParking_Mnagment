@@ -250,7 +250,7 @@ namespace WpfTest
                 var insertCmd = new SqliteCommand(@"
             INSERT INTO VehicleTypeFee (VehicleType, FeePerHour) VALUES
             ('Car', 0),
-            ('Motorbike', 0)
+            ('Motor cycle', 0)
         ", connection);
                 insertCmd.ExecuteNonQuery();
 
@@ -300,6 +300,7 @@ namespace WpfTest
                 insertCommand.Parameters.AddWithValue("@phone", st.PhoneNumber);
                 insertCommand.Parameters.AddWithValue("@date", st.JoinDate);
                 insertCommand.ExecuteNonQuery();
+                MessageBox.Show("کارمند با موفقیت ثبت شد");
             }
             catch (Exception ex)
             {
