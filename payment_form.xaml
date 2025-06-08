@@ -28,7 +28,7 @@
                   CanUserAddRows="False"
                   SelectionMode="Single"
                   SelectionUnit="FullRow"
-                  Margin="40,40,300,100" 
+                  Margin="40,40,200,100" 
                   Grid.RowSpan="3">
 
             <DataGrid.Columns>
