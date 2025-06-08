@@ -58,7 +58,11 @@ namespace WpfTest
                 CarGridOptions.Visibility = Visibility.Visible;
             }
             else
+            {
                 carDataGrid.Visibility = Visibility.Hidden;
+                CarGridOptions.Visibility = Visibility.Hidden;
+            }
+                
         }
         
         private void paymentBtn_Click( object sender, RoutedEventArgs e)

@@ -110,11 +110,7 @@ namespace WpfTest
             if (freeSpot == null)
                 return;
 
-            if (txtPlatePart1.Text.Length != 2 || string.IsNullOrWhiteSpace(cmbPlateLetter.Text) || txtPlatePart2.Text.Length != 3)
-            {
-                MessageBox.Show("Bro, don't pass nulls or wrong info. Fill all the fields properly.");
-                return;
-            }
+
 
             if (txtEnterDate.SelectedDate == null)
             {
@@ -124,7 +120,7 @@ namespace WpfTest
 
             if (string.IsNullOrWhiteSpace(txtCarSpecification.Text) ||
                 !IsPhoneNumberValid(phone) ||
-                string.IsNullOrWhiteSpace(txtParkPlace.Text) ||
+                string.IsNullOrWhiteSpace(txtParkPlace.Text) || string.IsNullOrEmpty(plate) ||
                 string.IsNullOrWhiteSpace(txtEnterTime.Text))
             {
                 MessageBox.Show("Bro, don't pass nulls or wrong info. Fill all the fields properly.");
