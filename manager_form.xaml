@@ -148,7 +148,7 @@
         </Button>
 
 
-        <Button Content="وظعیت پارکینگ" 
+        <Button Content="وضعیت پارکینگ" 
                 HorizontalAlignment="Left" 
                 Height="53" 
                 Margin="643,0,0,313" 
@@ -199,18 +199,30 @@
             </Button.Background>
         </Button>
 
+        <StackPanel Visibility="Visible" x:Name="feeDataStack" Grid.Column="1" Margin="26,91,372,75">
+            <DataGrid Background="#ecf0f1" x:Name="feeDataGrid" Visibility="Visible"
+                      AutoGenerateColumns="True" Height="198" RenderTransformOrigin="0.5,0.5" Width="371">
+                <DataGrid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </DataGrid.RenderTransform>
+            </DataGrid>
+            <Button Content="reset" x:Name="resetBtn" Click="resetBtn_Clcik"/>
+        </StackPanel>
 
-        <DataGrid Background="#ecf0f1" x:Name="feeDataGrid" Visibility="Hidden"
-                      AutoGenerateColumns="True" Grid.Column="1" Margin="58,87,494,214"/>
 
 
         <StackPanel x:Name="gridOptions" Orientation="Horizontal" HorizontalAlignment="Left" Margin="271,483,0,31" Grid.Column="1" Visibility="Hidden">
             <Button Content="Delete" Width="99" Click="Delete_Click" Height="35">
                 <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFA1A1A1" Offset="0.33"/>
-                    <GradientStop Color="White" Offset="1"/>
-                </LinearGradientBrush>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFA1A1A1" Offset="0.33"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
                 </Button.Background>
             </Button>
 
