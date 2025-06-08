@@ -56,7 +56,7 @@ namespace WpfTest
                 MessageBox.Show("\nData:");
                 if (!dataReader.HasRows)
                 {
-                    MessageBox.Show("(no rows)");
+                    MessageBox.Show("ردیفی وجود ندارد");
                 }
                 else
                 {
@@ -106,12 +106,12 @@ namespace WpfTest
 
                 }
 
-                MessageBox.Show("manager doesn't exist");
+                MessageBox.Show("مدیر وجود ندارد");
                 return false;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred: " + ex.Message);
+                MessageBox.Show("An error occurred: " + ex.Message);////////////////////
                 return false;
             }
         }
@@ -136,18 +136,18 @@ namespace WpfTest
                     if (dbUser == hashedUser && dbPass == hashedPass)
                     {
                         string? name = reader["Name"].ToString();
-                        MessageBox.Show($"welcome {name} as staff ");
+                        MessageBox.Show($"welcome {name} as staff ");//////////////
                         return true;
                     }
 
                       
                 }
-                MessageBox.Show("log in as staff failed");
+                MessageBox.Show("!ورود به عنوان کارکن شکست خورد");
                 return false;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("an error occured: " + ex.Message);
+                MessageBox.Show("an error occured: " + ex.Message);////////////
                 return false;
             }
         }
@@ -187,7 +187,7 @@ namespace WpfTest
             }
             catch (Exception ex) 
             {
-                MessageBox.Show("an error occured " + ex.Message);
+                MessageBox.Show("an error occured " + ex.Message);////////////
                 return false;   
             }
         }
@@ -276,7 +276,7 @@ namespace WpfTest
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MessageBox.Show($"Error: {ex.Message}");////////////////
             }
         }
 
@@ -327,7 +327,7 @@ namespace WpfTest
                     }
                     else
                     {
-                        MessageBox.Show("No free spots found.");
+                        MessageBox.Show(" !جای خالی وجود ندارد");
                     }
                 }
             }
@@ -448,7 +448,7 @@ namespace WpfTest
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error while updating car: {ex.Message}");
+                MessageBox.Show($"Error while updating car: {ex.Message}");////////////////
                 return false;
             }
         }
@@ -484,7 +484,7 @@ namespace WpfTest
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Delete error: {ex.Message}");
+                MessageBox.Show($"Delete error: {ex.Message}");////////////////
                 return false;
             }
         }
@@ -515,7 +515,7 @@ namespace WpfTest
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Update Staff Error: {ex.Message}");
+                MessageBox.Show($"Update Staff Error: {ex.Message}");//////////////////
                 return false;
             }
         }
@@ -535,7 +535,7 @@ namespace WpfTest
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Delete error: {ex.Message}");
+                MessageBox.Show($"Delete error: {ex.Message}");///////////////
                 return false;
             }
         }
