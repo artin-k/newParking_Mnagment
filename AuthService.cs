@@ -141,9 +141,7 @@ namespace WpfTest
                         string? name = reader["Name"].ToString();
                         MessageBox.Show($"welcome {name} as staff ");
                         return true;
-                    }
-
-                      
+                    }                     
                 }
                 MessageBox.Show("log in as staff failed");
                 return false;
@@ -491,6 +489,28 @@ namespace WpfTest
                 return false;
             }
         }
+
+        public bool DeleteManager(string name)
+        {
+            try
+            {
+                using var connection = new SqliteConnection("Data Source=parking.db");
+                connection.Open();
+
+                var deleteCmd = new SqliteCommand(
+                    "DELETE FROM Manager WHERE Name = @name", connection);
+                deleteCmd.Parameters.AddWithValue("@name", name);
+
+                int rowsAffected = deleteCmd.ExecuteNonQuery();
+                return rowsAffected > 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Delete Manager error: {ex.Message}");
+                return false;
+            }
+        }
+
 
         public bool UpdateStaff(Staff staff)
         {

@@ -43,33 +43,34 @@ namespace WpfTest
             return !string.IsNullOrWhiteSpace(phoneNumber) && IsAllDigit(phoneNumber) && phoneNumber.Length == 11;
         }
 
-        public void saveStaff_click(object sender, RoutedEventArgs e) 
+        public void saveStaff_click(object sender, RoutedEventArgs e)
         {
             string fullName = txtFullName.Text;
-            string username = txtUsername.Text;
+            string username = txtUsername.Text; 
             string password = txtPassword.Text;
             string role = comboRole.Text;
-            string phone = txtPhone.Text;           
+            string phone = txtPhone.Text;
             DateTime? joinDate = dpJoinDate.SelectedDate;
-            if (joinDate.HasValue)
-            {
-                string formattedDate = joinDate.Value.ToString("yyyy-MM-dd"); 
-            }
 
-            bool anyEmptyField = new[] { fullName, username, password, role, phone }.Any(string.IsNullOrWhiteSpace);           
+
+
+            bool anyEmptyField = new[] { fullName, username, password, role, phone }.Any(string.IsNullOrWhiteSpace);
+
 
             if (anyEmptyField || !joinDate.HasValue || !IsPhoneNumberValid(phone) || !(IsAllDigit(username) && username.Length != 9))
             {
-                MessageBox.Show("لطفاً تمام فیلدها با دقت کامل پر کنید.");               
+                MessageBox.Show("لطفاً تمام فیلدها با دقت کامل پر کنید.");
                 return;
             }
 
-            Staff st = new Staff(fullName, username, password, role, phone, joinDate.Value);
+            Staff st = new Staff(fullName, password, username, role, phone, joinDate.Value);
             AuthService authService = new AuthService();
             authService.AddStaff(st);
+
             MessageBox.Show("کارمند با موفقیت ذخیره شد");
-            LoadFeeDataGrid();
+            LoadFeeDataGrid(); 
         }
+
 
         public void CancelBtnـClick(object sender, RoutedEventArgs e)
         {
