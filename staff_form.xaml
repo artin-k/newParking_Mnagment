@@ -132,7 +132,7 @@
         </Button>
 
         <Button x:Name="statusBtn"
-            Content="وظعیت پارکینگ"
+            Content="وضعیت پارکینگ"
             Width="132"
             Margin="488,217,58,0"
             Padding="10,5"
