@@ -23,8 +23,8 @@ namespace WpfTest
     {
         public manager_form()
         {
-            InitializeComponent();
             // This is what links to XAML
+            InitializeComponent();
 
             List<Staff> allStaff = AuthService.GetStaffs();
 

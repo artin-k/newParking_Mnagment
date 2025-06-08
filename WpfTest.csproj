@@ -15,7 +15,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Update="backgrounds\login_back.jpg">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	  <None Update="backgrounds\login.MP4">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="backgrounds\ww.jpg">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>

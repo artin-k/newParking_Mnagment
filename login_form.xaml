@@ -11,16 +11,16 @@
         Width="350" >
 
 
-        <Window.Resources>
-            <!-- Style for TextBox -->
-            <Style x:Key="TransparentTextBoxStyle" TargetType="TextBox">
-                <Setter Property="Background" Value="Transparent"/>
-                <Setter Property="BorderBrush" Value="Transparent"/>
-                <Setter Property="BorderThickness" Value="0"/>
-                <Setter Property="Foreground" Value="Black"/>
-            </Style>
+    <Window.Resources>
+        <!-- Style for TextBox -->
+        <Style x:Key="TransparentTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
 
-            <!-- Style for PasswordBox -->
+        <!-- Style for PasswordBox -->
         <Style x:Key="TransparentPasswordBoxStyle" TargetType="PasswordBox">
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="Background" Value="Transparent"/>
@@ -43,9 +43,6 @@
         </Style>
 
     </Window.Resources>
-
-
-
 
     <Grid  HorizontalAlignment="Center" Width="400">
         <!-- Background Video -->

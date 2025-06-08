@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTest"
         mc:Ignorable="d"
-        Title="payment_form" Height="450" Width="900" Background="#bdc3c7">
+        Title="payment_form" Height="450" Width="900">
+
+    <Window.Background>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/backgrounds/ww.jpg" Stretch="UniformToFill" Opacity="0.5"/>
+    </Window.Background>
 
     <Grid Margin="10,10,10,-6">
         <Grid.RowDefinitions>
@@ -101,11 +105,12 @@
                              Content="خودرو" 
                              GroupName="vehicleType" 
                              Checked="RadioButton_Checked" 
-                             
+                             Foreground="White"
                           
                              Width="50"/>
                 <RadioButton x:Name="radioMotorbike" 
                              Content="موتور سیکلت" 
+                             Foreground="White"
                              GroupName="vehicleType" 
                              Checked="RadioButton_Checked" 
                              Width="98" Height="20" 

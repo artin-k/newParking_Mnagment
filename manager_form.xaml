@@ -9,8 +9,12 @@
         mc:Ignorable="d"
         Title="manager form" 
         Height="500" 
-        Width="900" 
-        Background="#bdc3c7">
+        Width="900">
+
+    <Window.Background>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/backgrounds/login_back.jpg" Stretch="UniformToFill" Opacity="0.5"/>
+    </Window.Background>
+
 
     <Grid 
         Margin="-72,0,0,-16" 
