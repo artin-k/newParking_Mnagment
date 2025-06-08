@@ -39,7 +39,7 @@
                 <DataGridTextColumn Header="Park Place" Binding="{Binding ParkPlace}" />
                 <DataGridTextColumn Header="Entry Time" Binding="{Binding EntryTime}" />
                 <DataGridTextColumn Header="Exit Time" Binding="{Binding ExitTime}" />
-                <DataGridTextColumn Header="Fee" Binding="{Binding PaymentAmount}" />
+                <DataGridTextColumn Header="Fee" Binding="{Binding Fee}" />
                 <DataGridTextColumn Header="IsExited" Binding="{Binding IsExited}" />
             </DataGrid.Columns>
         </DataGrid>
