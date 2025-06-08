@@ -42,7 +42,7 @@
 
             <StackPanel Margin="1,0,-7,0" Height="431" >
 
-                <TextBox x:Name="txtParkPlace" MaxLength="12" Margin="10" Width="15" Height="16"/>
+                <TextBox x:Name="txtParkPlace" MaxLength="12" Margin="10" Width="17" Height="16"/>
                 <local:PlaceholderTextBox x:Name="txtPhone" MaxLength="11" PlaceholderText="شماره تماس" Margin="10" Width="327"/>
                 <local:PlaceholderTextBox x:Name="txtCarSpecification" MaxLength="11" PlaceholderText="مشخصات خودرو" Margin="10" Width="328"/>
                 <TextBox x:Name="txtEnterTime" MaxLength="12" Margin="10" Width="324"/>

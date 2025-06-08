@@ -66,8 +66,6 @@ namespace WpfTest
             Staff st = new Staff(fullName, password, username, role, phone, joinDate.Value);
             AuthService authService = new AuthService();
             authService.AddStaff(st);
-
-            MessageBox.Show("کارمند با موفقیت ذخیره شد");
             LoadFeeDataGrid(); 
         }
 
@@ -88,7 +86,6 @@ namespace WpfTest
             feeDataGrid.ItemsSource = feeList;
         }
 
-
         private void setStatus_Click(object sender, RoutedEventArgs e)
         {
             parkingStatus parkingStatus = new parkingStatus();
@@ -106,6 +103,7 @@ namespace WpfTest
                 {                    
                     authService.SetFee(vehicleType, fee);
                     MessageBox.Show("Fee updated successfully.");
+                    LoadFeeDataGrid();
                 }
                 else
                 {
@@ -177,7 +175,6 @@ namespace WpfTest
             {
                 HideAllPages();
                 staffPanel.Visibility = Visibility.Visible;
-
             }
             else
             {

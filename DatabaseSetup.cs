@@ -10,8 +10,8 @@ namespace WpfTest
         {
             using var connection = new SqliteConnection(_connectionString);
             connection.Open();
-           
-                        // Create Cars table if it doesn't exist
+
+            // Create Cars table if it doesn't exist
             var createCars = new SqliteCommand(@"
                 CREATE TABLE IF NOT EXISTS Cars (
                     Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -28,6 +28,8 @@ namespace WpfTest
                 );
                 ", connection);
             createCars.ExecuteNonQuery();
+          
+
 
 
 
