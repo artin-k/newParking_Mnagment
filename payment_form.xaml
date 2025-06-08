@@ -5,13 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTest"
         mc:Ignorable="d"
-        Title="payment_form" Height="450" Width="1000" Background="#bdc3c7">
+        Title="payment_form" Height="450" Width="900" Background="#bdc3c7">
 
     <Grid Margin="10,10,10,-6">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="123*"/>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="298*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5*" />
+            <ColumnDefinition />
             <!-- DataGrid takes most space -->
-            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="0*" />
             <!-- Button takes less space -->
         </Grid.ColumnDefinitions>
 
@@ -23,7 +28,8 @@
                   CanUserAddRows="False"
                   SelectionMode="Single"
                   SelectionUnit="FullRow"
-                  Margin="10">
+                  Margin="40,40,300,100" 
+                  Grid.RowSpan="3">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Plate" Binding="{Binding Plate}" />
@@ -43,9 +49,9 @@
             Content="خودرو های ثبت شده"
             Width="100"
             Height="40"
-            VerticalAlignment="Center"
+            VerticalAlignment="Top"
             HorizontalAlignment="Left"
-            Click="ExistedCarBtn_Click" Grid.ColumnSpan="2" Margin="807,0,0,0" FontStyle="Italic" FontSize="11">
+            Click="ExistedCarBtn_Click" Margin="731,10,0,0" FontStyle="Italic" FontSize="11" Grid.Row="2">
 
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -62,7 +68,7 @@
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
                 Click="paymentBtn_Click"
-                RenderTransformOrigin="0.554,2.456" Margin="807,266,0,0" Grid.ColumnSpan="2" FontStyle="Italic">
+                RenderTransformOrigin="0.554,2.456" Margin="731,109,0,0" FontStyle="Italic" Grid.Row="2">
 
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -73,13 +79,14 @@
         </Button>
 
         <StackPanel x:Name="payStack" 
-              Visibility="Visible"
+              Visibility="Hidden"
               Grid.Column="0"                                     
-              Margin="10,0,163,10" Grid.ColumnSpan="2">
+              Margin="133,25,338,25" RenderTransformOrigin="0.508,0.359" Grid.RowSpan="3">
             <StackPanel Orientation="Horizontal" 
                         Height="22" 
                         RenderTransformOrigin="50.50,0.5" 
                         Margin="100"
+                        
                         Width="150">
                 <StackPanel.RenderTransform>
                     <TransformGroup>
@@ -90,8 +97,20 @@
                     </TransformGroup>
                 </StackPanel.RenderTransform>
 
-                <RadioButton x:Name="radioCar" Content="خودرو" GroupName="vehicleType" Checked="RadioButton_Checked" Width="50"/>
-                <RadioButton x:Name="radioMotorbike" Content="موتور سیکلت" GroupName="vehicleType" Checked="RadioButton_Checked" Width="98" Height="20" RenderTransformOrigin="0.5,0.5">
+                <RadioButton x:Name="radioCar" 
+                             Content="خودرو" 
+                             GroupName="vehicleType" 
+                             Checked="RadioButton_Checked" 
+                             
+                          
+                             Width="50"/>
+                <RadioButton x:Name="radioMotorbike" 
+                             Content="موتور سیکلت" 
+                             GroupName="vehicleType" 
+                             Checked="RadioButton_Checked" 
+                             Width="98" Height="20" 
+                           
+                             RenderTransformOrigin="0.5,0.5">
                     <RadioButton.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -103,11 +122,12 @@
                 </RadioButton>
             </StackPanel>
             <local:PlaceholderTextBox x:Name="txtMotorPlate"
+                                      Margin="0,0,0,0"
                                       MaxLength="7" 
                                       PlaceholderText=" پلاک موتور" 
-                                      Width="306" 
-                                      Visibility="Visible"/>
-            <StackPanel x:Name="normalPlate" Orientation="Horizontal" Visibility="Visible" Width="262">
+                                      Width="176" 
+                                      Visibility="Hidden"/>
+            <StackPanel x:Name="normalPlate" Orientation="Horizontal" Visibility="Hidden" Width="168">
                 <TextBox x:Name="txtPlatePart1" Width="40" MaxLength="2" Margin="0,0,5,0"/>
                 <ComboBox x:Name="cmbPlateLetter" Width="60" Margin="0,0,5,0">
                     <ComboBoxItem Content="ب" IsSelected="True"/>
@@ -129,9 +149,9 @@
                 </ComboBox>
                 <TextBox x:Name="txtPlatePart2" Width="60" MaxLength="3"/>
             </StackPanel>
-            <StackPanel Width="183" 
-                        Height="70" 
-                        Margin="1"
+            <StackPanel Width="184" 
+                        Height="70"
+                      
                         RenderTransformOrigin="0.5,0.5">
                 <StackPanel.RenderTransform>
                     <TransformGroup>
@@ -164,7 +184,7 @@
 
         </StackPanel>
 
-        <StackPanel x:Name="CarGridOptions" Orientation="Horizontal" HorizontalAlignment="Left" Margin="587,372,0,10" Visibility="Hidden">
+        <StackPanel x:Name="CarGridOptions" Orientation="Horizontal" HorizontalAlignment="Left" Margin="587,240,0,10" Visibility="Hidden" Width="220" Grid.Row="2">
 
             <Button Content="Update" Width="100" Margin="5" Click="Update_Click">
                 <Button.Background>

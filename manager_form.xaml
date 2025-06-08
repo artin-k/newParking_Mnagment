@@ -24,8 +24,8 @@
         <GroupBox 
           x:Name="staffPanel" 
           Visibility="Hidden" 
-          Header="Staff Panel" 
-          Margin="26,71,486,0" 
+          Header="پنل کارمندان" 
+          Margin="26,90,486,0" 
           Grid.Column="1" 
           Height="412" 
           VerticalAlignment="Top">
@@ -76,7 +76,7 @@
                   CanUserAddRows="False"
                   SelectionMode="Single"
                   SelectionUnit="FullRow"
-                  Margin="0,59,292,119" Grid.Column="1">
+                  Margin="50,100,292,119" Grid.Column="1">
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="name" Binding="{Binding Name}" />
@@ -199,7 +199,7 @@
             </Button.Background>
         </Button>
 
-        <StackPanel Visibility="Visible" x:Name="feeDataStack" Grid.Column="1" Margin="26,91,372,75">
+        <StackPanel Visibility="Hidden" x:Name="feeDataStack" Grid.Column="1" Margin="26,192,371,127">
             <DataGrid Background="#ecf0f1" x:Name="feeDataGrid" Visibility="Visible"
                       AutoGenerateColumns="True" Height="198" RenderTransformOrigin="0.5,0.5" Width="371">
                 <DataGrid.RenderTransform>
@@ -211,7 +211,7 @@
                     </TransformGroup>
                 </DataGrid.RenderTransform>
             </DataGrid>
-            <Button Content="reset" x:Name="resetBtn" Click="resetBtn_Clcik"/>
+            <Button Content="reset" x:Name="resetBtn" Click="resetBtn_Clcik" Width="200"/>
         </StackPanel>
 
 
