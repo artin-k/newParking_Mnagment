@@ -142,15 +142,15 @@
                     </TransformGroup>
                 </StackPanel.RenderTransform>
                 <Label x:Name="lblPayment"
-                Content="amount" Width="143"
+                Content="قیمت" Width="143"
 
                    />
                 <Button x:Name="btnCalcPayment"
-                           Content="Calculate payment"
+                           Content="محاسبه قیمت"
                            Width="142"
                            Padding="10,5"
 
-                           Click="CalcPayment_click">
+                           Click="CalcPayment_click" FontStyle="Italic">
                     <Button.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="#FF4B627C" Offset="0.234"/>
