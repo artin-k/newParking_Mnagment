@@ -122,7 +122,7 @@ namespace WpfTest
         {
             staffPanel.Visibility = Visibility.Hidden;
             staffGrid.Visibility = Visibility.Hidden;
-            feeDataGrid.Visibility = Visibility.Hidden;
+            feeDataStack.Visibility = Visibility.Hidden;
             setingFee.Visibility = Visibility.Hidden;
             gridOptions.Visibility = Visibility.Hidden;
         }
@@ -145,14 +145,14 @@ namespace WpfTest
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (feeDataGrid.Visibility != Visibility.Visible)
+            if (feeDataStack.Visibility != Visibility.Visible)
             {
                 HideAllPages();
-                feeDataGrid.Visibility = Visibility.Visible;
+                feeDataStack.Visibility = Visibility.Visible;
             }
             else
             {
-                feeDataGrid.Visibility = Visibility.Hidden;
+                feeDataStack.Visibility = Visibility.Hidden;
             }
             
         }
@@ -232,6 +232,12 @@ namespace WpfTest
             }
         }
 
+        public void resetBtn_Clcik(object sender, RoutedEventArgs e) 
+        {
+            AuthService authService = new AuthService();
+            authService.RefreshVehicleTypeFeesFromDb();
+            LoadFeeDataGrid();
+        }
     }
 }
 

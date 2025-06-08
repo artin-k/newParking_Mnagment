@@ -235,7 +235,7 @@ namespace WpfTest
             return feeList;
         }
 
-        private void RefreshVehicleTypeFeesFromDb()
+        public void RefreshVehicleTypeFeesFromDb()
         {
             try
             {
