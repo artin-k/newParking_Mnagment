@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTest"
         mc:Ignorable="d"
-        Title="payment_form" Height="450" Width="900">
+        Title="payment_form" Height="450" Width="870">
 
     <Window.Background>
         <ImageBrush ImageSource="pack://siteoforigin:,,,/backgrounds/ww.jpg" Stretch="UniformToFill" Opacity="0.5"/>
@@ -167,7 +167,7 @@
                     </TransformGroup>
                 </StackPanel.RenderTransform>
                 <Label x:Name="lblPayment"
-                Content="قیمت" Width="143"
+                Content="قیمت" Width="143" Foreground="White"
 
                    />
                 <Button x:Name="btnCalcPayment"
