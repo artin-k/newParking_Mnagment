@@ -148,7 +148,7 @@
         </Button>
 
 
-        <Button Content="وظعیت پارکینگ" 
+        <Button Content="وضعیت پارکینگ" 
                 HorizontalAlignment="Left" 
                 Height="53" 
                 Margin="643,0,0,313" 

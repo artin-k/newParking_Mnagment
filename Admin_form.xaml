@@ -10,7 +10,7 @@
         Width="800">
 
     <Grid Background="#707b7c" 
-          Height="495" 
+          Height="440" 
           VerticalAlignment="Top" HorizontalAlignment="Center" Width="800">
         <Grid.RowDefinitions>
             <RowDefinition Height="16*"/>
@@ -23,12 +23,12 @@
         </Grid.ColumnDefinitions>
 
         <Button x:Name="gridOptions" Content="Delete" Click="Delete_Click" Background="#b3b6b7" Grid.ColumnSpan="2" Margin="437,297,233,67" Grid.Row="1" Visibility="Hidden"/>
-        
+
         <GroupBox 
           x:Name="managerPanel" 
           Visibility="Hidden" 
-          Header="set manager Panel" 
-          Margin="26,71,486,0" 
+          Header="پنل ثبت مدیر" 
+          Margin="45,35,470,40" 
           Grid.Column="1" 
           Height="412" 
           VerticalAlignment="Top" Grid.RowSpan="3">
@@ -66,7 +66,7 @@
           CanUserAddRows="False"
           SelectionMode="Single"
           SelectionUnit="FullRow"
-          Margin="10,15,177,227"
+          Margin="20,25,260,227"
           ItemsSource="{Binding allManagers}" Grid.ColumnSpan="2" Grid.RowSpan="2">
 
             <DataGrid.Columns>
@@ -77,26 +77,38 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Content="set manager" 
+        <Button Content="تعریف مدیر" 
                 HorizontalAlignment="Left" 
                 Height="53" 
-                Margin="628,0,0,12" 
-                VerticalAlignment="Bottom" 
-                Background="#b3b6b7"
+                Margin="596,0,0,227" 
+                VerticalAlignment="Bottom"
                 Width="132" 
                 Click="setManager_Click"
-                Grid.Column="1">
+                Grid.Column="1" Grid.Row="1" FontStyle="Italic">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Gray" Offset="0.442"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
         </Button>
 
-        <Button Content="view managers" 
+        <Button Content="مدیر ها" 
             HorizontalAlignment="Left" 
-            Height="53" 
-            Margin="628,0,0,316" 
-            VerticalAlignment="Bottom" 
-            Background="#b3b6b7"
+            Height="54" 
+            Margin="596,179,0,0" 
+            VerticalAlignment="Top"
             Width="132" 
             Click="viewManagers_Click"
-            Grid.Column="1" Grid.Row="1"/>
+            Grid.Column="1" Grid.Row="1" FontStyle="Italic">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Gray" Offset="0.288"/>
+                    <GradientStop Color="White" Offset="1"/>
+                    <GradientStop Color="#FFEBEBEB" Offset="0.853"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
 
 
     </Grid>
