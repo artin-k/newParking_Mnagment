@@ -25,12 +25,12 @@
             <ColumnDefinition Width="31*"/>
         </Grid.ColumnDefinitions>
 
-        <GroupBox x:Name="staffPanel"  
+        <GroupBox x:Name="staffPanel"
           Header="پنل کاربری" 
-          Margin="26,71,276,0"
+          Margin="37,10,276,0"
                   Grid.Column="1" Grid.Row="0"
-                  Height="412"                  
-                  VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+                  Height="384"                  
+                  VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
             <GroupBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -40,15 +40,15 @@
                 </TransformGroup>
             </GroupBox.RenderTransform>
 
-            <StackPanel Margin="6,0,-6,0" >
+            <StackPanel Margin="1,0,-7,0" Height="431" >
 
                 <TextBox x:Name="txtParkPlace" MaxLength="12" Margin="10" Width="15" Height="16"/>
-                <local:PlaceholderTextBox x:Name="txtPhone" MaxLength="11" PlaceholderText="شماره تماس" Margin="10" Width="321"/>
+                <local:PlaceholderTextBox x:Name="txtPhone" MaxLength="11" PlaceholderText="شماره تماس" Margin="10" Width="327"/>
                 <local:PlaceholderTextBox x:Name="txtCarSpecification" MaxLength="11" PlaceholderText="مشخصات خودرو" Margin="10" Width="328"/>
                 <TextBox x:Name="txtEnterTime" MaxLength="12" Margin="10" Width="324"/>
                 <StackPanel Orientation="Horizontal" Width="158">
-                    <RadioButton x:Name="radioCar" Content="خودرو" GroupName="vehicleType" Checked="RadioButton_Checked" Margin="0,0,5,0"/>
-                    <RadioButton x:Name="radioMotorbike" Content="موتور سیکلت" GroupName="vehicleType" Checked="RadioButton_Checked" Width="86"/>
+                    <RadioButton x:Name="radioCar" Content="خودرو" GroupName="vehicleType" Checked="RadioButton_Checked" Margin="0,0,5,0" Background="White" Foreground="White"/>
+                    <RadioButton x:Name="radioMotorbike" Content="موتور سیکلت" GroupName="vehicleType" Checked="RadioButton_Checked" Width="86" Background="White" Foreground="White"/>
                 </StackPanel>
 
                 <local:PlaceholderTextBox x:Name="txtMotorPlate" MaxLength="7" PlaceholderText=" پلاک موتور" Margin="10" Width="306" Visibility="Hidden"/>
@@ -116,13 +116,13 @@
         </GroupBox>
 
         <Button x:Name="PaymentFrmBtn"
-        Content="payment"
+        Content="تسویه"
         Width="132"
-        Margin="506,108,40,0"
+        Margin="488,124,58,0"
         Padding="10,5"
         Grid.Column="1"
         VerticalAlignment="Top"
-        Click="PaymentFrmBtn_Click" Height="53">
+        Click="PaymentFrmBtn_Click" Height="53" IsCancel="True" FontStyle="Italic">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFA1A1A1" Offset="0.276"/>
@@ -132,13 +132,13 @@
         </Button>
 
         <Button x:Name="statusBtn"
-            Content="status parking"
+            Content="وظعیت پارکینگ"
             Width="132"
-            Margin="506,188,40,0"
+            Margin="488,217,58,0"
             Padding="10,5"
             Grid.Column="1"
             VerticalAlignment="Top"
-            Click="statusBtn_Click" Height="53">
+            Click="statusBtn_Click" Height="53" FontStyle="Italic">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFA1A1A1" Offset="0.327"/>

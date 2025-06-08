@@ -41,7 +41,7 @@
                     <ComboBoxItem Content="worker" IsSelected="True"/>
                 </ComboBox>
 
-                <local:PlaceholderTextBox x:Name="txtPhone" MaxLength="12" PlaceholderText="شماره تماس" Margin="10"/>
+                <local:PlaceholderTextBox x:Name="txtPhone" MaxLength="11" PlaceholderText="شماره تماس" Margin="10"/>
                 <DatePicker x:Name="dpJoinDate"
                     Margin="10"
                     SelectedDateFormat="Short"
