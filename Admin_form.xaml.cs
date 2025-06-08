@@ -23,10 +23,10 @@ namespace WpfTest
         {
             InitializeComponent();
 
-            LoadExitedCars();
+            LoadExitedManagers();
         }
 
-        private void LoadExitedCars()
+        private void LoadExitedManagers()
         {
             List<Manager> allManagers = AuthService.GetManagers();
 
@@ -46,6 +46,7 @@ namespace WpfTest
             if (txtFullName == null || txtUsername == null || txtPassword == null)
             {
                 MessageBox.Show("insert the textboxes");
+                return;
             }
             else 
             {

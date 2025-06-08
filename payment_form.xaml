@@ -41,12 +41,11 @@
         <!-- Button next to the grid -->
         <Button x:Name="ExitedCarBtn"
             Content="View Cars"
-            Grid.Column="1"
             Width="100"
             Height="40"
-            VerticalAlignment="Top"
+            VerticalAlignment="Center"
             HorizontalAlignment="Left"
-            Click="ExistedCarBtn_Click">
+            Click="ExistedCarBtn_Click" Grid.ColumnSpan="2" Margin="807,0,0,0">
 
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -58,13 +57,12 @@
 
         <Button x:Name="paymentsBtn"
                 Content="set payment"
-                Grid.Column="1"
                 Width="100"
                 Height="40"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
                 Click="paymentBtn_Click"
-                RenderTransformOrigin="0.554,2.456" Margin="0,94,0,0">
+                RenderTransformOrigin="0.554,2.456" Margin="807,266,0,0" Grid.ColumnSpan="2">
 
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -78,7 +76,11 @@
               Visibility="Visible"
               Grid.Column="0"                                     
               Margin="0,0,10,10">
-            <StackPanel Orientation="Horizontal" Height="22" RenderTransformOrigin="50.50,0.5" Width="270">
+            <StackPanel Orientation="Horizontal" 
+                        Height="22" 
+                        RenderTransformOrigin="50.50,0.5" 
+                        Margin="100"
+                        Width="150">
                 <StackPanel.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleY="1"/>
@@ -87,11 +89,24 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </StackPanel.RenderTransform>
-                
-                <RadioButton x:Name="radioCar" Content="Car" GroupName="vehicleType" Checked="RadioButton_Checked"/>
-                <RadioButton x:Name="radioMotorbike" Content="Motorbike" GroupName="vehicleType" Checked="RadioButton_Checked"/>
+
+                <RadioButton x:Name="radioCar" Content="خودرو" GroupName="vehicleType" Checked="RadioButton_Checked" Width="50"/>
+                <RadioButton x:Name="radioMotorbike" Content="موتور سیکلت" GroupName="vehicleType" Checked="RadioButton_Checked" Width="98" Height="20" RenderTransformOrigin="0.5,0.5">
+                    <RadioButton.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-2.083"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="-0.764"/>
+                        </TransformGroup>
+                    </RadioButton.RenderTransform>
+                </RadioButton>
             </StackPanel>
-            <local:PlaceholderTextBox x:Name="txtMotorPlate" MaxLength="7" PlaceholderText=" پلاک موتور" Width="306" Visibility="Visible"/>
+            <local:PlaceholderTextBox x:Name="txtMotorPlate"
+                                      MaxLength="7" 
+                                      PlaceholderText=" پلاک موتور" 
+                                      Width="306" 
+                                      Visibility="Visible"/>
             <StackPanel x:Name="normalPlate" Orientation="Horizontal" Visibility="Visible" Width="262">
                 <TextBox x:Name="txtPlatePart1" Width="40" MaxLength="2" Margin="0,0,5,0"/>
                 <ComboBox x:Name="cmbPlateLetter" Width="60" Margin="0,0,5,0">
@@ -114,15 +129,25 @@
                 </ComboBox>
                 <TextBox x:Name="txtPlatePart2" Width="60" MaxLength="3"/>
             </StackPanel>
-
-            <StackPanel Margin="200">
+            <StackPanel Width="183" 
+                        Height="70" 
+                        Margin="1"
+                        RenderTransformOrigin="0.5,0.5">
+                <StackPanel.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="0.372"/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="0.594"/>
+                    </TransformGroup>
+                </StackPanel.RenderTransform>
                 <Label x:Name="lblPayment"
-                Content="amount" Width="71"
+                Content="amount" Width="143"
 
                    />
                 <Button x:Name="btnCalcPayment"
                            Content="Calculate payment"
-                           Width="120"
+                           Width="142"
                            Padding="10,5"
 
                            Click="CalcPayment_click">

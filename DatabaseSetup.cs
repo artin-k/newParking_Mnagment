@@ -64,7 +64,7 @@ namespace WpfTest
                 CREATE TABLE IF NOT EXISTS VehicleTypeFee (
                     Id INTEGER PRIMARY KEY AUTOINCREMENT,
                     VehicleType TEXT NOT NULL UNIQUE,  
-                    FeePerHour INTEGER NOT NULL
+                    FeePerHour INTEGER NOT NULL 0
                 );
             ", connection);
             VehicleTypeFee.ExecuteNonQuery();
