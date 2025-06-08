@@ -95,5 +95,8 @@
             Width="132" 
             Click="viewManagers_Click"
             Grid.Column="1" Grid.Row="1"/>
+
+        <StackPanel x:Name="gridOptions" Orientation="Horizontal" HorizontalAlignment="Left" Margin="271,3,0,-136" Grid.Column="1" Visibility="Visible" Grid.Row="2"/>
+        <Button Content="Delete" Click="Delete_Click" Background="#b3b6b7" Grid.ColumnSpan="2" Margin="437,297,233,67" Grid.Row="1"/>
     </Grid>
 </Window>

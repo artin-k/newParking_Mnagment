@@ -67,6 +67,34 @@ namespace WpfTest
                 managerDataGrid.Visibility = Visibility.Hidden;
         }
 
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            AuthService auth = new AuthService();
 
+            if (managerDataGrid.SelectedItem is Manager selectedMan)
+            {
+                var confirm = MessageBox.Show(
+                    $"Delete manager with name {selectedMan.Name}?",
+                    "Confirm delete",
+                    MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                if (confirm == MessageBoxResult.Yes)
+                {
+                    if (auth.DeleteManager(selectedMan.Name))
+                    {
+                        // Remove from the grid’s source
+                        var managers = (List<Manager>)managerDataGrid.ItemsSource;
+                        managers.Remove(selectedMan);
+                        managerDataGrid.Items.Refresh();
+
+                        MessageBox.Show("manager deleted successfully.");
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Select a manager first.");
+            }
+        }
     }
 }
