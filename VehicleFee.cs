@@ -8,8 +8,10 @@ namespace WpfTest
 {
     public class VehicleFee
     {
+        public int Id { get; set; }
         public string VehicleType { get; set; }
-        public int Fee { get; set; }
+        public int FeePerHour { get; set; }
     }
+
 
 }

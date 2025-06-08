@@ -226,7 +226,7 @@ namespace WpfTest
                         feeList.Add(new VehicleFee
                         {
                             VehicleType = vehicleType,
-                            Fee = fee
+                            FeePerHour = fee
                         });
                     }
                 }
@@ -234,6 +234,35 @@ namespace WpfTest
 
             return feeList;
         }
+
+        private void RefreshVehicleTypeFeesFromDb()
+        {
+            try
+            {
+                using var connection = new SqliteConnection("Data Source=parking.db");
+                connection.Open();
+
+                // 1. Delete old data
+                var deleteCmd = new SqliteCommand("DELETE FROM VehicleTypeFee", connection);
+                deleteCmd.ExecuteNonQuery();
+
+                // 2. Insert default fees
+                var insertCmd = new SqliteCommand(@"
+            INSERT INTO VehicleTypeFee (VehicleType, FeePerHour) VALUES
+            ('Car', 0),
+            ('Motorbike', 0)
+        ", connection);
+                insertCmd.ExecuteNonQuery();
+
+                MessageBox.Show("Fees refreshed successfully.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error refreshing fees: " + ex.Message);
+            }
+
+        }
+
 
 
         public void AddStaff(Staff st)

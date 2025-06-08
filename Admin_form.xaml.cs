@@ -33,10 +33,27 @@ namespace WpfTest
             managerDataGrid.ItemsSource = allManagers;
         }
 
+        public void CancelBtnـClick(object sender, RoutedEventArgs e)
+        {
+            CancelFunc();
+        }
+
+        public void CancelFunc()
+        {
+            txtFullName.Text = string.Empty;
+            txtUsername.Text = string.Empty;
+            txtPassword.Text = string.Empty;
+        }
+
         public void setManager_Click(object sender, RoutedEventArgs e)
         {
-            if(managerPanel.Visibility == Visibility.Hidden) 
+            if(managerPanel.Visibility == Visibility.Hidden)
+            {
+                gridOptions.Visibility = Visibility.Hidden;
+                managerDataGrid.Visibility = Visibility.Hidden;
                 managerPanel.Visibility = Visibility.Visible;
+            } 
+
             else
                 managerPanel.Visibility = Visibility.Hidden;
         }
@@ -53,7 +70,10 @@ namespace WpfTest
                 AuthService authService = new AuthService();
                 bool success =  authService.setManager(txtFullName.Text, txtUsername.Text, txtPassword.Text);
                 if (success)
+                {
                     MessageBox.Show("manager saved successfully");
+                    CancelFunc();
+                }
                 else
                     MessageBox.Show("manager saving failed");
             }
@@ -63,7 +83,11 @@ namespace WpfTest
         public void viewManagers_Click(object sender, RoutedEventArgs e)
         {
             if (managerDataGrid.Visibility == Visibility.Hidden)
+            {
+                gridOptions.Visibility = Visibility.Visible;
+                managerPanel.Visibility = Visibility.Hidden;
                 managerDataGrid.Visibility = Visibility.Visible;
+            }
             else
                 managerDataGrid.Visibility = Visibility.Hidden;
         }
