@@ -14,12 +14,7 @@
     </Window.Background>
 
     <Grid Height="540" VerticalAlignment="Top">
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <GradientStop Color="Black" Offset="1"/>
-                <GradientStop Color="#FFB2B2B2"/>
-            </LinearGradientBrush>
-        </Grid.Background>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -34,7 +29,7 @@
           Margin="37,10,276,0"
                   Grid.Column="1" Grid.Row="0"
                   Height="384"                  
-                  VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
+                  VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2" Foreground="White">
             <GroupBox.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
