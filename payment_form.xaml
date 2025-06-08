@@ -75,7 +75,7 @@
         <StackPanel x:Name="payStack" 
               Visibility="Visible"
               Grid.Column="0"                                     
-              Margin="0,0,10,10">
+              Margin="10,0,163,10" Grid.ColumnSpan="2">
             <StackPanel Orientation="Horizontal" 
                         Height="22" 
                         RenderTransformOrigin="50.50,0.5" 
@@ -184,5 +184,21 @@
                 </Button.Background>
             </Button>
         </StackPanel>
+        <Button x:Name="paymentsBtn_Copy"
+            Content="set payment"
+            Width="100"
+            Height="40"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Click="paymentBtn_Click"
+            RenderTransformOrigin="0.554,2.456" Margin="798,279,0,0" Grid.ColumnSpan="2">
+
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFA1A1A1" Offset="0.26"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
     </Grid>
 </Window>

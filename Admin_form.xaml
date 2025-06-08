@@ -11,7 +11,7 @@
 
     <Grid Background="#707b7c" 
           Height="495" 
-          VerticalAlignment="Top">
+          VerticalAlignment="Top" HorizontalAlignment="Center" Width="800">
         <Grid.RowDefinitions>
             <RowDefinition Height="16*"/>
             <RowDefinition Height="80*"/>
@@ -22,6 +22,8 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
+        <Button x:Name="gridOptions" Content="Delete" Click="Delete_Click" Background="#b3b6b7" Grid.ColumnSpan="2" Margin="437,297,233,67" Grid.Row="1" Visibility="Hidden"/>
+        
         <GroupBox 
           x:Name="managerPanel" 
           Visibility="Hidden" 
@@ -60,7 +62,7 @@
         <DataGrid x:Name="managerDataGrid"
           AutoGenerateColumns="False"
           IsReadOnly="False"
-          Visibility="Visible"
+          Visibility="Hidden"
           CanUserAddRows="False"
           SelectionMode="Single"
           SelectionUnit="FullRow"
@@ -96,7 +98,6 @@
             Click="viewManagers_Click"
             Grid.Column="1" Grid.Row="1"/>
 
-        <StackPanel x:Name="gridOptions" Orientation="Horizontal" HorizontalAlignment="Left" Margin="271,3,0,-136" Grid.Column="1" Visibility="Visible" Grid.Row="2"/>
-        <Button Content="Delete" Click="Delete_Click" Background="#b3b6b7" Grid.ColumnSpan="2" Margin="437,297,233,67" Grid.Row="1"/>
+
     </Grid>
 </Window>
