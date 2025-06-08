@@ -40,12 +40,12 @@
 
         <!-- Button next to the grid -->
         <Button x:Name="ExitedCarBtn"
-            Content="View Cars"
+            Content="خودرو های ثبت شده"
             Width="100"
             Height="40"
             VerticalAlignment="Center"
             HorizontalAlignment="Left"
-            Click="ExistedCarBtn_Click" Grid.ColumnSpan="2" Margin="807,0,0,0">
+            Click="ExistedCarBtn_Click" Grid.ColumnSpan="2" Margin="807,0,0,0" FontStyle="Italic" FontSize="11">
 
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -56,13 +56,13 @@
         </Button>
 
         <Button x:Name="paymentsBtn"
-                Content="set payment"
+                Content="پنل تسویه"
                 Width="100"
                 Height="40"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"
                 Click="paymentBtn_Click"
-                RenderTransformOrigin="0.554,2.456" Margin="587,279,0,0">
+                RenderTransformOrigin="0.554,2.456" Margin="807,266,0,0" Grid.ColumnSpan="2" FontStyle="Italic">
 
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">

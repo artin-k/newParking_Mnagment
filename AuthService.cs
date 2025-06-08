@@ -731,7 +731,7 @@ namespace WpfTest
                         else
                         {
                             // fallback/default fee if vehicle type not found in DB
-                            feePerHour = 5000;
+                            feePerHour = 5000000;
                         }
 
                         // Step 5: Calculate time difference

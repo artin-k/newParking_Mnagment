@@ -24,7 +24,7 @@ namespace WpfTest
 
             //a test of the database and the columns 
             AuthService authService = new AuthService();
-            //authService.dbTests();
+            authService.dbTests();
 
         }
 

@@ -35,8 +35,8 @@
 
             <StackPanel Margin="6,0,-6,0" >
 
-                <local:PlaceholderTextBox x:Name="txtFullName" MaxLength="40" PlaceholderText="نام و نام خانوادگی" Margin="10"/>
-                <local:PlaceholderTextBox x:Name="txtUsername" MaxLength="20" PlaceholderText="کد ملی" Margin="10"/>
+                <local:PlaceholderTextBox x:Name="txtFullName" MaxLength="30" PlaceholderText="نام و نام خانوادگی" Margin="10"/>
+                <local:PlaceholderTextBox x:Name="txtUsername" MaxLength="10" PlaceholderText="کد ملی" Margin="10"/>
                 <local:PlaceholderTextBox x:Name="txtPassword" MaxLength="50" PlaceholderText="رمز عبور" Margin="10"/>
 
                 <StackPanel Orientation="Horizontal" 
