@@ -9,6 +9,10 @@
         Title="staff_form" Height="550" Width="700"
         Loaded="staff_form_Load">
 
+    <Window.Background>
+        <ImageBrush ImageSource="pack://siteoforigin:,,,/backgrounds/staff_back.jpg" Stretch="UniformToFill" Opacity="0.5"/>
+    </Window.Background>
+
     <Grid Height="540" VerticalAlignment="Top">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
